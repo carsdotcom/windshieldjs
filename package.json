@@ -1,0 +1,42 @@
+{
+  "name": "windshield",
+  "version": "0.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "gulp test",
+    "start": "node src/app",
+    "nodemon": "nodemon -e js,html,json src/app",
+    "coverage": "istanbul cover --include-all-sources gulp test"
+  },
+  "author": "Mac Heller-Ogden",
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "registry": "http://repository.cars.com/artifactory/api/npm/npm-local"
+  },
+  "dependencies": {
+    "bluebird": "^2.9.34",
+    "cars-content": "^0.0.1",
+    "handlebars": "^3.0.3",
+    "hapi": "^8.8.0",
+    "lodash": "^3.10.0",
+    "minimist": "^1.1.2",
+    "mkdirp": "^0.5.1",
+    "newrelic": "^1.21.2",
+    "owcs-rest": "^0.0.2",
+    "owcs-rest-plugin-cars": "^0.0.0",
+    "promise-circuitbreaker": "^1.0.2",
+    "request": "^2.60.0",
+    "winston": "^1.0.1"
+  },
+  "devDependencies": {
+    "del": "^1.2.1",
+    "gulp": "^3.9.0",
+    "gulp-jasmine": "^2.0.1",
+    "gulp-sequence": "^0.4.1",
+    "istanbul": "^0.3.18",
+    "jasmine": "^2.3.2",
+    "mkdirp": "^0.5.1",
+    "rewire": "^2.3.4"
+  }
+}
