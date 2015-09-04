@@ -1,20 +1,17 @@
 var path = require('path'),
+    _ = require('lodash'),
     Hapi = require('hapi'),
-    start;
+    defaultConfig = {
+        server: {
+            port: 1337
+        }
+    };
 
-function Server() {};
-
-Server.prototype = new Hapi.Server();
-
-Server.prototype.composer = require('./composer');
-Server.prototype.renderer = require('./renderer');
-Server.prototype.router = require('./router');
-Server.prototype.logger = require('./logger');
-
-Server.prototype.configure = function (config) {
+function Server(config) {
     var workingDir = process.argv[1];
-    this.config = (typeof config === 'object') ? config : {};
-    this.config.appDirName = config.appDirName || 'app';
+    this.config = this.config || defaultConfig;
+    _.assign(this.config, (typeof config === 'object') ? config : {});
+    this.config.appDirName = this.config.appDirName || 'app';
     this.config.appRoot = workingDir;
     this.config.appDir = path.join(workingDir, this.config.appDirName);
     this.views({
@@ -26,11 +23,11 @@ Server.prototype.configure = function (config) {
     });
 };
 
-start = Server.prototype.start;
+Server.prototype = new Hapi.Server();
 
-Server.prototype.start = function (func) {
+Server.prototype.composer = require('./composer');
+Server.prototype.renderer = require('./renderer');
+Server.prototype.router = require('./router');
+Server.prototype.logger = require('./logger');
 
-    start.call(this, func);
-};
-
-module.exports = { Server: Server };
+module.exports = Server;

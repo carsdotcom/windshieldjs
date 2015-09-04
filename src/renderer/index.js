@@ -28,7 +28,7 @@ module.exports = function (reply) {
             filePromise = promiseCachedFile(path.join(self.config.appRoot, paths[component.component], 'templates', 'default.html'), 'utf-8');
         } catch (e) {
             logger.error("`" + component.component + "` component not found.");
-            filePromise = promiseCachedFile(path.join(__dirname, 'notFound.html'), 'utf-8');
+            filePromise = promiseCachedFile(path.join(__dirname, '..', 'templates', 'notFound.html'), 'utf-8');
         }
         return filePromise.then(_.partial(composeTupel, component.partial));
     }

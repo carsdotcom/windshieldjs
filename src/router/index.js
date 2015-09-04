@@ -1,5 +1,8 @@
-module.exports = function (routes) {
-    var self = this;
+module.exports = function (options) {
+    var self = this,
+        options = (options != null) ? options : {},
+        context = options.context || '/windshield',
+        routes = options.routes || [];
 
     routes.forEach(function (route) {
         if (!route.path) throw new Error('missing `path` property');
@@ -8,7 +11,7 @@ module.exports = function (routes) {
 
         self.route({
             method: route.method || 'GET',
-            path: self.config.server.context + route.path,
+            path: context + route.path,
             handler: function (request, reply) {
                 var composerArgs = [];
 
