@@ -11,6 +11,8 @@ var path = require('path'),
 module.exports = function (reply) {
     var self = this;
 
+    // this path shouldn't be hard-coded to a strict convention ... let's make
+    // it configurable
     paths = (paths != null) ? paths : require(path.join(self.config.appRoot, 'app', 'mappings', 'componentPaths.json'));
 
     function composeTupel(name, source) {
