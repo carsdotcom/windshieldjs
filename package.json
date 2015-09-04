@@ -16,17 +16,15 @@
   },
   "dependencies": {
     "bluebird": "^2.9.34",
-    "cars-content": "^0.0.1",
     "handlebars": "^3.0.3",
-    "hapi": "^8.8.0",
+    "hapi": "8.8.0",
     "lodash": "^3.10.0",
     "minimist": "^1.1.2",
     "mkdirp": "^0.5.1",
     "newrelic": "^1.21.2",
-    "owcs-rest": "^0.0.2",
-    "owcs-rest-plugin-cars": "^0.0.0",
     "promise-circuitbreaker": "^1.0.2",
     "request": "^2.60.0",
+    "shortid": "^2.2.2",
     "winston": "^1.0.1"
   },
   "devDependencies": {
@@ -36,7 +34,6 @@
     "gulp-sequence": "^0.4.1",
     "istanbul": "^0.3.18",
     "jasmine": "^2.3.2",
-    "mkdirp": "^0.5.1",
     "rewire": "^2.3.4"
   }
 }

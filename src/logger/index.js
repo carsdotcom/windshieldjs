@@ -13,12 +13,12 @@ module.exports = new (winston.Logger)({
         new (winston.transports.Console)(),
         new (winston.transports.File)({
             name: 'info-log',
-            filename: path.join(process.cwd(), '..', 'logs', 'info.log'),
+            filename: path.join(logsDir, 'info.log'),
             level: 'info'
         }),
         new (winston.transports.File)({
             name: 'error-log',
-            filename: path.join(process.cwd(), '..', 'logs', 'error.log'),
+            filename: path.join(logsDir, 'error.log'),
             level: 'error'
         })
     ]
