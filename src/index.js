@@ -1,6 +1,7 @@
 var path = require('path'),
     _ = require('lodash'),
     Hapi = require('hapi'),
+    logger = require('./logger'),
     defaultConfig = {
         server: {
             port: 1337
@@ -9,6 +10,7 @@ var path = require('path'),
 
 function Server(config) {
     var workingDir = process.argv[1];
+    logger.info('application directory identified as:', workingDir);
     this.config = this.config || defaultConfig;
     _.assign(this.config, (typeof config === 'object') ? config : {});
     this.config.appDirName = this.config.appDirName || 'app';
@@ -28,6 +30,6 @@ Server.prototype = new Hapi.Server();
 Server.prototype.composer = require('./composer');
 Server.prototype.renderer = require('./renderer');
 Server.prototype.router = require('./router');
-Server.prototype.logger = require('./logger');
+Server.prototype.logger = logger;
 
 module.exports = Server;
