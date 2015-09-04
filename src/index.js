@@ -9,7 +9,14 @@ var path = require('path'),
     };
 
 function Server(config) {
-    var workingDir = process.argv[1];
+    var workingDir;
+    if (process.argv[0] === 'node') {
+        workingDir = process.argv[1];
+    } else if (config.appRoot) {
+        workingDir = config.appRoot;
+    } else {
+        throw new Error('Cannot determine working directory.');
+    }
     logger.info('application directory identified as:', workingDir);
     this.config = this.config || defaultConfig;
     _.assign(this.config, (typeof config === 'object') ? config : {});
