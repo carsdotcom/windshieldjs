@@ -4,8 +4,7 @@
   "description": "",
   "main": "lib/index.js",
   "scripts": {
-    "test": "gulp test",
-    "coverage": "istanbul cover --include-all-sources gulp test"
+    "test": "gulp test"
   },
   "author": "Mac Heller-Ogden",
   "license": "Apache-2.0",
@@ -26,6 +25,7 @@
   "devDependencies": {
     "del": "^1.2.1",
     "gulp": "^3.9.0",
+    "gulp-istanbul": "^0.10.0",
     "gulp-jasmine": "^2.0.1",
     "gulp-sequence": "^0.4.1",
     "istanbul": "^0.3.18",

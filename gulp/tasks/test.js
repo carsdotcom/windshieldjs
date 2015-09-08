@@ -1,10 +1,9 @@
 var _ = require('lodash'),
     path = require('path'),
-    jasmine = require('gulp-jasmine'),
-    jasmineConfig = require(path.join('..', 'config', 'jasmine.json'));
+    jasmine = require('gulp-jasmine');
 
 module.exports = function () {
-    return gulp.src(_.map(jasmineConfig.spec_files, _.ary(_.partial(path.join, jasmineConfig.spec_dir), 1)))
+    return gulp.src(['lib/**/*.spec.js'])
        .pipe(jasmine());
 };
 
