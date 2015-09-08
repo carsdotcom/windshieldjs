@@ -1,6 +1,6 @@
 # windshield
 
-A Node.js Rendering Platform
+An enterprise rendering plugin for hapi.
 
 <br>
 
