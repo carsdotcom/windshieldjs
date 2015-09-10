@@ -100,10 +100,23 @@ module.exports = function () {
         view: function () {}
     };
 
-    mocks.windshieldCallContext = {
-        settings: {
-            rootDir: '/mock'
-        }
+    mocks.composer = function () {
+        return mocks.genericPromise;
+    };
+
+    mocks.renderer = function () {
+        return function () {
+            return mocks.genericPromise;
+        };
+    };
+
+    mocks.renderer = function () {
+        return function () {
+            return mocks.genericPromise;
+        };
+    };
+
+    mocks.router = function () {
     };
 
     mocks.logger = {
@@ -111,6 +124,106 @@ module.exports = function () {
         error: mocks.noop,
         info: mocks.noop
     };
+
+    mocks.windshieldCallContext = {
+        composer: mocks.composer,
+        renderer: mocks.renderer,
+        router: mocks.router,
+        logger: mocks.logger,
+        settings: {
+            rootDir: '/mock'
+        }
+    };
+
+    mocks.server = {
+        routes: [],
+        route: function (route) {
+            this.routes.push(route);
+        }
+    };
+
+    mocks.routes = [
+        {
+            path: '/mock-route-1',
+            context: mocks.genericContext,
+            adapters: [ mocks.pageAdapter, mocks.assocAdapter ]
+        },
+        {
+            path: '/mock-route-2',
+            context: mocks.genericContext,
+            adapters: [ mocks.pageAdapter, mocks.assocAdapter ]
+        }
+    ];
+
+    mocks.invalidRoutes1 = [
+        {
+            path: {},
+            context: mocks.genericContext,
+            adapters: [ mocks.pageAdapter, mocks.assocAdapter ]
+        },
+        {
+            path: [],
+            context: mocks.genericContext,
+            adapters: [ mocks.pageAdapter, mocks.assocAdapter ]
+        },
+        {
+            path: function () {},
+            context: mocks.genericContext,
+            adapters: [ mocks.pageAdapter, mocks.assocAdapter ]
+        },
+        {
+            path: 123,
+            context: mocks.genericContext,
+            adapters: [ mocks.pageAdapter, mocks.assocAdapter ]
+        }
+    ];
+
+    mocks.invalidRoutes2 = [
+        {
+            path: '/mock-route',
+            context: '',
+            adapters: [ mocks.pageAdapter, mocks.assocAdapter ]
+        },
+        {
+            path: '/mock-route',
+            context: [],
+            adapters: [ mocks.pageAdapter, mocks.assocAdapter ]
+        },
+        {
+            path: '/mock-route',
+            context: function () {},
+            adapters: [ mocks.pageAdapter, mocks.assocAdapter ]
+        },
+        {
+            path: '/mock-route',
+            context: 123,
+            adapters: [ mocks.pageAdapter, mocks.assocAdapter ]
+        }
+    ];
+
+    mocks.invalidRoutes3 = [
+        {
+            path: '/mock-route',
+            context: mocks.genericContext,
+            adapters: ''
+        },
+        {
+            path: '/mock-route',
+            context: mocks.genericContext,
+            adapters: {}
+        },
+        {
+            path: '/mock-route',
+            context: mocks.genericContext,
+            adapters: function () {}
+        },
+        {
+            path: '/mock-route',
+            context: mocks.genericContext,
+            adapters: 123
+        }
+    ];
+
 
     return mocks;
 };
