@@ -139,7 +139,13 @@ module.exports = function () {
         routes: [],
         route: function (route) {
             this.routes.push(route);
-        }
+        },
+        views: mocks.noop,
+        expose: mocks.noop
+    };
+
+    mocks.options = {
+        rootDir: 'mockDir'
     };
 
     mocks.routes = [
