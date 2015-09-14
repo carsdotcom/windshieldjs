@@ -1,6 +1,6 @@
 {
-  "name": "windshield",
-  "version": "1.1.8",
+  "name": "windshieldjs",
+  "version": "0.0.0",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
