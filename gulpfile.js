@@ -7,4 +7,4 @@ gulp.task('watch', function () {
     gulp.watch('src/**/*.js', [ 'test' ]);
 });
 
-gulp.task('default', [ 'test' ]);
+gulp.task('default', [ 'lint', 'test' ]);

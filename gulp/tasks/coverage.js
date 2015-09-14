@@ -2,15 +2,15 @@ var _ = require('lodash'),
     path = require('path'),
     jasmine = require('gulp-jasmine'),
     istanbul = require('gulp-istanbul'),
-    testConfig = require('../config/test');
+    files = require('../config/files');
 
 module.exports = function (cb) {
 
-    gulp.src(testConfig.srcFiles)
+    gulp.src(files.srcFiles)
         .pipe(istanbul()) // Covering files
         .pipe(istanbul.hookRequire()) // Force `require` to return covered files
         .on('finish', function () {
-            gulp.src(testConfig.allFiles)
+            gulp.src(files.allFiles)
                 .pipe(jasmine())
                 .pipe(istanbul.writeReports()) // Creating the reports after tests ran
                 //.pipe(istanbul.enforceThresholds({ thresholds: { global: 90 } })) // Enforce a coverage of at least 90%

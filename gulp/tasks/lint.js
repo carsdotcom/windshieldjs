@@ -1,10 +1,11 @@
 var _ = require('lodash'),
     path = require('path'),
-    jasmine = require('gulp-jasmine'),
+    eslint = require('gulp-eslint'),
     files = require('../config/files');
 
 module.exports = function () {
-    return gulp.src(files.specFiles)
-       .pipe(jasmine());
+    return gulp.src(files.srcFiles)
+       .pipe(eslint())
+       .pipe(eslint.format());
 };
 

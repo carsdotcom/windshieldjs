@@ -16,7 +16,7 @@
         "modules": true
     },
     "rules": {
-        "one-var": 2,
+        "one-var": 0,
         "vars-on-top": 2,
         "no-mixed-requires": 0,
         "wrap-iife": [2, "any"],
@@ -40,7 +40,7 @@
         "no-new": 0,
         "quotes": 0,
         "no-trailing-spaces": 1,
-        "no-comma-dangle": 1,
+        "comma-dangle": 1,
         "no-underscore-dangle": 0,
         "no-console": 0,
         "no-debugger": 1,
