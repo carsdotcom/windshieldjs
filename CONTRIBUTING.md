@@ -11,7 +11,6 @@ Please follow the steps below to contribute a code change.
 
 * Clone the repository.
 * Create a feature branch.
-* Fix the issue ensuring that your code follows the [Hapi style guide](https://github.com/hapijs/contrib/blob/master/Style.md).
 * Add tests for your new code ensuring that you have 100% code coverage (we can help you reach 100% but will not merge without it).
     * Run `npm run-script coverage` to generate a report of test coverage.
 * Rebase your feature branch with origin/master immediately before submitting your pull request.
@@ -20,7 +19,6 @@ Please follow the steps below to contribute a code change.
 ### GitHub Users
 
 * Fork the repository.
-* Fix the issue ensuring that your code follows the [Hapi style guide](https://github.com/hapijs/contrib/blob/master/Style.md).
 * Add tests for your new code ensuring that you have 100% code coverage (we can help you reach 100% but will not merge without it).
     * Run `npm run-script coverage` to generate a report of test coverage.
 * Rebase your feature branch with upstream/master immediately before submitting your pull request.
