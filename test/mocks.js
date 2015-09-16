@@ -18,21 +18,27 @@ module.exports = function () {
     };
 
     mocks.assoc = {
-        secondary: [
-            { component: "bar" }
-        ]
+        associations: {
+            secondary: [
+                { component: "bar" }
+            ]
+        }
     };
 
     mocks.assoc2 = {
-        tertiary: [
-            { component: "baz" }
-        ]
+        associations: {
+            tertiary: [
+                { component: "baz" }
+            ]
+        }
     };
 
     mocks.assoc3 = {
-        tertiary: [
-            { component: "qux" }
-        ]
+        associations: {
+            tertiary: [
+                { component: "qux" }
+            ]
+        }
     };
 
 
