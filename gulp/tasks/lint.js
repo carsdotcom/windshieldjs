@@ -4,7 +4,7 @@ var _ = require('lodash'),
     files = require('../config/files');
 
 module.exports = function () {
-    return gulp.src(files.srcFiles)
+    return gulp.src(files.allFiles)
        .pipe(eslint())
        .pipe(eslint.format());
 };

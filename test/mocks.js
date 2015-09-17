@@ -1,3 +1,4 @@
+var fs = require('fs');
 module.exports = function () {
     var mocks = {};
 
@@ -137,7 +138,8 @@ module.exports = function () {
         router: mocks.router,
         logger: mocks.logger,
         settings: {
-            rootDir: '/mock'
+            rootDir: '/mock',
+            paths: {}
         }
     };
 
@@ -236,6 +238,13 @@ module.exports = function () {
         }
     ];
 
+    mocks.fs = fs;
+    var originalRealpathSync = fs.realpathSync;
+    mocks.fs.realpathSync = function () {
+        try {
+            return originalRealpathSync.apply(fs, Array.prototype.slice.call(arguments, 0));
+        } catch (e) {}
+    };
 
     return mocks;
 };

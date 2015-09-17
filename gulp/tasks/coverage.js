@@ -1,10 +1,13 @@
-var _ = require('lodash'),
-    path = require('path'),
-    jasmine = require('gulp-jasmine'),
-    istanbul = require('gulp-istanbul'),
-    files = require('../config/files');
+var _ = require('lodash');
+var path = require('path');
+var jasmine = require('gulp-jasmine');
+var istanbul = require('gulp-istanbul');
+var files = require('../config/files');
+var mocks = require('../../test/mocks');
 
 module.exports = function (cb) {
+
+    mocks();
 
     gulp.src(files.srcFiles)
         .pipe(istanbul()) // Covering files
