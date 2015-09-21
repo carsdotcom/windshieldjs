@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "bluebird": "^2.9.34",
+    "boom": "^2.8.0",
     "handlebars": "^3.0.3",
     "hapi": "8.8.0",
     "hoek": "^2.14.0",
