@@ -13,7 +13,10 @@ module.exports = function () {
         },
         associations: {
             main: [
-                { component: "foo" }
+                {
+                    component: "foo",
+                    data: {}
+                }
             ]
         }
     };
@@ -21,7 +24,10 @@ module.exports = function () {
     mocks.assoc = {
         associations: {
             secondary: [
-                { component: "bar" }
+                {
+                    component: "bar",
+                    data: {}
+                }
             ]
         }
     };
@@ -29,7 +35,10 @@ module.exports = function () {
     mocks.assoc2 = {
         associations: {
             tertiary: [
-                { component: "baz" }
+                {
+                    component: "baz",
+                    data: {}
+                }
             ]
         }
     };
@@ -37,7 +46,10 @@ module.exports = function () {
     mocks.assoc3 = {
         associations: {
             tertiary: [
-                { component: "qux" }
+                {
+                    component: "qux",
+                    data: {}
+                }
             ]
         }
     };
@@ -126,30 +138,25 @@ module.exports = function () {
     mocks.router = function () {
     };
 
-    mocks.logger = {
-        log: mocks.noop,
-        error: mocks.noop,
-        info: mocks.noop
-    };
-
-    mocks.windshieldCallContext = {
-        composer: mocks.composer,
-        renderer: mocks.renderer,
-        router: mocks.router,
-        logger: mocks.logger,
-        settings: {
-            rootDir: '/mock',
-            paths: {}
-        }
-    };
-
     mocks.server = {
         routes: [],
         route: function (route) {
             this.routes.push(route);
         },
         views: mocks.noop,
-        expose: mocks.noop
+        expose: mocks.noop,
+        log: mocks.noop
+    };
+
+    mocks.windshieldCallContext = {
+        composer: mocks.composer,
+        renderer: mocks.renderer,
+        router: mocks.router,
+        server: mocks.server,
+        settings: {
+            rootDir: '/mock',
+            paths: {}
+        }
     };
 
     mocks.options = {
