@@ -109,89 +109,53 @@ gulp.task('default', function (done) {
         message: "Continue?"
     }];
 
+    function generateArtifactHandler(type) {
+        return function (answers) {
+
+            function create(data){
+                var dest;
+
+                data = (data != null) ? data : {};
+
+                if (data.siloName) {
+                    dest = path.join(defaults.rootDir, type + 's', data.siloName, answers.name);
+                } else {
+                    dest = path.join(defaults.rootDir, type + 's', answers.name);
+                }
+
+                inquirer.prompt(prompts.confirm, function (confirmation){
+                    if (!confirmation.moveon) {
+                        console.log('Exiting now.');
+                        process.exit(1);
+                    }
+                    gulp.src(__dirname + '/templates/' + type + '/**')
+                        .pipe(template(answers))
+                        .pipe(rename(function (file) {
+                            if (file.basename[0] === '_') {
+                                file.basename = '_' + file.basename.slice(1);
+                            }
+                        }))
+                        .pipe(conflict(dest))
+                        .pipe(gulp.dest(dest))
+                        .on('end', function () {
+                            done();
+                        });
+                });
+            }
+
+            if (answers.silo) {
+                inquirer.prompt(prompts[type + 'Silo'], create);
+            } else {
+                create();
+            }
+        };
+
+    };
+
     var handlers = {};
 
-    handlers.component = function (answers) {
-
-        function createComponent(data){
-            var dest;
-
-            data = (data != null) ? data : {};
-
-            if (data.siloName) {
-                dest = path.join(defaults.rootDir, 'components', data.siloName, answers.name);
-            } else {
-                dest = path.join(defaults.rootDir, 'components', answers.name);
-            }
-
-            inquirer.prompt(prompts.confirm, function (confirmation){
-                if (!confirmation.moveon) {
-                    console.log('Exiting now.');
-                    process.exit(1);
-                }
-                gulp.src(__dirname + '/templates/component/**')
-                    .pipe(template(answers))
-                    .pipe(rename(function (file) {
-                        if (file.basename[0] === '_') {
-                            file.basename = '_' + file.basename.slice(1);
-                        }
-                    }))
-                    .pipe(conflict(dest))
-                    .pipe(gulp.dest(dest))
-                    .on('end', function () {
-                        done();
-                    });
-            });
-        }
-
-        if (answers.silo) {
-            inquirer.prompt(prompts.componentSilo, createComponent);
-        } else {
-            createComponent();
-        }
-
-    };
-
-    handlers.adapter = function (answers) {
-
-        function createAdapter(data){
-            var dest;
-
-            data = (data != null) ? data : {};
-
-            if (data.siloName) {
-                dest = path.join(defaults.rootDir, 'adapters', data.siloName, answers.name);
-            } else {
-                dest = path.join(defaults.rootDir, 'adapters', answers.name);
-            }
-
-            inquirer.prompt(prompts.confirm, function (confirmation){
-                if (!confirmation.moveon) {
-                    console.log('Exiting now.');
-                    process.exit(1);
-                }
-                gulp.src(__dirname + '/templates/adapter/**')
-                    .pipe(template(answers))
-                    .pipe(rename(function (file) {
-                        if (file.basename[0] === '_') {
-                            file.basename = '_' + file.basename.slice(1);
-                        }
-                    }))
-                    .pipe(conflict(dest))
-                    .pipe(gulp.dest(dest))
-                    .on('end', function () {
-                        done();
-                    });
-            });
-        }
-
-        if (answers.silo) {
-            inquirer.prompt(prompts.adapterSilo, createAdapter);
-        } else {
-            createAdapter();
-        }
-
-    };
+    handlers.component = generateArtifactHandler('component');
+    handlers.adapter = generateArtifactHandler('adapter');
 
     inquirer.prompt(prompts.type, function (answers) {
         inquirer.prompt(prompts[answers.type], handlers[answers.type]);
