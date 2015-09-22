@@ -1,0 +1,12 @@
+{
+    "srcFiles": [
+        "lib/**/*.js",
+        "!lib/**/*.spec.js"
+    ],
+    "specFiles": [
+        "lib/**/*.spec.js"
+    ],
+    "allFiles": [
+        "lib/**/*.js"
+    ]
+}
