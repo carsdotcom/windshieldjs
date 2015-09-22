@@ -1,8 +1,8 @@
 var gulp = require('gulp'),
     gutil = require('gulp-util'),
+    gulpif = require('gulp-if'),
     chalk = require('chalk'),
     path = require('path'),
-    install = require('gulp-install'),
     conflict = require('gulp-conflict'),
     template = require('gulp-template'),
     rename = require('gulp-rename'),
@@ -16,11 +16,23 @@ function format(string) {
 }
 
 var defaults = (function () {
-    var workingDirName = path.basename(process.cwd());
     var homeDir;
     var osUserName;
     var configFile;
     var user;
+    var pkg;
+    var badProjectErrMsg = "Current directory is not a windshieldjs project.";
+
+    try {
+        pkg = require(path.join(process.cwd(), 'package.json'));
+        if (!pkg.keywords || (pkg.keywords.indexOf('windshieldjs') === -1)) {
+            throw new Error(badProjectErrMsg);
+        }
+    } catch (e) {
+        console.log(chalk.magenta(badProjectErrMsg));
+        console.log(chalk.magenta("Exiting now."));
+        process.exit(0);
+    }
 
     if (process.platform === 'win32') {
         homeDir = process.env.USERPROFILE;
@@ -38,7 +50,7 @@ var defaults = (function () {
     }
 
     return {
-        appName: workingDirName,
+        type: 'component',
         userName: osUserName || format(user.name || ''),
         authorName: user.name || '',
         authorEmail: user.email || ''
@@ -46,52 +58,80 @@ var defaults = (function () {
 }());
 
 gulp.task('default', function (done) {
-    var prompts = [{
-        name: 'appName',
-        message: 'What is the name of your project?',
-        default: defaults.appName
+
+    var prompts = {};
+
+    prompts.type = [{
+        type: 'list',
+        name: 'type',
+        message: 'What would you like to make?',
+        default: defaults.type,
+        choices: [
+            "component"
+        ]
+    }];
+
+    prompts.component = [{
+        name: 'name',
+        message: 'What would you like to name of the component?'
     }, {
-        name: 'appDescription',
-        message: 'What is the description?'
-    }, {
-        name: 'appVersion',
-        message: 'What is the version of your project?',
-        default: '0.0.0'
-    }, {
-        name: 'authorName',
-        message: 'What is the author name?',
-        default: defaults.authorName
-    }, {
-        name: 'authorEmail',
-        message: 'What is the author email?',
-        default: defaults.authorEmail
-    }, {
-        name: 'userName',
-        message: 'What is the github username?',
-        default: defaults.userName
-    }, {
+        type: 'confirm',
+        name: 'silo',
+        message: 'Would you like the component to be in a subdirectory?'
+    }];
+
+    prompts.componentSilo = [{
+        name: 'siloName',
+        message: 'What is the name of the subdirectory you would like to add your component to?'
+    }];
+
+    prompts.confirm = [{
         type: 'confirm',
         name: 'moveon',
         message: 'Continue?'
     }];
 
-    inquirer.prompt(prompts,
-        function (answers) {
-            if (!answers.moveon) return done();
-            answers.appNameSlug = _.kebabCase(answers.appName);
-            gulp.src(__dirname + '/templates/**')
+    var handlers = {};
+
+    handlers.component = function (answers) {
+
+        function createComponent(data){
+            var dest;
+
+            data = (data != null) ? data : {};
+
+            if (data.siloName) {
+                // hard-coding to src/app for now -- need to change this so it can be configured
+                dest = path.join(cwd, 'src', 'app', 'components', data.siloName, answers.name);
+            } else {
+                dest = path.join(cwd, 'src', 'app', 'components', answers.name);
+            }
+
+            gulp.src(__dirname + '/templates/component/**')
                 .pipe(template(answers))
                 .pipe(rename(function (file) {
                     if (file.basename[0] === '_') {
                         file.basename = '_' + file.basename.slice(1);
                     }
                 }))
-                .pipe(conflict(cwd))
-                .pipe(gulp.dest(cwd))
-                .pipe(install())
+                .pipe(conflict(cwd)) //, { cwd: dest }))
+                .pipe(gulp.dest(dest))
                 .on('end', function () {
                     done();
                 });
-        });
+        }
+
+        if (answers.silo) {
+            inquirer.prompt(prompts.componentSilo, createComponent);
+        } else {
+            createComponent();
+        }
+
+    };
+
+    inquirer.prompt(prompts.type, function (answers) {
+        inquirer.prompt(prompts[answers.type], handlers[answers.type]);
+    });
+
 });
 
