@@ -1,14 +1,15 @@
-var gulp = require('gulp'),
-    gutil = require('gulp-util'),
-    gulpif = require('gulp-if'),
-    chalk = require('chalk'),
-    path = require('path'),
-    conflict = require('gulp-conflict'),
-    template = require('gulp-template'),
-    rename = require('gulp-rename'),
-    _ = require('lodash'),
-    inquirer = require('inquirer'),
-    cwd = process.cwd();
+var gulp = require('gulp');
+var gutil = require('gulp-util');
+var gulpif = require('gulp-if');
+var chalk = require('chalk');
+var path = require('path');
+var conflict = require('gulp-conflict');
+var template = require('gulp-template');
+var rename = require('gulp-rename');
+var _ = require('lodash');
+var inquirer = require('inquirer');
+var cwd = process.cwd();
+var argv = require('minimist')(process.argv.slice(2));
 
 function format(string) {
     var username = string.toLowerCase();
@@ -22,6 +23,7 @@ var defaults = (function () {
     var user;
     var pkg;
     var badProjectErrMsg = "Current directory is not a windshieldjs project.";
+    var rootDir = (argv.rootDir) ? argv.rootDir : path.join(cwd, 'src', 'app');
 
     try {
         pkg = require(path.join(process.cwd(), 'package.json'));
@@ -53,7 +55,8 @@ var defaults = (function () {
         type: 'component',
         userName: osUserName || format(user.name || ''),
         authorName: user.name || '',
-        authorEmail: user.email || ''
+        authorEmail: user.email || '',
+        rootDir: rootDir
     };
 }());
 
@@ -101,10 +104,9 @@ gulp.task('default', function (done) {
             data = (data != null) ? data : {};
 
             if (data.siloName) {
-                // hard-coding to src/app for now -- need to change this so it can be configured
-                dest = path.join(cwd, 'src', 'app', 'components', data.siloName, answers.name);
+                dest = path.join(defaults.rootDir, 'components', data.siloName, answers.name);
             } else {
-                dest = path.join(cwd, 'src', 'app', 'components', answers.name);
+                dest = path.join(defaults.rootDir, 'components', answers.name);
             }
 
             gulp.src(__dirname + '/templates/component/**')
