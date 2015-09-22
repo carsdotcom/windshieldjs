@@ -70,28 +70,43 @@ gulp.task('default', function (done) {
         message: 'What would you like to make?',
         default: defaults.type,
         choices: [
-            "component"
+            "component",
+            "adapter"
         ]
     }];
 
     prompts.component = [{
-        name: 'name',
-        message: 'What would you like to name of the component?'
+        name: "name",
+        message: "What would you like to name of the component?"
     }, {
-        type: 'confirm',
-        name: 'silo',
-        message: 'Would you like the component to be in a subdirectory?'
+        type: "confirm",
+        name: "silo",
+        message: "Would you like the component to be in a subdirectory?"
     }];
 
     prompts.componentSilo = [{
-        name: 'siloName',
-        message: 'What is the name of the subdirectory you would like to add your component to?'
+        name: "siloName",
+        message: "What is the name of the subdirectory you would like to add your component to?"
+    }];
+
+    prompts.adapter = [{
+        name: "name",
+        message: "What would you like to name of the adapter?"
+    }, {
+        type: "confirm",
+        name: "silo",
+        message: "Would you like the adapter to be in a subdirectory?"
+    }];
+
+    prompts.adapterSilo = [{
+        name: "siloName",
+        message: "What is the name of the subdirectory you would like to add your adapter to?"
     }];
 
     prompts.confirm = [{
-        type: 'confirm',
-        name: 'moveon',
-        message: 'Continue?'
+        type: "confirm",
+        name: "moveon",
+        message: "Continue?"
     }];
 
     var handlers = {};
@@ -109,24 +124,71 @@ gulp.task('default', function (done) {
                 dest = path.join(defaults.rootDir, 'components', answers.name);
             }
 
-            gulp.src(__dirname + '/templates/component/**')
-                .pipe(template(answers))
-                .pipe(rename(function (file) {
-                    if (file.basename[0] === '_') {
-                        file.basename = '_' + file.basename.slice(1);
-                    }
-                }))
-                .pipe(conflict(dest))
-                .pipe(gulp.dest(dest))
-                .on('end', function () {
-                    done();
-                });
+            inquirer.prompt(prompts.confirm, function (confirmation){
+                if (!confirmation.moveon) {
+                    console.log('Exiting now.');
+                    process.exit(1);
+                }
+                gulp.src(__dirname + '/templates/component/**')
+                    .pipe(template(answers))
+                    .pipe(rename(function (file) {
+                        if (file.basename[0] === '_') {
+                            file.basename = '_' + file.basename.slice(1);
+                        }
+                    }))
+                    .pipe(conflict(dest))
+                    .pipe(gulp.dest(dest))
+                    .on('end', function () {
+                        done();
+                    });
+            });
         }
 
         if (answers.silo) {
             inquirer.prompt(prompts.componentSilo, createComponent);
         } else {
             createComponent();
+        }
+
+    };
+
+    handlers.adapter = function (answers) {
+
+        function createAdapter(data){
+            var dest;
+
+            data = (data != null) ? data : {};
+
+            if (data.siloName) {
+                dest = path.join(defaults.rootDir, 'adapters', data.siloName, answers.name);
+            } else {
+                dest = path.join(defaults.rootDir, 'adapters', answers.name);
+            }
+
+            inquirer.prompt(prompts.confirm, function (confirmation){
+                if (!confirmation.moveon) {
+                    console.log('Exiting now.');
+                    process.exit(1);
+                }
+                gulp.src(__dirname + '/templates/adapter/**')
+                    .pipe(template(answers))
+                    .pipe(rename(function (file) {
+                        if (file.basename[0] === '_') {
+                            file.basename = '_' + file.basename.slice(1);
+                        }
+                    }))
+                    .pipe(conflict(dest))
+                    .pipe(gulp.dest(dest))
+                    .on('end', function () {
+                        done();
+                    });
+            });
+        }
+
+        if (answers.silo) {
+            inquirer.prompt(prompts.adapterSilo, createAdapter);
+        } else {
+            createAdapter();
         }
 
     };
