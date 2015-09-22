@@ -116,7 +116,7 @@ gulp.task('default', function (done) {
                         file.basename = '_' + file.basename.slice(1);
                     }
                 }))
-                .pipe(conflict(cwd)) //, { cwd: dest }))
+                .pipe(conflict(dest))
                 .pipe(gulp.dest(dest))
                 .on('end', function () {
                     done();
