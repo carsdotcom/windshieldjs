@@ -71,7 +71,8 @@ gulp.task('default', function (done) {
         default: defaults.type,
         choices: [
             "component",
-            "adapter"
+            "adapter",
+            "route collection"
         ]
     }];
 
@@ -103,6 +104,11 @@ gulp.task('default', function (done) {
         message: "What is the name of the subdirectory you would like to add your adapter to?"
     }];
 
+    prompts['route collection'] = [{
+        name: "name",
+        message: "What would you like to name of the route collection?"
+    }];
+
     prompts.confirm = [{
         type: "confirm",
         name: "moveon",
@@ -112,28 +118,30 @@ gulp.task('default', function (done) {
     function generateArtifactHandler(type) {
         return function (answers) {
 
-            function create(data){
+            function create(data) {
                 var dest;
 
                 data = (data != null) ? data : {};
 
-                if (data.siloName) {
+                if (type === 'route') {
+                    dest = path.join(defaults.rootDir, type + 's');
+                } else if (data.siloName) {
                     dest = path.join(defaults.rootDir, type + 's', data.siloName, answers.name);
                 } else {
                     dest = path.join(defaults.rootDir, type + 's', answers.name);
                 }
 
                 inquirer.prompt(prompts.confirm, function (confirmation){
+
                     if (!confirmation.moveon) {
                         console.log('Exiting now.');
                         process.exit(1);
                     }
-                    gulp.src(__dirname + '/templates/' + type + '/**')
+
+                    gulp.src(__dirname + '/templates/' + type + '/**', { dot: true})
                         .pipe(template(answers))
                         .pipe(rename(function (file) {
-                            if (file.basename[0] === '_') {
-                                file.basename = '_' + file.basename.slice(1);
-                            }
+                            if (file.extname === '.js' && type === 'route') file.basename = answers.name;
                         }))
                         .pipe(conflict(dest))
                         .pipe(gulp.dest(dest))
@@ -156,6 +164,7 @@ gulp.task('default', function (done) {
 
     handlers.component = generateArtifactHandler('component');
     handlers.adapter = generateArtifactHandler('adapter');
+    handlers['route collection'] = generateArtifactHandler('route');
 
     inquirer.prompt(prompts.type, function (answers) {
         inquirer.prompt(prompts[answers.type], handlers[answers.type]);
