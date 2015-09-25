@@ -4,13 +4,30 @@ An enterprise rendering plugin for hapi.
 
 <br>
 
-## Install
+-----
 
-### Local
+<br>
+
+* [Install](#install)
+    - [Local](#local)
+    - [Global](#global)
+* [Usage](#usage)
+    - [Register](#register)
+    - [Scaffolding](#scaffolding)
+
+<br>
+
+-----
+
+<br>
+
+## <a name="install"/>Install
+
+### <a name="local"/>Local
 
     npm install --save windshieldjs
 
-### Global
+### <a name="global"/>Global
 
 To use the the CLI scaffolding interface, you will need to install windshield globally.
 
@@ -18,9 +35,13 @@ To use the the CLI scaffolding interface, you will need to install windshield gl
 
 <br>
 
-## Usage
+-----
 
-### Register
+<br>
+
+## <a name="usage"/>Usage
+
+### <a name="register"/>Register
 
 First, you must register the plugin with your Hapi server instance.
 
@@ -37,9 +58,7 @@ First, you must register the plugin with your Hapi server instance.
     });
 
 
-<br>
-
-### Scaffolding
+### <a name="scaffolding"/>Scaffolding
 
 If you have installed windshield globally (see above) you can use the windshield
 CLI tool to generate new components, adapters and layouts. Before your can use
