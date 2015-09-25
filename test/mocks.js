@@ -70,13 +70,13 @@ module.exports = function () {
         }
     };
 
-
     mocks.genericPromise = {
         then: function (func) {
             return func.apply(this, arguments);
         },
         catch: function () {},
-        finally: function () {}
+        finally: function () {},
+        apply: function () {}
     };
 
     mocks.pagePromise = {
@@ -226,6 +226,10 @@ module.exports = function () {
         {
             path: '/mock-route-2',
             context: mocks.genericContext,
+            adapters: [ mocks.pageAdapter, mocks.assocAdapter ]
+        },
+        {
+            path: '/mock-route-3',
             adapters: [ mocks.pageAdapter, mocks.assocAdapter ]
         }
     ];
