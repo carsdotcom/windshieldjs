@@ -8,6 +8,8 @@ An enterprise rendering plugin for hapi.
 
 <br>
 
+## Table of Contents
+
 * [Install](#install)
     - [Local](#local)
     - [Global](#global)
