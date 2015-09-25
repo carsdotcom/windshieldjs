@@ -1,10 +1,17 @@
 var fs = require('fs');
+var Promise = require('bluebird');
+
 module.exports = function () {
     var mocks = {};
 
     mocks.genericContext = {};
 
     mocks.noop = function () {};
+
+    mocks.component1 = {
+        component: "foo",
+        data: {}
+    };
 
     mocks.page = {
         layout: "mockLayout",
@@ -13,10 +20,7 @@ module.exports = function () {
         },
         associations: {
             main: [
-                {
-                    component: "foo",
-                    data: {}
-                }
+                mocks.component1
             ]
         }
     };
@@ -95,6 +99,14 @@ module.exports = function () {
         finally: function () {}
     };
 
+    mocks.componentPromise1 = {
+        then: function (func) {
+            return func.call(this, mocks.component1);
+        },
+        catch: function () {},
+        finally: function () {}
+    };
+
     mocks.genericAdapter = function () {
         return mocks.genericPromise;
     };
@@ -113,6 +125,14 @@ module.exports = function () {
 
     mocks.assocAdapter3 = function () {
         return mocks.assocPromise3;
+    };
+
+    mocks.componentAdapter1 = function () {
+        return mocks.componentPromise1;
+    };
+
+    mocks.componentModel1 = function () {
+        return mocks.component1.data;
     };
 
     mocks.reply = {
