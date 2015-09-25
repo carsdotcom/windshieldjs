@@ -25,6 +25,18 @@ module.exports = function () {
         }
     };
 
+    mocks.badPage = {
+        layout: "mockLayout",
+        attributes: {
+            title: "mock bad page"
+        },
+        associations: {
+            main: [
+                {}
+            ]
+        }
+    };
+
     mocks.assoc = {
         associations: {
             secondary: [
@@ -107,6 +119,14 @@ module.exports = function () {
         finally: function () {}
     };
 
+    mocks.filePromise = {
+        then: function (func) {
+            return func.apply(this, 'success');
+        },
+        catch: function () {},
+        finally: function () {}
+    };
+
     mocks.genericAdapter = function () {
         return mocks.genericPromise;
     };
@@ -176,6 +196,20 @@ module.exports = function () {
         settings: {
             rootDir: '/mock',
             paths: {}
+        }
+    };
+
+    mocks.windshieldCallContextWithPaths = {
+        composer: mocks.composer,
+        renderer: mocks.renderer,
+        router: mocks.router,
+        server: mocks.server,
+        settings: {
+            rootDir: '/mock',
+            paths: {
+                'foo': 'alt-path/foo',
+                'mockLayout': 'alt-path/mockLayout'
+            }
         }
     };
 
