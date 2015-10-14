@@ -151,6 +151,13 @@ module.exports = function () {
         return mocks.componentPromise1;
     };
 
+    mocks.componentAdapter2 = function componentAdapter2 (data, page, context) {
+        mocks._last_data = data;
+        mocks._last_page = page;
+        mocks._last_context = context;
+        return mocks.componentPromise1;
+    };
+
     mocks.componentModel1 = function () {
         return mocks.component1.data;
     };
