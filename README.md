@@ -1,6 +1,6 @@
-# windshield
+# WindshieldJS
 
-An enterprise rendering plugin for hapi.
+An Enterprise Rendering plugin for Hapi.js.
 
 <br>
 
