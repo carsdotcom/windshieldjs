@@ -8,6 +8,20 @@ An Enterprise Rendering plugin for Hapi.js.
 
 <br>
 
+## Important Note
+
+The majority of documentation for the Cars.com content rendering initiative
+exists within the [www-cars-com-rendering]() project for the time being.
+
+More detailed documentation for the WindshieldJS plugin will be added as the
+new platform proves itself and stablizes.
+
+<br>
+
+-----
+
+<br>
+
 ## Table of Contents
 
 * [Install](#install)
@@ -71,3 +85,23 @@ keyword. Once you have done this, you can simply run the `windshield` command
     windshield
 
 <br>
+
+-----
+
+<br>
+
+## Project Structure
+
+WindshieldJS favors convention over configuration. A WindshieldJS project
+must conform to the following project structure (relative to the provided
+`rootDir` option).
+
+* <rootDir>
+    - adapters
+    - components
+    - helpers
+    - layouts
+
+While currently not required, it is also recommended that you create a
+`routes` directory in order to keep your project well organized. This may
+become a convention in future versions.
