@@ -37,7 +37,7 @@ module.exports = function () {
         }
     };
 
-    mocks.assoc = {
+    mocks.assoc1 = {
         associations: {
             secondary: [
                 {
@@ -70,92 +70,38 @@ module.exports = function () {
         }
     };
 
-    mocks.genericPromise = {
-        then: function (func) {
-            return func.apply(this, arguments);
-        },
-        catch: function () {},
-        finally: function () {},
-        apply: function () {}
-    };
+    mocks.filePromise = Promise.resolve('success');
 
-    mocks.pagePromise = {
-        then: function (func) {
-            return func.call(this, mocks.page);
-        },
-        catch: function () {},
-        finally: function () {}
-    };
-
-    mocks.assocPromise = {
-        then: function (func) {
-            return func.call(this, mocks.assoc);
-        },
-        catch: function () {},
-        finally: function () {}
-    };
-
-    mocks.assocPromise2 = {
-        then: function (func) {
-            return func.call(this, mocks.assoc2);
-        },
-        catch: function () {},
-        finally: function () {}
-    };
-
-    mocks.assocPromise3 = {
-        then: function (func) {
-            return func.call(this, mocks.assoc3);
-        },
-        catch: function () {},
-        finally: function () {}
-    };
-
-    mocks.componentPromise1 = {
-        then: function (func) {
-            return func.call(this, mocks.component1);
-        },
-        catch: function () {},
-        finally: function () {}
-    };
-
-    mocks.filePromise = {
-        then: function (func) {
-            return func.apply(this, 'success');
-        },
-        catch: function () {},
-        finally: function () {}
-    };
-
-    mocks.genericAdapter = function () {
-        return mocks.genericPromise;
+    mocks.genericAdapter = function (data) {
+        return Promise.resolve(data);
     };
 
     mocks.pageAdapter = function () {
-        return mocks.pagePromise;
+        return Promise.resolve(mocks.page);
     };
 
-    mocks.assocAdapter = function () {
-        return mocks.assocPromise;
+    mocks.assocAdapter1 = function () {
+        return Promise.resolve(mocks.assoc1);
     };
 
     mocks.assocAdapter2 = function () {
-        return mocks.assocPromise2;
+        return Promise.resolve(mocks.assoc2);
     };
 
     mocks.assocAdapter3 = function () {
-        return mocks.assocPromise3;
+        return Promise.resolve(mocks.assoc3);
     };
 
     mocks.componentAdapter1 = function () {
-        return mocks.componentPromise1;
+        return Promise.resolve(mocks.component1);
     };
 
     mocks.componentAdapter2 = function componentAdapter2 (data, page, context) {
+        /* eslint camelcase:0 */
         mocks._last_data = data;
         mocks._last_page = page;
         mocks._last_context = context;
-        return mocks.componentPromise1;
+        return Promise.resolve(mocks.component1);
     };
 
     mocks.componentModel1 = function () {
@@ -203,6 +149,9 @@ module.exports = function () {
         settings: {
             rootDir: '/mock',
             paths: {}
+        },
+        handlebars: {
+            registerPartial: function () {}
         }
     };
 
@@ -311,7 +260,9 @@ module.exports = function () {
     ];
 
     mocks.fs = fs;
+
     var originalRealpathSync = fs.realpathSync;
+
     mocks.fs.realpathSync = function () {
         try {
             return originalRealpathSync.apply(fs, Array.prototype.slice.call(arguments, 0));

@@ -5,7 +5,9 @@
   "repository": "http://git.cars.com/scm/npm/windshieldjs.git",
   "main": "lib/index.js",
   "scripts": {
-    "test": "gulp test"
+    "gulp": "gulp --es_staging",
+    "test": "npm run gulp -- test",
+    "watch": "npm run gulp -- watch"
   },
   "author": "Mac Heller-Ogden",
   "license": "Apache-2.0",
