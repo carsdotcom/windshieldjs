@@ -6,8 +6,9 @@
   "main": "lib/index.js",
   "scripts": {
     "gulp": "gulp --es_staging",
-    "test": "npm run gulp -- test",
-    "watch": "npm run gulp -- watch"
+    "test": "node --es_staging ./node_modules/.bin/jasmine JASMINE_CONFIG_PATH=test/jasmine.json",
+    "watch": "nodemon --es_staging ./node_modules/.bin/jasmine JASMINE_CONFIG_PATH=test/jasmine.json",
+    "test-debug": "node debug --es_staging ./node_modules/.bin/jasmine JASMINE_CONFIG_PATH=test/jasmine.json"
   },
   "author": "Mac Heller-Ogden",
   "license": "Apache-2.0",
@@ -44,8 +45,11 @@
     "gulp-eslint": "^1.1.0",
     "gulp-istanbul": "^0.10.2",
     "gulp-jasmine": "^2.2.1",
+    "handlebars": "^4.0.5",
+    "hapi": "^11.1.2",
     "istanbul": "^0.4.0",
-    "jasmine": "^2.3.2",
-    "rewire": "^2.4.0"
+    "jasmine": "^2.4.1",
+    "rewire": "^2.4.0",
+    "vision": "^4.0.1"
   }
 }
