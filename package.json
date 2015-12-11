@@ -5,10 +5,10 @@
   "repository": "http://git.cars.com/scm/npm/windshieldjs.git",
   "main": "lib/index.js",
   "scripts": {
-    "gulp": "gulp --es_staging",
-    "test": "node --es_staging ./node_modules/.bin/jasmine JASMINE_CONFIG_PATH=test/jasmine.json",
-    "watch": "nodemon --es_staging ./node_modules/.bin/jasmine JASMINE_CONFIG_PATH=test/jasmine.json",
-    "test-debug": "node debug --es_staging ./node_modules/.bin/jasmine JASMINE_CONFIG_PATH=test/jasmine.json"
+    "test": "node --es_staging node_modules/.bin/_mocha",
+    "watch": "node --es_staging node_modules/.bin/_mocha --watch --bail",
+    "coverage": "node --es_staging node_modules/.bin/istanbul cover node_modules/.bin/_mocha",
+    "lint": "eslint ."
   },
   "author": "Mac Heller-Ogden",
   "license": "Apache-2.0",
@@ -26,30 +26,18 @@
     "joi": "7.0.0",
     "lodash": "^3.10.1",
     "mkdirp": "^0.5.1",
-    "gulp": "^3.9.0",
-    "gulp-conflict": "^0.4.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-sequence": "^0.4.1",
-    "gulp-template": "^3.0.0",
-    "gulp-util": "^3.0.7",
     "iniparser": "^1.0.5",
     "inquirer": "^0.11.0",
     "chalk": "^1.1.1",
-    "gulp-filelog": "^0.4.1",
-    "gulp-if": "^2.0.0",
     "liftoff": "^2.2.0",
     "minimist": "^1.2.0"
   },
   "devDependencies": {
-    "del": "^2.0.2",
-    "gulp-eslint": "^1.1.0",
-    "gulp-istanbul": "^0.10.2",
-    "gulp-jasmine": "^2.2.1",
-    "handlebars": "^4.0.5",
+    "async": "^1.5.0",
+    "eslint": "^1.10.3",
     "hapi": "^11.1.2",
     "istanbul": "^0.4.0",
-    "jasmine": "^2.4.1",
-    "rewire": "^2.4.0",
+    "mocha": "^2.3.4",
     "vision": "^4.0.1"
   }
 }
