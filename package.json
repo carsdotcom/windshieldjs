@@ -1,6 +1,6 @@
 {
   "name": "windshieldjs",
-  "version": "0.0.33",
+  "version": "0.0.34",
   "description": "An Enterprise Rendering Plugin for Hapi.js",
   "repository": "http://git.cars.com/scm/npm/windshieldjs.git",
   "main": "lib/index.js",
