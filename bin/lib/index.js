@@ -22,7 +22,7 @@ var defaults = (function () {
     var configFile;
     var user;
     var pkg;
-    var rootDir = (argv.rootDir) ? argv.rootDir : path.join(cwd, 'src', 'app');
+    var rootDir = (argv.rootDir) ? argv.rootDir : path.join(cwd, 'lib', 'app');
 
     try {
         pkg = require(path.join(process.cwd(), 'package.json'));
