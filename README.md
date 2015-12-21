@@ -43,12 +43,6 @@ new platform proves itself and stablizes.
 
     npm install --save windshieldjs
 
-### <a name="global"/>Global
-
-To use the the CLI scaffolding interface, you will need to install windshield globally.
-
-    npm install -g windshieldjs
-
 <br>
 
 -----
@@ -76,13 +70,12 @@ First, you must register the plugin with your Hapi server instance.
 
 ### <a name="scaffolding"/>Scaffolding
 
-If you have installed windshield globally (see above) you can use the windshield
-CLI tool to generate new components, adapters and layouts. Before your can use
-this tool, you must ensure your project's `package.json` has `windshieldjs` as a
-keyword. Once you have done this, you can simply run the `windshield` command
-*from the project root* and you'll then be lead through a series of prompts.
+windshieldjs comes with a binary CLI tool to generate new components, adapters
+and layouts. Run `./node_modules/.bin/windshield` *from the project root* of
+any project that has windshieldjs installed and you'll be lead through a series
+of prompts.
 
-    windshield
+    ./node_modules/.bin/windshield
 
 <br>
 

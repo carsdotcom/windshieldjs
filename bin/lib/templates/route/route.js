@@ -4,19 +4,17 @@ var Promise = require('bluebird');
 // The function below is just a mock adapter to facilitate a working
 // example of a route definition.
 
-function fooAdapter(context) {
-    return new Promise(function (resolve, reject) {
-        resolve({
-            attributes: {
-                title: context.request.params.title || 'foo'
-            }
-        });
+function dummyAdapterDoNotUse(context) {
+    return Promise.resolve({
+        attributes: {
+            title: context.request.params.title || 'scaffold'
+        }
     });
 };
 
 module.exports = [
     {
         path: "/foo/{title}",
-        adapters: [ fooAdapter ]
+        adapters: [ dummyAdapterDoNotUse ]
     }
 ];

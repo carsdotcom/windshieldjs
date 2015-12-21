@@ -1,5 +1,13 @@
 module.exports = [
     {
-        foo: 'bar'
+        name: "Basic test",
+        src: {
+            attributes: {
+                title: 'scaffold',
+                foo: 'bar'
+            }
+        },
+        out: { title: 'scaffold', foo: 'bar' }
     }
 ];
+

@@ -22,18 +22,14 @@ var defaults = (function () {
     var configFile;
     var user;
     var pkg;
-    var badProjectErrMsg = "Current directory is not a windshieldjs project.";
     var rootDir = (argv.rootDir) ? argv.rootDir : path.join(cwd, 'src', 'app');
 
     try {
         pkg = require(path.join(process.cwd(), 'package.json'));
-        if (!pkg.keywords || (pkg.keywords.indexOf('windshieldjs') === -1)) {
-            throw new Error(badProjectErrMsg);
-        }
     } catch (e) {
-        console.log(chalk.magenta(badProjectErrMsg));
+        console.log(chalk.magenta("Error reading `package.json`."));
         console.log(chalk.magenta("Exiting now."));
-        process.exit(0);
+        process.exit(1);
     }
 
     if (process.platform === 'win32') {

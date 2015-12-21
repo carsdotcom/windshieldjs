@@ -1,3 +1,4 @@
 module.exports = function (data) {
-    this.foo = data.foo;
+    this.title = data.attributes.title;
+    this.foo = data.attributes.foo;
 };
