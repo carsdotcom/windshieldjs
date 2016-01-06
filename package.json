@@ -1,6 +1,6 @@
 {
   "name": "windshieldjs",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "An Enterprise Rendering Plugin for Hapi.js",
   "repository": "http://git.cars.com/scm/npm/windshieldjs.git",
   "main": "lib/index.js",
@@ -47,7 +47,7 @@
     "vision": "^4.0.1"
   },
   "pre-commit": [
-      "test",
-      "lint"
+    "test",
+    "lint"
   ]
 }
