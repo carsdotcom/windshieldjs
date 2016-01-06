@@ -27,7 +27,7 @@ describe('router', function () {
             adapters: [ function () { return Promise.resolve({ layout: 'other' }); }]
         };
         testRoute(route, function (response) {
-            assert.equal(response.statusCode, 200)
+            assert.equal(response.statusCode, 200);
             assert.equal(response.result, fs.readFileSync(path.normalize(testRoute.fixturePath + '/layouts/other.html'), { encoding: 'utf8' }));
             done();
         });
