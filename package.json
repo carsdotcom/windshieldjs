@@ -45,5 +45,9 @@
     "istanbul": "^0.4.0",
     "mocha": "^2.3.4",
     "vision": "^4.0.1"
-  }
+  },
+  "pre-commit": [
+      "test",
+      "lint"
+  ]
 }
