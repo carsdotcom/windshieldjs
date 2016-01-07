@@ -7,6 +7,7 @@ var vision = require('vision');
 var windshield = require('..');
 
 exports.registerWithOptions = registerWithOptions;
+
 function registerWithOptions(options, cb) {
     var windshieldWithOptions = {
         register: windshield,
@@ -27,14 +28,11 @@ function RouteTester(fixture) {
     function testRoute(route, cb) {
         registerWithOptions({
             rootDir: fixturePath,
-            handlebars: handlebars
+            handlebars: handlebars,
+            uriContext: '/foo',
+            routes: [ route ]
         }, function (err, server) {
             assert.ifError(err);
-
-            server.plugins.windshieldjs.router({
-                uriContext: '/foo',
-                routes: [ route ]
-            });
 
             var req = {
                 method: 'GET',

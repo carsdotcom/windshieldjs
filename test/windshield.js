@@ -41,7 +41,8 @@ describe('windshield plugin', function () {
 
             function test(cb) {
                 var opts = {
-                    rootDir: baseDir
+                    rootDir: baseDir,
+                    routes: []
                 };
                 registerWithOptions(opts, function(err) {
                     assert(err);
@@ -62,7 +63,8 @@ describe('windshield plugin', function () {
 
             function test(cb) {
                 var opts = {
-                    rootDir: baseDir
+                    rootDir: baseDir,
+                    routes: []
                 };
                 registerWithOptions(opts, function(err) {
                     assert(err);

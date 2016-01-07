@@ -61,7 +61,9 @@ First, you must register the plugin with your Hapi server instance.
         register: require('windshieldjs'),
         options: {
             rootDir: path.join(__dirname, 'app'),
-            paths: require('./app/paths')
+            paths: require('./app/paths'),
+            uriContext: '/foo',
+            routes: require('./app/routes')
         }
     }, function (err) {
         if (err) console.log(err);
