@@ -3,11 +3,10 @@ module.exports = [
         name: "Basic test",
         src: {
             attributes: {
-                title: 'scaffold',
-                foo: 'bar'
+                content: 'scaffold'
             }
         },
-        out: { title: 'scaffold', foo: 'bar' }
+        out: { content: 'scaffold' }
     }
 ];
 

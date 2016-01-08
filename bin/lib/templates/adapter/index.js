@@ -4,8 +4,7 @@ module.exports = function (context) {
     var page = {
         layout: 'default',
         attributes: {
-            title: 'scaffold',
-            foo: 'bar'
+            title: 'scaffold'
         },
         associations: {
             // add named asssociations here
