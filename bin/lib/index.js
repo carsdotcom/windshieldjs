@@ -63,7 +63,7 @@ gulp.task('default', function (done) {
     prompts.type = [{
         type: 'list',
         name: 'type',
-        message: 'What would you like to make?',
+        message: chalk.blue.bgBlack('What would you like to make?'),
         default: defaults.type,
         choices: [
             "component",
@@ -74,41 +74,41 @@ gulp.task('default', function (done) {
 
     prompts.component = [{
         name: "name",
-        message: "What would you like to name of the component?"
+        message: chalk.blue.bgBlack("What would you like to name of the component?")
     }, {
         type: "confirm",
         name: "silo",
-        message: "Would you like the component to be in a subdirectory?"
+        message: chalk.blue.bgBlack("Would you like the component to be in a subdirectory?")
     }];
 
     prompts.componentSilo = [{
         name: "siloName",
-        message: "What is the name of the subdirectory you would like to add your component to?"
+        message: chalk.blue.bgBlack("What is the name of the subdirectory you would like to add your component to?")
     }];
 
     prompts.adapter = [{
         name: "name",
-        message: "What would you like to name of the adapter?"
+        message: chalk.blue.bgBlack("What would you like to name of the adapter?")
     }, {
         type: "confirm",
         name: "silo",
-        message: "Would you like the adapter to be in a subdirectory?"
+        message: chalk.blue.bgBlack("Would you like the adapter to be in a subdirectory?")
     }];
 
     prompts.adapterSilo = [{
         name: "siloName",
-        message: "What is the name of the subdirectory you would like to add your adapter to?"
+        message: chalk.blue.bgBlack("What is the name of the subdirectory you would like to add your adapter to?")
     }];
 
     prompts['route collection'] = [{
         name: "name",
-        message: "What would you like to name of the route collection?"
+        message: chalk.blue.bgBlack("What would you like to name of the route collection?")
     }];
 
     prompts.confirm = [{
         type: "confirm",
         name: "moveon",
-        message: "Continue?"
+        message: chalk.blue.bgBlack("Continue?")
     }];
 
     function generateArtifactHandler(type) {
