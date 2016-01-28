@@ -102,7 +102,7 @@ gulp.task('default', function (done) {
 
     prompts['route collection'] = [{
         name: "name",
-        message: chalk.blue.bgBlack("What would you like to name of the route collection?")
+        message: chalk.blue.bgBlack("What would you like to name the route collection?")
     }];
 
     prompts.confirm = [{
@@ -134,7 +134,7 @@ gulp.task('default', function (done) {
                         process.exit(1);
                     }
 
-                    gulp.src(__dirname + '/templates/' + type + '/**', { dot: true})
+                    gulp.src(__dirname + '/templates/' + type + '/**', { dot: true })
                         .pipe(template(answers))
                         .pipe(rename(function (file) {
                             if (file.extname === '.js' && type === 'route') file.basename = answers.name;
@@ -142,6 +142,7 @@ gulp.task('default', function (done) {
                         .pipe(conflict(dest))
                         .pipe(gulp.dest(dest))
                         .on('end', function () {
+                            if (type === 'route') console.log('\n\nRun your application and checkout your new route at "/scaffolded/test"\n');
                             done();
                         });
                 });

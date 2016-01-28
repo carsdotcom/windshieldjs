@@ -2,12 +2,23 @@ var Promise = require('bluebird');
 
 module.exports = function (context) {
     var page = {
-        layout: 'default',
+        layout: "default",
         attributes: {
-            title: 'scaffold'
+            title: "scaffold"
         },
         associations: {
-            // add named asssociations here
+            main: [
+                {
+                    component: "scaffolded",
+                    template: "default",
+                    data: {
+                        attributes: {
+                            content: "this is data from a scaffolded adapter",
+                            adSize: "pencil-leader"
+                        }
+                    }
+                }
+            ]
         }
     };
     return Promise.resolve(page);
