@@ -4,7 +4,7 @@ module.exports = function (context) {
     var page = {
         layout: "default",
         attributes: {
-            title: "scaffold"
+            title: "<%= name %>"
         },
         associations: {
             main: [
@@ -13,8 +13,7 @@ module.exports = function (context) {
                     template: "default",
                     data: {
                         attributes: {
-                            content: "this is data from a scaffolded adapter",
-                            adSize: "pencil-leader"
+                            content: "this is data from a scaffolded adapter"
                         }
                     }
                 }

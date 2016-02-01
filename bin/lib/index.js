@@ -142,7 +142,7 @@ gulp.task('default', function (done) {
                         .pipe(conflict(dest))
                         .pipe(gulp.dest(dest))
                         .on('end', function () {
-                            if (type === 'route') console.log('\n\nRun your application and checkout your new route at "/scaffolded/test"\n');
+                            if (type === 'route') console.log('\n\nRun your application and checkout your new route at "/scaffolded/' + answers.name + '"\n');
                             done();
                         });
                 });

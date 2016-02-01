@@ -14,7 +14,7 @@ function dummyAdapterDoNotUse(context) {
     var request = context.request;
     var page = {
         attributes: {
-            title: request.params.title || 'this is data from a scaffolded route collection'
+            title: request.params.title || context.name
         }
     };
     return Promise.resolve(page);
@@ -25,7 +25,10 @@ function dummyAdapterDoNotUse(context) {
 
 module.exports = [
     {
-        path: "/scaffolded/{title}",
+        path: "/scaffolded/{title?}",
+        context: {
+            name: "<%= name %>"
+        },
         adapters: [ dummyAdapterDoNotUse ]
     }
 ];
