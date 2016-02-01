@@ -7,16 +7,17 @@ var Promise = require('bluebird');
 
 var helpers = require('./helpers');
 
-describe('router -', function () {
+describe('layouts -', function () {
     var testRoute = helpers.RouteTester('fixtures/basic');
 
-    it('route can be defined with just a path and a single adapter', function (done) {
+    it('custom layout should be used when layout property defined in page definition', function (done) {
         var route = {
             path: '/bar',
-            adapters: [ function () { return Promise.resolve({}); }]
+            adapters: [ function () { return Promise.resolve({ layout: 'other' }); }]
         };
         testRoute(route, function (response) {
             assert.equal(response.statusCode, 200);
+            assert.equal(response.result, fs.readFileSync(path.normalize(testRoute.fixturePath + '/layouts/other.html'), { encoding: 'utf8' }));
             done();
         });
     });

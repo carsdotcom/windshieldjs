@@ -26,12 +26,14 @@ function RouteTester(fixture) {
     var fixturePath = path.join(__dirname, fixture);
 
     function testRoute(route, cb) {
-        registerWithOptions({
+        var options = {
             rootDir: fixturePath,
             handlebars: handlebars,
             uriContext: '/foo',
-            routes: [ route ]
-        }, function (err, server) {
+            routes: [ route ],
+            components: require(path.join(fixturePath, 'components'))
+        };
+        registerWithOptions(options, function (err, server) {
             assert.ifError(err);
 
             var req = {

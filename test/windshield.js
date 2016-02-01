@@ -12,7 +12,6 @@ var helpers = require('./helpers');
 var windshield = require('../');
 
 var registerWithOptions = helpers.registerWithOptions;
-var fixturePath = path.join(__dirname, 'fixture');
 var tmpBase = path.join(os.tmpdir(), 'windshield', Date.now().toString());
 
 describe('windshield plugin', function () {
@@ -53,25 +52,5 @@ describe('windshield plugin', function () {
             }
         });
 
-        xit('should throw an error if the component directory can not be found', function (done) {
-            var baseDir = path.join(tmpBase, 'empty');
-            async.series([
-                mkdirp.bind(null, baseDir),
-                mkdirp.bind(null, path.join(baseDir, 'helpers')),
-                test
-            ], done);
-
-            function test(cb) {
-                var opts = {
-                    rootDir: baseDir,
-                    routes: []
-                };
-                registerWithOptions(opts, function(err) {
-                    assert(err);
-                    assert(/components/i.test(err));
-                    cb();
-                });
-            }
-        });
     });
 });
