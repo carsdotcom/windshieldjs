@@ -1,4 +1,5 @@
 "use strict";
+var _ = require('lodash');
 
 var fs = require('fs');
 var path = require('path');
@@ -13,7 +14,16 @@ describe('layouts -', function () {
     it('custom layout should be used when layout property defined in page definition', function (done) {
         var route = {
             path: '/bar',
-            adapters: [ function () { return Promise.resolve({ layout: 'other' }); }]
+            adapters: [ {
+                method: function (context, request, reply) {
+
+                    _.merge(context, { layout: 'other' });
+
+                    reply(Promise.resolve({ layout: 'other' }));
+
+                },
+                assign: 'test'
+            }]
         };
         testRoute(route, function (response) {
             assert.equal(response.statusCode, 200);

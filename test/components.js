@@ -1,4 +1,5 @@
 "use strict";
+var _ = require('lodash');
 
 var fs = require('fs');
 var path = require('path');
@@ -25,47 +26,29 @@ describe('components -', function () {
 
     var testRoute = helpers.RouteTester('fixtures/basic');
 
-    it('when a component has an adapter it should be used', function (done) {
-        var mockComponent = {
-            component: 'componentWithAdapter',
-            data: {
-                attributes: { content: 'foo' }
-            }
-        };
-        var route = {
-            path: '/bar',
-            adapters: [ function () {
-                return Promise.resolve({
-                    associations: {
-                        main: [
-                            mockComponent
-                        ]
-                    }
-                });
-            }]
-        };
-        sandbox.spy(fixtureComponents.componentWithAdapter, 'adapter');
-        testRoute(route, function (response) {
-            expect(fixtureComponents.componentWithAdapter.adapter).to.have.been.calledWith(mockComponent.data);
-            done();
-        });
-    });
-
     it('should use the template which matches the name of the association they belong to', function (done) {
         var mockComponent = {
             component: 'basicComponent'
         };
         var route = {
             path: '/bar',
-            adapters: [ function () {
-                return Promise.resolve({
-                    layout: 'railAssoc',
-                    associations: {
-                        rail: [
-                            mockComponent
-                        ]
-                    }
-                });
+            adapters: [{
+                method: function (context, request, reply) {
+
+                    var data = {
+                        layout: 'railAssoc',
+                        associations: {
+                            rail: [
+                                mockComponent
+                            ]
+                        }
+                    };
+
+                    _.merge(context, data);
+
+                    reply(Promise.resolve(data));
+                },
+                assign: 'test'
             }]
         };
         testRoute(route, function (data) {
