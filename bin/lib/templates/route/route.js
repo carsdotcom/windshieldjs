@@ -10,8 +10,7 @@ var Promise = require('bluebird');
  *  real one.
  */
 
-function dummyAdapterDoNotUse(context) {
-    var request = context.request;
+function dummyAdapterDoNotUse(context, request) {
     var page = {
         attributes: {
             title: request.params.title || context.name
