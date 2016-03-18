@@ -26,7 +26,7 @@ describe('page adapters -', function () {
 
     var testRoute = helpers.RouteTester('fixtures/basic');
 
-    it('should use reply if defining reply in adapter call signature', function (done) {
+    it('should use reply if defined as prehandler (object with `method` property', function (done) {
         var mockComponent = {
             component: 'basicComponent'
         };
@@ -46,9 +46,8 @@ describe('page adapters -', function () {
 
                     _.merge(context, data);
 
-                    reply(Promise.resolve(data));
-                },
-                assign: 'test'
+                    return reply(Promise.resolve(data));
+                }
             },
                 function (context, request) {
 
@@ -72,7 +71,7 @@ describe('page adapters -', function () {
         });
     });
 
-    it('should not need reply if not defined in adapter call signature', function (done) {
+    it('should not need reply if not defined as prehandler (object with `method` property)', function (done) {
         var mockComponent = {
             component: 'basicComponent'
         };
@@ -100,6 +99,22 @@ describe('page adapters -', function () {
             expect(data.payload).to.contain('this is the rail template');
             done();
         });
+    });
+
+    it('should act as decorators', function (done) {
+        var route = {
+            path: '/foo',
+            adapters: [
+                function (context, request) {
+                    context.attributes.setByFirstAdapter = 'this was set by first adapter';
+                    return Promise.resolve(context);
+                }, function (context, request) {
+                    expect(context.attributes.setByFirstAdapter).to.contain('this was set by first adapter');
+                    done();
+                }
+            ]
+        };
+        testRoute(route, () => {});
     });
 
 });
