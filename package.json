@@ -23,7 +23,6 @@
     "boom": "3.0.0",
     "chalk": "^1.1.1",
     "gulp": "^3.9.0",
-    "gulp-conflict": "^0.4.0",
     "gulp-if": "^2.0.0",
     "gulp-rename": "^1.2.2",
     "gulp-template": "^3.1.0",
@@ -31,12 +30,13 @@
     "handlebars": "^4.0.5",
     "hoek": "3.0.1",
     "iniparser": "^1.0.5",
-    "inquirer": "^0.11.0",
+    "inquirer": "^0.12.0",
     "joi": "7.0.0",
     "liftoff": "^2.2.0",
     "lodash": "^4.6.1",
     "minimist": "^1.2.0",
-    "mkdirp": "^0.5.1"
+    "mkdirp": "^0.5.1",
+    "stream-conflict": "^0.0.1"
   },
   "devDependencies": {
     "async": "^1.5.0",

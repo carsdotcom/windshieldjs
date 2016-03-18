@@ -1,15 +1,17 @@
+"use strict";
+
 var gulp = require('gulp');
 var gutil = require('gulp-util');
 var gulpif = require('gulp-if');
 var chalk = require('chalk');
 var path = require('path');
-var conflict = require('gulp-conflict');
-var template = require('gulp-template');
+var conflict = require('stream-conflict');
 var rename = require('gulp-rename');
 var _ = require('lodash');
 var inquirer = require('inquirer');
 var cwd = process.cwd();
 var argv = require('minimist')(process.argv.slice(2));
+var template = require('gulp-template');
 
 function format(string) {
     var username = string.toLowerCase();
@@ -68,13 +70,20 @@ gulp.task('default', function (done) {
         choices: [
             "component",
             "adapter",
-            "route collection"
+            "route"
         ]
     }];
 
+    function filenameValidate(name) {
+        var isValid = /^[a-z]+[a-z0-9]*$/gi.test(name);
+        (!isValid) && console.log('\nPlease use camelCase with alphanumeric characters only, first character must be a letter');
+        return isValid;
+    }
+
     prompts.component = [{
         name: "name",
-        message: chalk.blue.bgBlack("What would you like to name of the component?")
+        message: chalk.blue.bgBlack("What would you like to name of the component?"),
+        validate: filenameValidate
     }, {
         type: "confirm",
         name: "silo",
@@ -83,12 +92,14 @@ gulp.task('default', function (done) {
 
     prompts.componentSilo = [{
         name: "siloName",
-        message: chalk.blue.bgBlack("What is the name of the subdirectory you would like to add your component to?")
+        message: chalk.blue.bgBlack("What is the name of the subdirectory you would like to add your component to?"),
+        validate: filenameValidate
     }];
 
     prompts.adapter = [{
         name: "name",
-        message: chalk.blue.bgBlack("What would you like to name of the adapter?")
+        message: chalk.blue.bgBlack("What would you like to name of the adapter?"),
+        validate: filenameValidate
     }, {
         type: "confirm",
         name: "silo",
@@ -97,12 +108,14 @@ gulp.task('default', function (done) {
 
     prompts.adapterSilo = [{
         name: "siloName",
-        message: chalk.blue.bgBlack("What is the name of the subdirectory you would like to add your adapter to?")
+        message: chalk.blue.bgBlack("What is the name of the subdirectory you would like to add your adapter to?"),
+        validate: filenameValidate
     }];
 
-    prompts['route collection'] = [{
+    prompts.route = [{
         name: "name",
-        message: chalk.blue.bgBlack("What would you like to name the route collection?")
+        message: chalk.blue.bgBlack("What would you like to name the route?"),
+        validate: filenameValidate
     }];
 
     prompts.confirm = [{
@@ -142,7 +155,7 @@ gulp.task('default', function (done) {
                         .pipe(conflict(dest))
                         .pipe(gulp.dest(dest))
                         .on('end', function () {
-                            if (type === 'route') console.log('\n\nRun your application and checkout your new route at "/scaffolded/' + answers.name + '"\n');
+                            if (type === 'route') console.log('\n\nRun your application and checkout your new route at "/scaffolded-' + answers.name + '"\n');
                             done();
                         });
                 });
@@ -161,7 +174,7 @@ gulp.task('default', function (done) {
 
     handlers.component = generateArtifactHandler('component');
     handlers.adapter = generateArtifactHandler('adapter');
-    handlers['route collection'] = generateArtifactHandler('route');
+    handlers.route = generateArtifactHandler('route');
 
     inquirer.prompt(prompts.type, function (answers) {
         inquirer.prompt(prompts[answers.type], handlers[answers.type]);

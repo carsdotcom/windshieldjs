@@ -10,24 +10,27 @@ var Promise = require('bluebird');
  *  real one.
  */
 
-function dummyAdapterDoNotUse(context, request) {
+function dummyAdapterDoNotUse(context) {
     var page = {
         attributes: {
-            title: request.params.title || context.name
+            title: context.name
         }
     };
     return Promise.resolve(page);
 };
 
 
-// Route collection
+// route collection
 
 module.exports = [
+
+    // scaffolded route
     {
-        path: "/scaffolded/{title?}",
+        path: "/scaffolded-<%= name %>",
         context: {
             name: "<%= name %>"
         },
         adapters: [ dummyAdapterDoNotUse ]
     }
+
 ];
