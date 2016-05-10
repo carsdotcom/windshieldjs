@@ -1,0 +1,35 @@
+pairs:
+  kj: Keith Jender; kjender
+  jr: Joseph Rodriguez; jrodriguez
+  bb: Brenton Bairhalter; bbairhalter
+  mm: Michael Michalak; mmichalak
+  ak: Alex Krautmann; akrautmann
+  dj: Danish Jawa;
+  ec: Eugene Connor; econnor
+  jg: James Gillen; jgillen
+  jc: Jeremy Chambers; jchambers
+  mh: Mac Heller-Ogden; mheller-ogden
+  eo: Ezra Oh; eoh
+  md: Michael Dehner; mdehner
+  lo: Lucas Overland; loverland
+  mp: Michael Perri; mperri
+  ec: Eugene Connor; econnor
+  jcs: JC Sokolow; jcsokolow
+  rk: Rodger Kurth; rkurth
+  rf: Rafay Faruqi; rfaruqi
+  sb: Sri Harsha Bandi; sbandi
+  aa: Arun Kumar Annabhimuni; aannabhimuni
+  sh: Stephen Habegger; shabegger
+  sm: Steven Morgan; smorgan
+  rp: Ray Perry; rperry
+  apa: Anthony Andras; aandras
+  mv: Manohar Vankayala; mvankayala
+  rz: Rafay Zafer; rzafer
+  jp: Jahnavi Patel; jjpatel
+  ab: Ashok Bollikonda; abollikonda
+  pr: Priya Raparti; praparti
+  lp: Lee Page; lpage
+  zs: Zlatko Sisic; zsisic
+email:
+  prefix: pair
+  domain: cars.com
