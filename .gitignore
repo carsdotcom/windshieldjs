@@ -1,0 +1,8 @@
+*.iml
+.idea/
+.DS_Store
+coverage
+node_modules/*
+**/*.log
+.vagrant
+env.json
