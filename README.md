@@ -11,8 +11,6 @@ An Enterprise Rendering plugin for Hapi.js.
 ## Table of Contents
 
 * [Install](#install)
-    - [Local](#local)
-    - [Global](#global)
 * [Usage](#usage)
     - [Register](#register)
     - [Scaffolding](#scaffolding)
@@ -24,8 +22,6 @@ An Enterprise Rendering plugin for Hapi.js.
 <br>
 
 ## <a name="install"/>Install
-
-### <a name="local"/>Local
 
     npm install --save windshieldjs
 
@@ -167,6 +163,32 @@ The resulting page object, after all adapters have resolve, would be composed to
         }
     }
 
+Components can also have their own adapters. A the data which resolves from component adapter will be added back onto the component object within a `data` property. After this additional processing a component object within the page object might then look like this:
+
+    {
+        component: "globalNav",
+        data: {
+            items: [
+                {
+                    displayName: "Buy",
+                    href: "/for-sale/"
+                },
+                {
+                    displayName: "Sell &amp; Trade",
+                    href: "/sell/"
+                },
+                {
+                    displayName: "Service &amp; Repair",
+                    href: "/auto-repair/"
+                },
+                {
+                    displayName: "News",
+                    href: "/news/"
+                }
+            ]
+        }
+    }
+
 
 ### <a name="scaffolding"/>Scaffolding
 
@@ -190,6 +212,6 @@ WindshieldJS is mostly driven by configuration, but due to the way Hapi's
 directly within the `rootDir` of your project. If you are using Handlebars
 helpers, you must add a `helpers` directory inside `rootDir` as well.
 
-* <rootDir>
-    - helpers
-    - layouts
+- `rootDir`
+  - helpers
+  - layouts
