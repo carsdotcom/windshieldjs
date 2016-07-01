@@ -61,6 +61,7 @@ describe("the Component object", function () {
 
 
                     it("should return an object with the name set to the definition, empty data, and an undefined layout", function () {
+                        /* eslint no-undefined: 0 */
                         expect(result).to.deep.equal({
                             data: {
                                 name: "TestComponent",
@@ -99,16 +100,16 @@ describe("the Component object", function () {
                     it("should set result.data.name", function () {
                         expect(result.data.name).to.equal("TestComponent");
                     });
-                    
+
                     it("should set the result.data.layout", function () {
                         expect(result.data.layout).to.equal("testlayout");
                     });
-                    
+
                     it("should set result.data.data to equal the passed in data", function () {
                        expect(result.data.data).to.deep.equal({
                            test: "123",
                            val: "456"
-                       }); 
+                       });
                     });
 
                 });
@@ -124,11 +125,11 @@ describe("the Component object", function () {
 
         beforeEach(function () {
             adapterDef = Promise.defer();
-            
+
             adapter = sandbox.spy(function () {
-                return adapterDef.promise;    
+                return adapterDef.promise;
             });
-            
+
             component = new Component({
                 adapter
             });
@@ -159,19 +160,19 @@ describe("the Component object", function () {
 
                 beforeEach(function (done) {
                     adapterDef.resolve({test: "Result"});
-                    
+
                     component.evaluate({component: "AdaptedComponent"}, "ctx", "req").then(function (resp) {
                         result = resp;
                         done();
                     });
                 });
-                
+
                 describe("the adapter", function () {
-                   
+
                     it("should have been called", function () {
-                       expect(adapter.callCount).to.equal(1); 
+                       expect(adapter.callCount).to.equal(1);
                     });
-                    
+
                     it("should have been called with empty data", function () {
                         expect(adapter.args[0][0]).to.deep.equal({});
                     });
@@ -183,7 +184,7 @@ describe("the Component object", function () {
                     it("should receive the context as the second argument", function () {
                         expect(adapter.args[0][2]).to.equal("req");
                     });
-                    
+
                 });
 
                 describe("the result", function () {
@@ -199,8 +200,8 @@ describe("the Component object", function () {
                     it("should set result.data.data to equal the passed in data", function () {
                         expect(result.data.data).to.deep.equal({test: "Result"});
                     });
-                    
-                    
+
+
 
                 });
 
@@ -212,7 +213,7 @@ describe("the Component object", function () {
                 beforeEach(function (done) {
 
                     adapterDef.resolve({value: "Something"});
-                    
+
                     var definiton = {
                         component: "CoolThing",
                         layout: "overridelayout",
@@ -240,9 +241,9 @@ describe("the Component object", function () {
                             val: "456"
                         });
                     });
-                    
+
                     it("should receive the context as the second argument", function () {
-                       expect(adapter.args[0][1]).to.equal("context"); 
+                       expect(adapter.args[0][1]).to.equal("context");
                     });
 
                     it("should receive the context as the second argument", function () {
@@ -278,7 +279,7 @@ describe("the Component object", function () {
         var component, adapter, adapterResp;
 
         beforeEach(function () {
-            
+
             adapterResp = "Some response data";
             adapter = sandbox.spy(function () {
                 return adapterResp;
