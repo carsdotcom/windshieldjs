@@ -60,7 +60,6 @@
         "no-dupe-keys": 2,
         "eol-last": 0,
         "key-spacing": 0,
-        "space-after-keywords": [2, "always"],
         "brace-style": [1, "1tbs", {
             "allowSingleLine": true
         }],
