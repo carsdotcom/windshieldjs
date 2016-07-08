@@ -707,7 +707,7 @@ describe("the Component object", function () {
                         });
 
                         it("should render correctly", function () {
-                           expect(result.data.markup).to.equal("Some response data:Default");
+                            expect(result.data.markup).to.equal("Some response data:Default");
                         });
 
                     });
