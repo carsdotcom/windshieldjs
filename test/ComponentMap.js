@@ -84,9 +84,9 @@ describe("The Component Map", function () {
         describe("Getting a component by name", function () {
 
             it("should return the named component instance on request", function () {
-               expect(map.getComponent("component1").implementation).to.equal(component1);
+                expect(map.getComponent("component1").implementation).to.equal(component1);
             });
-            
+
         });
 
     });
