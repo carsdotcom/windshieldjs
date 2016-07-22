@@ -51,7 +51,7 @@ describe("the AssociationList object", function () {
             };
 
             components = new ComponentMap({});
-            aList = new AssociationList(associations);
+            aList = AssociationList(associations);
         });
 
 
@@ -182,7 +182,7 @@ describe("the AssociationList object", function () {
             };
 
             components = new ComponentMap({});
-            aList = new AssociationList(associations);
+            aList = AssociationList(associations);
         });
 
 
