@@ -59,8 +59,9 @@ describe("The Component Map", function () {
                 component2
             };
 
-            map = new ComponentMap(components);
+            map = ComponentMap(components);
             map.init().then(function () {
+                console.log(map);
                 done();
             });
         });
@@ -69,11 +70,6 @@ describe("The Component Map", function () {
             expect(component1.templates.assoc.then.callCount).to.equal(1);
             expect(component2.templates.jawjawjaw.then.callCount).to.equal(1);
             expect(component2.templates.heehaw.then.callCount).to.equal(1);
-        });
-
-        it("should have instantiated all the components into component objects", function () {
-            expect(map.components.component1 instanceof Component).to.equal(true);
-            expect(map.components.component2 instanceof Component).to.equal(true);
         });
 
         it("should have added all the components to it's list", function () {

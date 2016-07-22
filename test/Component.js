@@ -24,19 +24,16 @@ describe("the Component object", function () {
         var component;
 
         beforeEach(function () {
-            component = new Component({});
+            component = Component({});
         });
 
         describe("loadTemplates", function () {
 
-            beforeEach(function (done) {
+
+            it("should not have failed", function (done) {
                 component.loadTemplates().then(function () {
                     done();
                 });
-            });
-
-            it("should not have loaded any templates", function () {
-                expect(component.templates).to.deep.equal({});
             });
 
         });
@@ -150,7 +147,7 @@ describe("the Component object", function () {
                     return adapterDef.promise;
                 });
 
-                component = new Component({
+                component = Component({
                     adapter,
                     templates: {
                         "default": Promise.resolve("{{test}}{{value}}")
@@ -321,7 +318,7 @@ describe("the Component object", function () {
                     return adapterDef.promise;
                 });
 
-                component = new Component({
+                component = Component({
                     adapter,
                     templates: {
                         "default": Promise.resolve("{{test}}{{value}}"),
@@ -628,7 +625,7 @@ describe("the Component object", function () {
                     return adapterResp;
                 });
 
-                component = new Component({
+                component = Component({
                     adapter,
                     templates: {
                         "default": Promise.resolve("{{value}}{{test}}:Default"),
@@ -797,7 +794,7 @@ describe("the Component object", function () {
                 return adapterResp;
             });
 
-            component = new Component({
+            component = Component({
                 adapter,
                 templates: {
                     "default": Promise.resolve("var is '{{value}}'")
