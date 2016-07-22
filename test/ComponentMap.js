@@ -61,7 +61,6 @@ describe("The Component Map", function () {
 
             map = ComponentMap(components);
             map.init().then(function () {
-                console.log(map);
                 done();
             });
         });
