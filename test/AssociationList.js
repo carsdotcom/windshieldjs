@@ -162,6 +162,7 @@ describe("the AssociationList object", function () {
                             }
                         }
                     ]);
+
                     expect(result.rail).to.deep.equal([
                         {associations: {}, markup: 'c2 result'},
                         {associations: {}, markup: 'c3 result'}
