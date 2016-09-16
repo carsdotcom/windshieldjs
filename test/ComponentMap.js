@@ -7,6 +7,7 @@ chai.use(sinonChai);
 var Promise = require("bluebird");
 var Component = require('../lib/Component');
 var ComponentMap = require('../lib/ComponentMap');
+var Handlebars = require('handlebars');
 
 describe("The Component Map", function () {
 
@@ -60,7 +61,7 @@ describe("The Component Map", function () {
             };
 
             map = ComponentMap(components);
-            map.init().then(function () {
+            map.init(Handlebars).then(function () {
                 done();
             });
         });

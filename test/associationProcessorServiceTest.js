@@ -6,15 +6,21 @@ var sinonChai = require('sinon-chai');
 chai.use(sinonChai);
 var Promise = require("bluebird");
 var mockComponents = require("./fixtures/basic/components");
+var ComponentMap = require("../lib/ComponentMap");
+var Handlebars = require('handlebars');
 var associationProcessorService = require('../lib/associationProcessorService');
 
 
 describe("the association processor service", function () {
 
-    var sandbox;
+    var sandbox, components;
 
-    beforeEach(function () {
+    beforeEach(function (done) {
         sandbox = sinon.sandbox.create();
+        components = ComponentMap(mockComponents);
+        components.init(Handlebars).then(function () {
+            done();
+        });
     });
 
     afterEach(function () {
@@ -29,37 +35,31 @@ describe("the association processor service", function () {
 
             var associations = {rail: [{component: 'basicComponent'}]};
             var iterPromise = associationProcessorService.runAssociationIterator(
-                "context", "request", mockComponents, associations);
+                "context", "request", components, associations);
 
             iterPromise.then(function (res) {
                 result = res;
+                console.log(res);
                 done();
             });
 
         });
 
         it("should have association data", function () {
-            expect(result.associationData).to.exist;
+            expect(result.markup).to.exist;
         });
 
         it("should have exported data", function () {
-            expect(result.exportedData).to.exist;
+            expect(result.exported).to.exist;
         });
 
         it("should have a rail association", function () {
-            expect(result.associationData.rail).to.exist;
+            expect(result.markup.rail).to.exist;
         });
 
         describe("The rail association", function () {
             it("should have the correct data", function () {
-                expect(result.associationData.rail).to.deep.equal([
-                    {
-                        name: 'basicComponent',
-                        layout: undefined,
-                        data: {},
-                        associations: {}
-                    }
-                ]);
+                expect(result.markup.rail).to.equal('this is the rail template');
             });
         });
 
@@ -84,7 +84,7 @@ describe("the association processor service", function () {
                 ]
             };
             var iterPromise = associationProcessorService.runAssociationIterator(
-                "context", "request", mockComponents, associations);
+                "context", "request", components, associations);
 
             iterPromise.then(function (res) {
                 result = res;
@@ -96,8 +96,11 @@ describe("the association processor service", function () {
         describe("Exported data", function () {
 
             it("should contain the data exported from the component adapter", function () {
-                expect(result.exportedData).to.deep.equal({
-                    componentWithAdapter: {test: 'Hello'}
+                expect(result.exported).to.deep.equal({
+                    data: {
+                        test: 'Hello'
+                    },
+                    exportAs: "componentWithAdapter"
                 });
             });
         });
@@ -105,20 +108,11 @@ describe("the association processor service", function () {
         describe("Association Data", function () {
 
             it("should have a main association", function () {
-                expect(result.associationData.main).to.exist;
+                expect(result.markup.main).to.exist;
             });
 
             it("should have all the data returned from the adapter", function () {
-                expect(result.associationData.main).to.deep.equal([
-                    {
-                        name: 'componentWithAdapter',
-                        layout: undefined,
-                        data: {
-                            content: "Fake Content"
-                        },
-                        associations: {}
-                    }
-                ]);
+                expect(result.markup.main).to.equal("<p>Fake Content</p>");
             });
 
         });

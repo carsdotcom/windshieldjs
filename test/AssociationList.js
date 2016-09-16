@@ -66,7 +66,7 @@ describe("the AssociationList object", function () {
 
         describe("Evaluating the list", function () {
 
-            var result, c1, c2, c3, c4, n1;
+            var result, c1, c2, c3, c4, n1, c1render;
 
             beforeEach(function (done) {
 
@@ -78,7 +78,7 @@ describe("the AssociationList object", function () {
                 n1 = new Component({});
 
 
-                sandbox.stub(c1, 'render', function () {
+                c1render = sandbox.stub(c1, 'render', function () {
                     return Promise.resolve({markup: "c1 result"});
                 });
 
@@ -149,30 +149,23 @@ describe("the AssociationList object", function () {
 
                 it("should include all the associations", function () {
 
-                    expect(result.main).to.deep.equal([
-                        {
-                            markup: 'c1 result',
-                            associations: {
-                                inner1: [
-                                    {
-                                        associations: {},
-                                        markup: "n1 result"
-                                    }
-                                ]
-                            }
-                        }
-                    ]);
+                    console.log(result);
 
-                    expect(result.rail).to.deep.equal([
-                        {associations: {}, markup: 'c2 result'},
-                        {associations: {}, markup: 'c3 result'}
-                    ]);
+                    expect(result.markup.main).to.equal('c1 result');
+
+                    expect(c1render).to.have.been.calledWith({
+                        associations: { exported: {  }, markup: { inner1: "n1 result" } },
+                        component: "c1",
+                        data: { testData: "hi" }
+                    });
+
+                    expect(result.markup.rail).to.equal("c2 result\nc3 result");
 
                 });
 
                 it("should only have the associations", function () {
-                    expect(result.hasOwnProperty("main")).to.equal(true);
-                    expect(result.hasOwnProperty("rail")).to.equal(true);
+                    expect(result.markup.hasOwnProperty("main")).to.equal(true);
+                    expect(result.markup.hasOwnProperty("rail")).to.equal(true);
                     expect(Object.keys(result).length).to.equal(2);
                 });
 

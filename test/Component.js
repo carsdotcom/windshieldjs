@@ -6,6 +6,7 @@ var sinonChai = require('sinon-chai');
 chai.use(sinonChai);
 var Promise = require("bluebird");
 var Component = require('../lib/Component');
+const Handlebars = require("handlebars");
 
 describe("the Component object", function () {
 
@@ -31,7 +32,7 @@ describe("the Component object", function () {
 
 
             it("should not have failed", function (done) {
-                component.loadTemplates().then(function () {
+                component.loadTemplates(Handlebars).then(function () {
                     done();
                 });
             });
@@ -73,12 +74,8 @@ describe("the Component object", function () {
                     it("should be an object with the name set to the definition, empty data, and an undefined layout", function () {
                         /* eslint no-undefined: 0 */
                         expect(result).to.deep.equal({
-                            data: {
-                                name: "TestComponent",
-                                layout: undefined,
-                                markup: "",
-                                data: {}
-                            }
+                            markup: "",
+                            exported: undefined
                         });
                     });
 
@@ -108,22 +105,7 @@ describe("the Component object", function () {
                 describe("the result", function () {
 
                     it("should have markup that is an empty string", function () {
-                        expect(result.data.markup).to.equal("");
-                    });
-
-                    it("should set result.data.name", function () {
-                        expect(result.data.name).to.equal("TestComponent");
-                    });
-
-                    it("should set the result.data.layout", function () {
-                        expect(result.data.layout).to.equal("testlayout");
-                    });
-
-                    it("should set result.data.data to equal the passed in data", function () {
-                        expect(result.data.data).to.deep.equal({
-                            test: "123",
-                            val: "456"
-                        });
+                        expect(result.markup).to.equal("");
                     });
 
                 });
@@ -154,7 +136,7 @@ describe("the Component object", function () {
                     }
                 });
 
-                component.loadTemplates().then(function () {
+                component.loadTemplates(Handlebars).then(function () {
                     done();
                 });
             });
@@ -213,20 +195,8 @@ describe("the Component object", function () {
 
                     describe("the result", function () {
 
-                        it("should set result.data.name", function () {
-                            expect(result.data.name).to.equal("AdaptedComponent");
-                        });
-
-                        it("should set the result.data.layout", function () {
-                            expect(result.data.layout).to.be.undefined;
-                        });
-
-                        it("should set result.data.data to equal the passed in data", function () {
-                            expect(result.data.data).to.deep.equal({test: "Result"});
-                        });
-
                         it("should have markup equaling 'Result'", function () {
-                            expect(result.data.markup).to.equal("Result");
+                            expect(result.markup).to.equal("Result");
                         });
 
 
@@ -282,20 +252,8 @@ describe("the Component object", function () {
                     describe("the result", function () {
 
 
-                        it("should set result.data.name", function () {
-                            expect(result.data.name).to.equal("CoolThing");
-                        });
-
-                        it("should set the result.data.layout", function () {
-                            expect(result.data.layout).to.equal("overridelayout");
-                        });
-
-                        it("should set result.data.data to equal the passed in data", function () {
-                            expect(result.data.data).to.deep.equal({value: "Something"});
-                        });
-
                         it("should correctly render the markup", function () {
-                            expect(result.data.markup).to.equal("Something");
+                            expect(result.markup).to.equal("Something");
                         });
 
                     });
@@ -326,7 +284,7 @@ describe("the Component object", function () {
                     }
                 });
 
-                component.loadTemplates().then(function () {
+                component.loadTemplates(Handlebars).then(function () {
                     done();
                 });
             });
@@ -387,20 +345,9 @@ describe("the Component object", function () {
 
                         describe("the result", function () {
 
-                            it("should set result.data.name", function () {
-                                expect(result.data.name).to.equal("AdaptedComponent");
-                            });
-
-                            it("should set the result.data.layout", function () {
-                                expect(result.data.layout).to.be.undefined;
-                            });
-
-                            it("should set result.data.data to equal the passed in data", function () {
-                                expect(result.data.data).to.deep.equal({test: "Result"});
-                            });
 
                             it("should have markup equaling 'Result'", function () {
-                                expect(result.data.markup).to.equal("Result");
+                                expect(result.markup).to.equal("Result");
                             });
 
 
@@ -442,20 +389,9 @@ describe("the Component object", function () {
 
                         describe("the result", function () {
 
-                            it("should set result.data.name", function () {
-                                expect(result.data.name).to.equal("AdaptedComponent");
-                            });
-
-                            it("should set the result.data.layout", function () {
-                                expect(result.data.layout).to.be.undefined;
-                            });
-
-                            it("should set result.data.data to equal the passed in data", function () {
-                                expect(result.data.data).to.deep.equal({test: "Result"});
-                            });
 
                             it("should have markup equaling 'Result'", function () {
-                                expect(result.data.markup).to.equal("rail: Result");
+                                expect(result.markup).to.equal("rail: Result");
                             });
 
 
@@ -515,20 +451,8 @@ describe("the Component object", function () {
                         describe("the result", function () {
 
 
-                            it("should set result.data.name", function () {
-                                expect(result.data.name).to.equal("CoolThing");
-                            });
-
-                            it("should set the result.data.layout", function () {
-                                expect(result.data.layout).to.equal("overridelayout");
-                            });
-
-                            it("should set result.data.data to equal the passed in data", function () {
-                                expect(result.data.data).to.deep.equal({value: "Something"});
-                            });
-
                             it("should correctly render the markup", function () {
-                                expect(result.data.markup).to.equal("Something");
+                                expect(result.markup).to.equal("Something");
                             });
 
                         });
@@ -583,20 +507,8 @@ describe("the Component object", function () {
                         describe("the result", function () {
 
 
-                            it("should set result.data.name", function () {
-                                expect(result.data.name).to.equal("CoolThing");
-                            });
-
-                            it("should set the result.data.layout", function () {
-                                expect(result.data.layout).to.equal("overridelayout");
-                            });
-
-                            it("should set result.data.data to equal the passed in data", function () {
-                                expect(result.data.data).to.deep.equal({value: "Something"});
-                            });
-
                             it("should correctly render the markup", function () {
-                                expect(result.data.markup).to.equal("rail: Something");
+                                expect(result.markup).to.equal("rail: Something");
                             });
 
                         });
@@ -633,7 +545,7 @@ describe("the Component object", function () {
                     }
                 });
 
-                component.loadTemplates().then(function () {
+                component.loadTemplates(Handlebars).then(function () {
                     done();
                 });
             });
@@ -691,20 +603,9 @@ describe("the Component object", function () {
 
                     describe("the result", function () {
 
-                        it("should set result.data.name", function () {
-                            expect(result.data.name).to.equal("AdaptedComponent");
-                        });
-
-                        it("should set the result.data.layout", function () {
-                            expect(result.data.layout).to.be.undefined;
-                        });
-
-                        it("should set result.data.data to equal the adapter result", function () {
-                            expect(result.data.data).to.equal(adapterResp);
-                        });
 
                         it("should render correctly", function () {
-                            expect(result.data.markup).to.equal("Some response data:Default");
+                            expect(result.markup).to.equal("Some response data:Default");
                         });
 
                     });
@@ -757,20 +658,10 @@ describe("the Component object", function () {
                     describe("the result", function () {
 
 
-                        it("should set result.data.name", function () {
-                            expect(result.data.name).to.equal("CoolThing");
-                        });
 
-                        it("should set the result.data.layout", function () {
-                            expect(result.data.layout).to.equal("custom");
-                        });
-
-                        it("should set result.data.data to equal the adapter result", function () {
-                            expect(result.data.data).to.equal(adapterResp);
-                        });
 
                         it("should render correctly", function () {
-                            expect(result.data.markup).to.equal('rrrrrail...Some response data');
+                            expect(result.markup).to.equal('rrrrrail...Some response data');
                         });
 
                     });
@@ -801,7 +692,7 @@ describe("the Component object", function () {
                 }
             });
 
-            component.loadTemplates().then(function () {
+            component.loadTemplates(Handlebars).then(function () {
                 done();
             });
         });
@@ -859,20 +750,9 @@ describe("the Component object", function () {
 
                 describe("the result", function () {
 
-                    it("should set result.data.name", function () {
-                        expect(result.data.name).to.equal("AdaptedComponent");
-                    });
-
-                    it("should set the result.data.layout", function () {
-                        expect(result.data.layout).to.be.undefined;
-                    });
-
-                    it("should set result.data.data to equal the adapter result", function () {
-                        expect(result.data.data).to.deep.equal({});
-                    });
 
                     it('should render correctly', function () {
-                        expect(result.data.markup).to.equal("var is ''");
+                        expect(result.markup).to.equal("var is ''");
                     });
 
                 });
@@ -925,17 +805,7 @@ describe("the Component object", function () {
                 describe("the result", function () {
 
 
-                    it("should set result.data.name", function () {
-                        expect(result.data.name).to.equal("CoolThing");
-                    });
 
-                    it("should set the result.data.layout", function () {
-                        expect(result.data.layout).to.equal("custom");
-                    });
-
-                    it("should set result.data.data to equal the adapter result", function () {
-                        expect(result.data.data).to.deep.equal({});
-                    });
 
                 });
 
