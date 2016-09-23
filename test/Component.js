@@ -449,7 +449,7 @@ describe("the Component object", function () {
                         describe("the result", function () {
 
 
-                            it.only("should correctly render the markup", function () {
+                            it("should correctly render the markup", function () {
                                 expect(result.markup).to.equal("Something");
                             });
 
@@ -466,7 +466,6 @@ describe("the Component object", function () {
 
                             var definiton = {
                                 component: "CoolThing",
-                                layout: "overridelayout",
                                 data: {
                                     test: "123",
                                     val: "456"
