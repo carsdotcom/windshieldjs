@@ -97,10 +97,9 @@ describe("the association processor service", function () {
 
             it("should contain the data exported from the component adapter", function () {
                 expect(result.exported).to.deep.equal({
-                    data: {
+                    componentWithAdapter: {
                         test: 'Hello'
-                    },
-                    exportAs: "componentWithAdapter"
+                    }
                 });
             });
         });

@@ -72,10 +72,9 @@ describe("the Component object", function () {
                 describe("the result", function () {
 
                     it("should be an object with the name set to the definition, empty data, and an undefined layout", function () {
-                        /* eslint no-undefined: 0 */
                         expect(result).to.deep.equal({
                             markup: "",
-                            exported: undefined
+                            exported: {}
                         });
                     });
 
@@ -412,7 +411,6 @@ describe("the Component object", function () {
 
                             var definiton = {
                                 component: "CoolThing",
-                                layout: "overridelayout",
                                 data: {
                                     test: "123",
                                     val: "456"
@@ -451,7 +449,7 @@ describe("the Component object", function () {
                         describe("the result", function () {
 
 
-                            it("should correctly render the markup", function () {
+                            it.only("should correctly render the markup", function () {
                                 expect(result.markup).to.equal("Something");
                             });
 
@@ -619,7 +617,7 @@ describe("the Component object", function () {
 
                         var definiton = {
                             component: "CoolThing",
-                            layout: "custom",
+                            layout: "rail",
                             data: {
                                 test: "123",
                                 val: "456"
@@ -656,8 +654,6 @@ describe("the Component object", function () {
                     });
 
                     describe("the result", function () {
-
-
 
 
                         it("should render correctly", function () {
