@@ -13,7 +13,12 @@ module.exports = {
         },
         adapter: function (data) {
             return Promise.resolve({
-                content: data.attributes.content
+                data: {
+                    content: data.attributes.content
+                },
+                "export": {
+                    test: "Hello"
+                }
             });
         }
     },
