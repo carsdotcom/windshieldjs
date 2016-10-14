@@ -1,5 +1,7 @@
 # WindshieldJS
 
+[![Join the chat at https://gitter.im/carsdotcom/windshieldjs](https://badges.gitter.im/carsdotcom/windshieldjs.svg)](https://gitter.im/carsdotcom/windshieldjs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 An Enterprise Rendering plugin for Hapi.js.
 
 <br>
