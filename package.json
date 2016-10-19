@@ -12,9 +12,6 @@
   },
   "author": "Mac Heller-Ogden",
   "license": "Apache-2.0",
-  "publishConfig": {
-    "registry": "https://repository.cars.com/artifactory/api/npm/npm-local"
-  },
   "bin": {
     "windshield": "bin/windshield"
   },
