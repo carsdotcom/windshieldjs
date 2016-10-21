@@ -60,7 +60,7 @@ describe("the AssociationList object", function () {
             };
 
             components = new ComponentMap({});
-            aList = AssociationList(associations);
+            aList = AssociationList(associations, components);
         });
 
 
@@ -102,7 +102,7 @@ describe("the AssociationList object", function () {
                     return {c1, c2, c3, c4, n1}[name];
                 });
 
-                aList.evaluate("context", "request", components).then(function (res) {
+                aList.render("context", "request").then(function (res) {
                     result = res;
                     done();
                 });
