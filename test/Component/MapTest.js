@@ -5,8 +5,8 @@ var sinonChai = require('sinon-chai');
 
 chai.use(sinonChai);
 var Promise = require("bluebird");
-var Component = require('../lib/Component');
-var ComponentMap = require('../lib/ComponentMap');
+var Component = require('../../lib/Component');
+var ComponentMap = require('../../lib/Component/Map');
 var Handlebars = require('handlebars');
 
 describe("The Component Map", function () {
