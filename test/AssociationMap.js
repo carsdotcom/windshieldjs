@@ -7,7 +7,7 @@ chai.use(sinonChai);
 var Promise = require("bluebird");
 var Component = require('../lib/Component');
 var ComponentMap = require("../lib/ComponentMap");
-var AssociationList = require("../lib/AssociationList");
+var AssociationList = require("../lib/AssociationMap");
 
 describe("the AssociationList object", function () {
 
