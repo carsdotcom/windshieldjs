@@ -1,16 +1,17 @@
-var chai = require('chai');
-var expect = chai.expect;
-var sinon = require('sinon');
-var sinonChai = require('sinon-chai');
+'use strict';
+const chai = require('chai');
+const expect = chai.expect;
+const sinon = require('sinon');
+const sinonChai = require('sinon-chai');
 
 chai.use(sinonChai);
-var Promise = require("bluebird");
-var Component = require('../../lib/Component');
-const Handlebars = require("handlebars");
+const Promise = require('bluebird');
+const Component = require('../../lib/Component');
+const Handlebars = require('handlebars');
 
 describe("the Component object", function () {
 
-    var sandbox;
+    let sandbox;
 
     beforeEach(function () {
         sandbox = sinon.sandbox.create();
@@ -22,7 +23,7 @@ describe("the Component object", function () {
 
     describe("When the implementation is empty", function () {
 
-        var component;
+        let component;
 
         beforeEach(function () {
             component = Component({});
@@ -57,7 +58,7 @@ describe("the Component object", function () {
 
         describe("render", function () {
 
-            var result;
+            let result;
 
             describe("When there is nothing passed in the definition", function () {
 
@@ -86,7 +87,7 @@ describe("the Component object", function () {
 
 
                 beforeEach(function (done) {
-                    var definiton = {
+                    let definiton = {
                         component: "TestComponent",
                         layout: "testlayout",
                         data: {
@@ -119,7 +120,7 @@ describe("the Component object", function () {
         describe("And has one default template", function () {
 
 
-            var component, adapter, adapterDef;
+            let component, adapter, adapterDef;
 
             beforeEach(function (done) {
                 adapterDef = Promise.defer();
@@ -158,7 +159,7 @@ describe("the Component object", function () {
 
             describe("render", function () {
 
-                var result;
+                let result;
 
                 describe("When there is nothing passed in the definition", function () {
 
@@ -213,7 +214,7 @@ describe("the Component object", function () {
 
                         adapterDef.resolve({value: "Something"});
 
-                        var definiton = {
+                        let definiton = {
                             component: "CoolThing",
                             layout: "overridelayout",
                             data: {
@@ -271,7 +272,7 @@ describe("the Component object", function () {
         describe("And has several templates", function () {
 
 
-            var component, adapter, adapterDef;
+            let component, adapter, adapterDef;
 
             beforeEach(function (done) {
                 adapterDef = Promise.defer();
@@ -311,7 +312,7 @@ describe("the Component object", function () {
 
             describe("render", function () {
 
-                var result;
+                let result;
 
                 describe("When there is nothing passed in the definition", function () {
 
@@ -420,7 +421,7 @@ describe("the Component object", function () {
 
                             adapterDef.resolve({value: "Something"});
 
-                            var definiton = {
+                            let definiton = {
                                 component: "CoolThing",
                                 data: {
                                     test: "123",
@@ -477,7 +478,7 @@ describe("the Component object", function () {
 
                             adapterDef.resolve({value: "Something"});
 
-                            var definiton = {
+                            let definiton = {
                                 component: "CoolThing",
                                 data: {
                                     test: "123",
@@ -540,7 +541,7 @@ describe("the Component object", function () {
 
         describe("when the component has one default template", function () {
 
-            var component, adapter, adapterResp;
+            let component, adapter, adapterResp;
 
             beforeEach(function (done) {
 
@@ -580,7 +581,7 @@ describe("the Component object", function () {
 
             describe("render", function () {
 
-                var result;
+                let result;
 
                 describe("When there is nothing passed in the definition", function () {
 
@@ -632,7 +633,7 @@ describe("the Component object", function () {
 
                     beforeEach(function (done) {
 
-                        var definiton = {
+                        let definiton = {
                             component: "CoolThing",
                             layout: "rail",
                             data: {
@@ -691,7 +692,7 @@ describe("the Component object", function () {
 
     describe("When the implementation returns null or undefined", function () {
 
-        var component, adapter, adapterResp;
+        let component, adapter, adapterResp;
 
         beforeEach(function (done) {
 
@@ -730,7 +731,7 @@ describe("the Component object", function () {
 
         describe("render", function () {
 
-            var result;
+            let result;
 
             describe("When there is nothing passed in the definition", function () {
 
@@ -782,7 +783,7 @@ describe("the Component object", function () {
 
                 beforeEach(function (done) {
 
-                    var definiton = {
+                    let definiton = {
                         component: "CoolThing",
                         layout: "custom",
                         data: {

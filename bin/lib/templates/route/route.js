@@ -1,5 +1,5 @@
-var Promise = require('bluebird');
-
+'use strict';
+const Promise = require('bluebird');
 
 /**
  *  The function below is just a mock adapter to facilitate a working

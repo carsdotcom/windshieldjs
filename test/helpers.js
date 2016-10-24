@@ -1,20 +1,20 @@
-var path = require('path');
-var Hapi = require('hapi');
-var assert = require('assert');
-var handlebars = require('handlebars');
-var vision = require('vision');
-
-var windshield = require('..');
+'use strict';
+const path = require('path');
+const Hapi = require('hapi');
+const assert = require('assert');
+const handlebars = require('handlebars');
+const vision = require('vision');
+const windshield = require('..');
 
 exports.registerWithOptions = registerWithOptions;
 
 function registerWithOptions(options, cb) {
-    var windshieldWithOptions = {
+    let windshieldWithOptions = {
         register: windshield,
         options: options
     };
-    var plugins = [ vision, windshieldWithOptions ];
-    var server = new Hapi.Server({ debug: { log: [ 'error' ]} });
+    let plugins = [ vision, windshieldWithOptions ];
+    let server = new Hapi.Server({ debug: { log: [ 'error' ]} });
     server.connection({ port: 3000 });
     server.register(plugins, function(err) {
         cb(err, !err && server);
@@ -23,10 +23,10 @@ function registerWithOptions(options, cb) {
 
 exports.RouteTester = RouteTester;
 function RouteTester(fixture) {
-    var fixturePath = path.join(__dirname, fixture);
+    let fixturePath = path.join(__dirname, fixture);
 
     function testRoute(route, cb) {
-        var options = {
+        let options = {
             rootDir: fixturePath,
             handlebars: handlebars,
             uriContext: '/foo',
@@ -36,7 +36,7 @@ function RouteTester(fixture) {
         registerWithOptions(options, function (err, server) {
             assert.ifError(err);
 
-            var req = {
+            let req = {
                 method: 'GET',
                 url: '/foo' + route.path
             };

@@ -1,18 +1,16 @@
-"use strict";
-var _ = require('lodash');
-
-var fs = require('fs');
-var path = require('path');
-var assert = require('assert');
-var Promise = require('bluebird');
-
-var helpers = require('./helpers');
+'use strict';
+const _ = require('lodash');
+const fs = require('fs');
+const path = require('path');
+const assert = require('assert');
+const Promise = require('bluebird');
+const helpers = require('./helpers');
 
 describe('layouts -', function () {
-    var testRoute = helpers.RouteTester('fixtures/basic');
+    let testRoute = helpers.RouteTester('fixtures/basic');
 
     it('custom layout should be used when layout property defined in page definition', function (done) {
-        var route = {
+        let route = {
             path: '/bar',
             adapters: [ {
                 method: function (context, request, reply) {

@@ -1,17 +1,18 @@
-var chai = require('chai');
-var expect = chai.expect;
-var sinon = require('sinon');
-var sinonChai = require('sinon-chai');
+'use strict';
+const chai = require('chai');
+const expect = chai.expect;
+const sinon = require('sinon');
+const sinonChai = require('sinon-chai');
 
 chai.use(sinonChai);
-var Promise = require("bluebird");
-var Component = require('../../lib/Component');
-var ComponentMap = require('../../lib/Component/Map');
-var Handlebars = require('handlebars');
+const Promise = require("bluebird");
+const Component = require('../../lib/Component');
+const ComponentMap = require('../../lib/Component/Map');
+const Handlebars = require('handlebars');
 
 describe("The Component Map", function () {
 
-    var sandbox;
+    let sandbox;
 
     beforeEach(function () {
         sandbox = sinon.sandbox.create();
@@ -24,7 +25,7 @@ describe("The Component Map", function () {
 
     describe("Loading the map initially", function () {
 
-        var component1, component2, map;
+        let component1, component2, map;
 
         beforeEach(function (done) {
 
@@ -55,7 +56,7 @@ describe("The Component Map", function () {
                 }
             };
 
-            var components = {
+            let components = {
                 component1,
                 component2
             };

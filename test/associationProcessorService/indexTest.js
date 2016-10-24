@@ -1,19 +1,20 @@
-var chai = require('chai');
-var expect = chai.expect;
-var sinon = require('sinon');
-var sinonChai = require('sinon-chai');
+'use strict';
+const chai = require('chai');
+const expect = chai.expect;
+const sinon = require('sinon');
+const sinonChai = require('sinon-chai');
 
 chai.use(sinonChai);
-var Promise = require("bluebird");
-var mockComponents = require("../fixtures/basic/components");
-var ComponentMap = require("../../lib/Component/Map");
-var Handlebars = require('handlebars');
-var associationProcessorService = require('../../lib/associationProcessorService');
+const Promise = require("bluebird");
+const mockComponents = require("../fixtures/basic/components");
+const ComponentMap = require("../../lib/Component/Map");
+const Handlebars = require('handlebars');
+const associationProcessorService = require('../../lib/associationProcessorService');
 
 
 describe("the association processor service", function () {
 
-    var sandbox, components;
+    let sandbox, components;
 
     beforeEach(function (done) {
         sandbox = sinon.sandbox.create();
@@ -29,17 +30,16 @@ describe("the association processor service", function () {
 
     describe("When a component has a non-default template/association name", function () {
 
-        var result;
+        let result;
 
         beforeEach(function (done) {
 
-            var associations = {rail: [{component: 'basicComponent'}]};
-            var iterPromise = associationProcessorService.runAssociationIterator(
+            let associations = {rail: [{component: 'basicComponent'}]};
+            let iterPromise = associationProcessorService.associationIterator(
                 "context", "request", components, associations);
 
             iterPromise.then(function (res) {
                 result = res;
-                console.log(res);
                 done();
             });
 
@@ -67,11 +67,11 @@ describe("the association processor service", function () {
 
     describe("When the component has an adapter", function () {
 
-        var result;
+        let result;
 
         beforeEach(function (done) {
 
-            var associations = {
+            let associations = {
                 main: [
                     {
                         component: 'componentWithAdapter',
@@ -83,7 +83,7 @@ describe("the association processor service", function () {
                     }
                 ]
             };
-            var iterPromise = associationProcessorService.runAssociationIterator(
+            let iterPromise = associationProcessorService.associationIterator(
                 "context", "request", components, associations);
 
             iterPromise.then(function (res) {

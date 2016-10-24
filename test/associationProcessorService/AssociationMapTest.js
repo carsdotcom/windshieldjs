@@ -1,17 +1,18 @@
-var chai = require('chai');
-var expect = chai.expect;
-var sinon = require('sinon');
-var sinonChai = require('sinon-chai');
+'use strict';
+const chai = require('chai');
+const expect = chai.expect;
+const sinon = require('sinon');
+const sinonChai = require('sinon-chai');
 
 chai.use(sinonChai);
-var Promise = require("bluebird");
-var Component = require('../../lib/Component');
-var ComponentMap = require("../../lib/Component/Map");
-var AssociationList = require("../../lib/associationProcessorService/AssociationMap");
+const Promise = require('bluebird');
+const Component = require('../../lib/Component');
+const ComponentMap = require('../../lib/Component/Map');
+const AssociationList = require('../../lib/associationProcessorService/AssociationMap');
 
 describe("the AssociationList object", function () {
 
-    var sandbox;
+    let sandbox;
 
     beforeEach(function () {
         sandbox = sinon.sandbox.create();
@@ -23,7 +24,7 @@ describe("the AssociationList object", function () {
 
     describe("Handling nested associations", function () {
 
-        var components, associations, aList;
+        let components, associations, aList;
 
         beforeEach(function () {
             associations = {
@@ -66,7 +67,7 @@ describe("the AssociationList object", function () {
 
         describe("Evaluating the list", function () {
 
-            var result, c1, c2, c3, c4, n1, c1render;
+            let result, c1, c2, c3, c4, n1, c1render;
 
             beforeEach(function (done) {
 
@@ -148,8 +149,6 @@ describe("the AssociationList object", function () {
             describe("The Result", function () {
 
                 it("should include all the associations", function () {
-
-                    console.log(result);
 
                     expect(result.markup.main).to.equal('c1 result');
 

@@ -1,13 +1,15 @@
-var chai = require('chai');
-var expect = chai.expect;
-var sinon = require('sinon');
-var sinonChai = require('sinon-chai');
+'use strict';
+
+const chai = require('chai');
+const expect = chai.expect;
+const sinon = require('sinon');
+const sinonChai = require('sinon-chai');
 chai.use(sinonChai);
-var adapter = require('..');
-var mockContext = {};
+const adapter = require('..');
+const mockContext = {};
 
 describe('<%= name %> adapter', function () {
-    var sandbox;
+    let sandbox;
 
     beforeEach(function () {
         sandbox = sinon.sandbox.create();
