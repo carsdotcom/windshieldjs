@@ -5,7 +5,7 @@ var sinonChai = require('sinon-chai');
 
 chai.use(sinonChai);
 var Promise = require("bluebird");
-var Component = require('../lib/Component');
+var Component = require('../../lib/Component');
 const Handlebars = require("handlebars");
 
 describe("the Component object", function () {
@@ -133,7 +133,7 @@ describe("the Component object", function () {
                     templates: {
                         "default": Promise.resolve("{{test}}{{value}}")
                     }
-                });
+                }, "TestComponent");
 
                 component.loadTemplates(Handlebars).then(function () {
                     done();
@@ -166,7 +166,7 @@ describe("the Component object", function () {
                     beforeEach(function (done) {
                         adapterDef.resolve({test: "Result"});
 
-                        component.render({component: "AdaptedComponent"}, "ctx", "req", 'main').then(function (resp) {
+                        component.render({component: "AdaptedComponent"}, "ctx", "req", 'main', 'testCalledName').then(function (resp) {
                             result = resp;
                             done();
                         });
@@ -178,8 +178,11 @@ describe("the Component object", function () {
                             expect(adapter.callCount).to.equal(1);
                         });
 
-                        it("should have been called with empty data", function () {
-                            expect(adapter.args[0][0]).to.deep.equal({});
+                        it("should have been called with default data", function () {
+                            expect(adapter.args[0][0]).to.deep.equal({
+                                componentName: "TestComponent",
+                                calledName: 'testCalledName'
+                            });
                         });
 
                         it("should receive the context as the second argument", function () {
@@ -219,7 +222,7 @@ describe("the Component object", function () {
                             }
                         };
 
-                        component.render(definiton, "context", "request", '').then(function (resp) {
+                        component.render(definiton, "context", "request", '', 'fizBuz').then(function (resp) {
                             result = resp;
                             done();
                         });
@@ -231,8 +234,10 @@ describe("the Component object", function () {
                             expect(adapter.callCount).to.equal(1);
                         });
 
-                        it("should have been called with empty data", function () {
+                        it("should have been called with the right data", function () {
                             expect(adapter.args[0][0]).to.deep.equal({
+                                componentName: "TestComponent",
+                                calledName: 'fizBuz',
                                 test: "123",
                                 val: "456"
                             });
@@ -281,7 +286,7 @@ describe("the Component object", function () {
                         "default": Promise.resolve("{{test}}{{value}}"),
                         rail: Promise.resolve("rail: {{test}}{{value}}")
                     }
-                });
+                }, 'comp');
 
                 component.loadTemplates(Handlebars).then(function () {
                     done();
@@ -316,7 +321,7 @@ describe("the Component object", function () {
                         beforeEach(function (done) {
                             adapterDef.resolve({test: "Result"});
 
-                            component.render({component: "AdaptedComponent"}, "ctx", "req", 'main').then(function (resp) {
+                            component.render({component: "AdaptedComponent"}, "ctx", "req", 'main', '').then(function (resp) {
                                 result = resp;
                                 done();
                             });
@@ -328,8 +333,11 @@ describe("the Component object", function () {
                                 expect(adapter.callCount).to.equal(1);
                             });
 
-                            it("should have been called with empty data", function () {
-                                expect(adapter.args[0][0]).to.deep.equal({});
+                            it("should have been called with default data", function () {
+                                expect(adapter.args[0][0]).to.deep.equal({
+                                    calledName: '',
+                                    componentName: 'comp'
+                                });
                             });
 
                             it("should receive the context as the second argument", function () {
@@ -372,8 +380,11 @@ describe("the Component object", function () {
                                 expect(adapter.callCount).to.equal(1);
                             });
 
-                            it("should have been called with empty data", function () {
-                                expect(adapter.args[0][0]).to.deep.equal({});
+                            it("should have been called with default data", function () {
+                                expect(adapter.args[0][0]).to.deep.equal({
+                                    calledName: undefined,
+                                    componentName: "comp"
+                                });
                             });
 
                             it("should receive the context as the second argument", function () {
@@ -429,10 +440,12 @@ describe("the Component object", function () {
                                 expect(adapter.callCount).to.equal(1);
                             });
 
-                            it("should have been called with empty data", function () {
+                            it("should have been called with correct data", function () {
                                 expect(adapter.args[0][0]).to.deep.equal({
+                                    val: "456",
                                     test: "123",
-                                    val: "456"
+                                    calledName: undefined,
+                                    componentName: "comp"
                                 });
                             });
 
@@ -486,8 +499,10 @@ describe("the Component object", function () {
 
                             it("should have been called with empty data", function () {
                                 expect(adapter.args[0][0]).to.deep.equal({
+                                    val: "456",
                                     test: "123",
-                                    val: "456"
+                                    calledName: undefined,
+                                    componentName: "comp"
                                 });
                             });
 
@@ -585,7 +600,10 @@ describe("the Component object", function () {
                         });
 
                         it("should have been called with empty data", function () {
-                            expect(adapter.args[0][0]).to.deep.equal({});
+                            expect(adapter.args[0][0]).to.deep.equal({
+                                calledName: undefined,
+                                componentName: undefined
+                            });
                         });
 
                         it("should receive the context as the second argument", function () {
@@ -635,8 +653,10 @@ describe("the Component object", function () {
                             expect(adapter.callCount).to.equal(1);
                         });
 
-                        it("should have been called with empty data", function () {
+                        it("should have been called with the passed data data", function () {
                             expect(adapter.args[0][0]).to.deep.equal({
+                                componentName: undefined,
+                                calledName: undefined,
                                 test: "123",
                                 val: "456"
                             });
@@ -729,8 +749,11 @@ describe("the Component object", function () {
                         expect(adapter.callCount).to.equal(1);
                     });
 
-                    it("should have been called with empty data", function () {
-                        expect(adapter.args[0][0]).to.deep.equal({});
+                    it("should have been called with default data", function () {
+                        expect(adapter.args[0][0]).to.deep.equal({
+                            componentName: undefined,
+                            calledName: undefined
+                        });
                     });
 
                     it("should receive the context as the second argument", function () {
@@ -780,10 +803,12 @@ describe("the Component object", function () {
                         expect(adapter.callCount).to.equal(1);
                     });
 
-                    it("should have been called with empty data", function () {
+                    it("should have been called with the passed data", function () {
                         expect(adapter.args[0][0]).to.deep.equal({
+                            val: "456",
                             test: "123",
-                            val: "456"
+                            calledName: undefined,
+                            componentName: undefined
                         });
                     });
 
@@ -798,8 +823,6 @@ describe("the Component object", function () {
                 });
 
                 describe("the result", function () {
-
-
 
 
                 });

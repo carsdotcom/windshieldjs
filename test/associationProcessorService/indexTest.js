@@ -5,10 +5,10 @@ var sinonChai = require('sinon-chai');
 
 chai.use(sinonChai);
 var Promise = require("bluebird");
-var mockComponents = require("./fixtures/basic/components");
-var ComponentMap = require("../lib/ComponentMap");
+var mockComponents = require("../fixtures/basic/components");
+var ComponentMap = require("../../lib/Component/Map");
 var Handlebars = require('handlebars');
-var associationProcessorService = require('../lib/associationProcessorService');
+var associationProcessorService = require('../../lib/associationProcessorService');
 
 
 describe("the association processor service", function () {

@@ -5,7 +5,7 @@
   "repository": "http://git.cars.com/scm/npm/windshieldjs.git",
   "main": "lib/index.js",
   "scripts": {
-    "test": "node --es_staging node_modules/.bin/_mocha",
+    "test": "node --es_staging node_modules/.bin/_mocha \"test/**/*.js\"",
     "watch": "node --es_staging node_modules/.bin/_mocha --watch --bail",
     "coverage": "node --es_staging node_modules/.bin/istanbul cover node_modules/.bin/_mocha",
     "lint": "eslint ."

@@ -1,0 +1,9 @@
+<div style="padding:30px">
+    <h1>Component {{componentName}} is not defined in this project!</h1>
+    <p>Available Components are</p>
+    <ul style="padding-left: 24px">
+        {{#each componentList}}
+            <li style="list-style-type: disc">{{.}}</li>
+        {{/each}}
+    </ul>
+</div>
