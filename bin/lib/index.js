@@ -1,30 +1,30 @@
-"use strict";
+'use strict';
 
-var gulp = require('gulp');
-var gutil = require('gulp-util');
-var gulpif = require('gulp-if');
-var chalk = require('chalk');
-var path = require('path');
-var conflict = require('stream-conflict');
-var rename = require('gulp-rename');
-var _ = require('lodash');
-var inquirer = require('inquirer');
-var cwd = process.cwd();
-var argv = require('minimist')(process.argv.slice(2));
-var template = require('gulp-template');
+const gulp = require('gulp');
+const gutil = require('gulp-util');
+const gulpif = require('gulp-if');
+const chalk = require('chalk');
+const path = require('path');
+const conflict = require('stream-conflict');
+const rename = require('gulp-rename');
+const _ = require('lodash');
+const inquirer = require('inquirer');
+const cwd = process.cwd();
+const argv = require('minimist')(process.argv.slice(2));
+const template = require('gulp-template');
 
 function format(string) {
-    var username = string.toLowerCase();
+    let username = string.toLowerCase();
     return username.replace(/\s/g, '');
 }
 
-var defaults = (function () {
-    var homeDir;
-    var osUserName;
-    var configFile;
-    var user;
-    var pkg;
-    var rootDir = (argv.rootDir) ? argv.rootDir : path.join(cwd, 'lib', 'app');
+let defaults = (function () {
+    let homeDir;
+    let osUserName;
+    let configFile;
+    let user;
+    let pkg;
+    let rootDir = (argv.rootDir) ? argv.rootDir : path.join(cwd, 'lib', 'app');
 
     try {
         pkg = require(path.join(process.cwd(), 'package.json'));
@@ -60,7 +60,7 @@ var defaults = (function () {
 
 gulp.task('default', function (done) {
 
-    var prompts = {};
+    let prompts = {};
 
     prompts.type = [{
         type: 'list',
@@ -75,7 +75,7 @@ gulp.task('default', function (done) {
     }];
 
     function filenameValidate(name) {
-        var isValid = /^[a-z]+[a-z0-9]*$/gi.test(name);
+        let isValid = /^[a-z]+[a-z0-9]*$/gi.test(name);
         (!isValid) && console.log('\nPlease use camelCase with alphanumeric characters only, first character must be a letter');
         return isValid;
     }
@@ -128,7 +128,7 @@ gulp.task('default', function (done) {
         return function (answers) {
 
             function create(data) {
-                var dest;
+                let dest;
 
                 data = (data != null) ? data : {};
 
@@ -170,7 +170,7 @@ gulp.task('default', function (done) {
 
     };
 
-    var handlers = {};
+    let handlers = {};
 
     handlers.component = generateArtifactHandler('component');
     handlers.adapter = generateArtifactHandler('adapter');
@@ -181,4 +181,3 @@ gulp.task('default', function (done) {
     });
 
 });
-

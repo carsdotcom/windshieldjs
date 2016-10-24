@@ -1,18 +1,15 @@
 "use strict";
-var os = require('os');
-var assert = require('assert');
-var path = require('path');
-var async = require('async');
-var Hapi = require('hapi');
-var vision = require('vision');
-var mkdirp = require('mkdirp');
-
-var helpers = require('./helpers');
-
-var windshield = require('../');
-
-var registerWithOptions = helpers.registerWithOptions;
-var tmpBase = path.join(os.tmpdir(), 'windshield', Date.now().toString());
+const os = require('os');
+const assert = require('assert');
+const path = require('path');
+const async = require('async');
+const Hapi = require('hapi');
+const vision = require('vision');
+const mkdirp = require('mkdirp');
+const helpers = require('./helpers');
+const windshield = require('../');
+const registerWithOptions = helpers.registerWithOptions;
+const tmpBase = path.join(os.tmpdir(), 'windshield', Date.now().toString());
 
 describe('windshield plugin', function () {
 
@@ -22,7 +19,6 @@ describe('windshield plugin', function () {
     });
 
     describe('registering', function () {
-
 
     });
 });

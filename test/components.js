@@ -1,20 +1,19 @@
 "use strict";
-var _ = require('lodash');
-
-var fs = require('fs');
-var path = require('path');
-var Promise = require('bluebird');
-var helpers = require('./helpers');
-var fixtureComponents = require('./fixtures/basic/components');
-var chai = require('chai');
-var expect = chai.expect;
-var sinon = require('sinon');
-var sinonChai = require('sinon-chai');
+const _ = require('lodash');
+const fs = require('fs');
+const path = require('path');
+const Promise = require('bluebird');
+const helpers = require('./helpers');
+const fixtureComponents = require('./fixtures/basic/components');
+const chai = require('chai');
+const expect = chai.expect;
+const sinon = require('sinon');
+const sinonChai = require('sinon-chai');
 
 chai.use(sinonChai);
 
 describe('components -', function () {
-    var sandbox;
+    let sandbox;
 
     beforeEach(function () {
         sandbox = sinon.sandbox.create();
@@ -24,18 +23,18 @@ describe('components -', function () {
         sandbox.restore();
     });
 
-    var testRoute = helpers.RouteTester('fixtures/basic');
+    let testRoute = helpers.RouteTester('fixtures/basic');
 
     it('should use the template which matches the name of the association they belong to', function (done) {
-        var mockComponent = {
+        let mockComponent = {
             component: 'basicComponent'
         };
-        var route = {
+        let route = {
             path: '/bar',
             adapters: [{
                 method: function (context, request, reply) {
 
-                    var data = {
+                    let data = {
                         layout: 'railAssoc',
                         associations: {
                             rail: [

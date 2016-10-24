@@ -1,5 +1,5 @@
 'use strict';
-var Promise = require('bluebird');
+const Promise = require('bluebird');
 
 module.exports = function (context, page, req) {
     return Promise.resolve({

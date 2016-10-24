@@ -1,5 +1,6 @@
-var path = require('path');
-var gulpSequence = require('gulp-sequence');
+'use strict';
+const path = require('path');
+const gulpSequence = require('gulp-sequence');
 
 gulp = require('./gulp');
 
