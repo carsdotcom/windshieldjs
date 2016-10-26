@@ -2,7 +2,7 @@
   "name": "windshieldjs",
   "version": "1.3.2",
   "description": "An Enterprise Rendering Plugin for Hapi.js",
-  "repository": "http://git.cars.com/scm/npm/windshieldjs.git",
+  "repository": "https://github.com/carsdotcom/windshieldjs.git",
   "main": "lib/index.js",
   "scripts": {
     "test": "node --es_staging node_modules/.bin/_mocha \"test/**/*.js\"",
