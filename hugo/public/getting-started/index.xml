@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Getting-starteds on WindshieldJS</title>
+    <link>http://replace-this-with-your-hugo-site.com/getting-started/</link>
+    <description>Recent content in Getting-starteds on WindshieldJS</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 23 Sep 2016 12:00:00 +0600</lastBuildDate>
+    <atom:link href="http://replace-this-with-your-hugo-site.com/getting-started/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Getting started</title>
+      <link>http://replace-this-with-your-hugo-site.com/getting-started/</link>
+      <pubDate>Fri, 23 Sep 2016 12:00:00 +0600</pubDate>
+      
+      <guid>http://replace-this-with-your-hugo-site.com/getting-started/</guid>
+      <description>
+
+&lt;h2 id=&#34;a-name-install-installation&#34;&gt;&lt;a name=&#34;install&#34;/&gt;Installation&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;npm install --save windshieldjs
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&#34;a-name-usage-usage&#34;&gt;&lt;a name=&#34;usage&#34;/&gt;Usage&lt;/h2&gt;
+
+&lt;h3 id=&#34;a-name-register-register&#34;&gt;&lt;a name=&#34;register&#34;/&gt;Register&lt;/h3&gt;
+
+&lt;p&gt;First, you must register the plugin with your Hapi server instance.&lt;/p&gt;
+
+&lt;h4 id=&#34;example-of-registering-plugin-with-options&#34;&gt;Example of registering plugin with options&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;server.register({
+    register: require(&#39;windshieldjs&#39;),
+    options: {
+        rootDir: path.join(__dirname, &#39;app&#39;),
+        handlebars: require(&#39;handlebars&#39;),
+        uriContext: &#39;/foo&#39;,
+        routes: require(&#39;./app/routes&#39;),
+        components: require(&#39;./app/components&#39;)
+    }
+}, function (err) {
+    if (err) console.log(err);
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;See options below for details on each of these options.&lt;/p&gt;
+
+&lt;h3 id=&#34;a-name-options-options&#34;&gt;&lt;a name=&#34;options&#34; /&gt;Options&lt;/h3&gt;
+
+&lt;h4 id=&#34;rootdir&#34;&gt;&lt;code&gt;rootDir&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;This should be the absolute path to the root directory of your project. Page &lt;code&gt;layouts&lt;/code&gt; and Handlebars &lt;code&gt;helpers&lt;/code&gt; will be looked for at this location. (See note below about project structure requirements).&lt;/p&gt;
+
+&lt;h4 id=&#34;handlebars&#34;&gt;&lt;code&gt;handlebars&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;Windshield needs to use the same handlebars instance as is used by your project. To ensure it has access to the same object in memory, you should provide this instance within the config object.&lt;/p&gt;
+
+&lt;h4 id=&#34;uricontext&#34;&gt;&lt;code&gt;uriContext&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;This is the base URI under which windshield will register all of your routes. For example, if you set &lt;code&gt;uriContext&lt;/code&gt; to &amp;ldquo;/foo&amp;rdquo;, and you have a route defined as &amp;ldquo;/bar&amp;rdquo;, that route will be accessible at &amp;ldquo;/foo/bar&amp;rdquo;.&lt;/p&gt;
+
+&lt;h4 id=&#34;routes&#34;&gt;&lt;code&gt;routes&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;The &lt;code&gt;routes&lt;/code&gt; property on the Windshield config object is an array of route definitions.&lt;/p&gt;
+
+&lt;p&gt;Each route definition within the &lt;code&gt;routes&lt;/code&gt; array option is a configuration object with the following properties:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;path&lt;/code&gt; - This is a string which acts as a path expression. It&amp;rsquo;s handed off directly to Hapi&amp;rsquo;s router when Windshield sets up your route.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;context&lt;/code&gt; - This is an object which may contain route specific context to be referenced by the adapters.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;adapters&lt;/code&gt; - This is an array of adapter implementations. An adapter is Promise-returning function which resolves with a page object. (More on page objects below.)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pageFilter&lt;/code&gt; - This is an optional property which can be set as a Promise-returning function which will receive the final composed page object immediately before it is applied to the page layout template and any component templates. It provides one last chance for the developer to modify the page object. This can be useful for cases where the data contained in one component affects another component on the page.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;components&#34;&gt;&lt;code&gt;components&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;The &lt;code&gt;components&lt;/code&gt; property on the Windshield config object is an object which serves as a map of component implementations. The property names on this object are component names and the value of each property is a component&amp;rsquo;s implementation object.&lt;/p&gt;
+
+&lt;p&gt;Each component implementation is an object with the following properties: &lt;code&gt;template&lt;/code&gt;, &lt;code&gt;Model&lt;/code&gt; and &lt;code&gt;adapter&lt;/code&gt;. The template property is the only thing that is required, the Model and adapter are optional. A model should be a constructor function which recieves and returns an object. A Model is used for simple translation and transformation of component data. An adapter is a function which returns the Promise—this promise should resolve with an object. Adapters are used for pulling in external data for the component to use from client libraries, etc.&lt;/p&gt;
+
+&lt;p&gt;The &lt;code&gt;template&lt;/code&gt; property of the component implementation should be a function which returns a Promise—this Promise should resolve with a Handlebars template string. To make this as easy as possible, a helper method called &lt;code&gt;readTemplate&lt;/code&gt; is available on the &lt;code&gt;windshield&lt;/code&gt; object which takes the absolute path to a template file and generated the proper function for export.&lt;/p&gt;
+
+&lt;h3 id=&#34;a-name-page-adapters-page-adapters-objects&#34;&gt;&lt;a name=&#34;page-adapters&#34; /&gt;Page Adapters &amp;amp; Objects&lt;/h3&gt;
+
+&lt;p&gt;A page object is an object with the following properties: &lt;code&gt;layout&lt;/code&gt;,  &lt;code&gt;attributes&lt;/code&gt; and &lt;code&gt;associations&lt;/code&gt;. All page object properties are optional.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;layout&lt;/code&gt; - This is a string the value of which is the name of the Handlebars layout to use for the overall page.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;attributes&lt;/code&gt; - This is an object each property of which is a string. These serve as page-level attributes.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;associations&lt;/code&gt; - This is an object which serves as a map of &amp;ldquo;named associations&amp;rdquo;. You can think of an association as a zone within the page layout. Each property name is the assocation name, and the value of each property is a collection of component objects to be contained within that association.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Adapters are Promise-returning functions which resolve with page objects. Each route definition has an array of adapters, each of which will be called and resolve with a page object. All the resultant page objects are then merged back together to create one single page object which can be applied to the page layout.&lt;/p&gt;
+
+&lt;p&gt;For example, take the following route definition:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+    path: &#39;/listings&#39;,
+    adapters: [
+        headerAdapter,
+        searchAdapter,
+        footerAdapter,
+    ]
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The &lt;code&gt;headerAdapter&lt;/code&gt; in the example above, might return a partial page object which looks like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+    associations: {
+        header: [
+            { component: &amp;quot;globalNav&amp;quot; }
+        ]
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The &lt;code&gt;searchAdapter&lt;/code&gt; in the example above, might return a partial page object which looks like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+    attributes: {
+        title: &amp;quot;Cars.com&amp;quot;
+    },
+    associations: {
+        main: [
+            { component: &amp;quot;searchWidget&amp;quot; },
+            { component: &amp;quot;carListings&amp;quot; }
+        ]
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The &lt;code&gt;footerAdapter&lt;/code&gt; in the example above, might return a partial page object which looks like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+    associations: {
+        footer: [
+            { component: &amp;quot;footerNav&amp;quot; }
+        ]
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The resulting page object, after all adapters have resolve, would be composed together by Windshield and would look like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+    layout: &amp;quot;default&amp;quot;,
+    attributes: {
+        title: &amp;quot;Cars.com&amp;quot;
+    },
+    associations: {
+        header: [
+            { component: &amp;quot;globalNav&amp;quot; }
+        ],
+        main: [
+            { component: &amp;quot;searchWidget&amp;quot; },
+            { component: &amp;quot;carListings&amp;quot; }
+        ],
+        footer: [
+            { component: “footerNav&amp;quot; }
+        ],
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;a-name-component-adapters-component-adapters-objects&#34;&gt;&lt;a name=&#34;component-adapters&#34; /&gt;Component Adapters &amp;amp; Objects&lt;/h3&gt;
+
+&lt;p&gt;Components can also have their own adapters. The data which resolves from component adapter will be added back onto the component object within the &lt;code&gt;data&lt;/code&gt; property. Component objects should return an object with their data contained inside a &lt;code&gt;data&lt;/code&gt; property. This specification did not used to exists and currently a can component can still resolve with its data at the object root instead of inside a data property but this usage pattern is now deprecated and will not be supported in coming releases. After the component adapter has been processed, a component object within the page object might then look like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+    component: &amp;quot;globalNav&amp;quot;,
+    data: {
+        items: [
+            {
+                displayName: &amp;quot;Buy&amp;quot;,
+                href: &amp;quot;/for-sale/&amp;quot;
+            },
+            {
+                displayName: &amp;quot;Sell &amp;amp;amp; Trade&amp;quot;,
+                href: &amp;quot;/sell/&amp;quot;
+            },
+            {
+                displayName: &amp;quot;Service &amp;amp;amp; Repair&amp;quot;,
+                href: &amp;quot;/auto-repair/&amp;quot;
+            },
+            {
+                displayName: &amp;quot;News&amp;quot;,
+                href: &amp;quot;/news/&amp;quot;
+            }
+        ]
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In this way, each component referenced in the original page object, as generated by the page adapters, is hydrated until all of the data needed to render the final HTML of the page is contained in one composite page object.&lt;/p&gt;
+
+&lt;p&gt;Optionally, a component can also resolve with an &lt;code&gt;export&lt;/code&gt; and an &lt;code&gt;exportAs&lt;/code&gt; property. Data &amp;ldquo;exported&amp;rdquo; in this manner will then be usable within any template (whether it be a layout template or a component template) by using the &lt;code&gt;{exported}&lt;/code&gt; handlerbars helper. This is a new feature. More details on this coming soon.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;a-name-scaffolding-scaffolding&#34;&gt;&lt;a name=&#34;scaffolding&#34;/&gt;Scaffolding&lt;/h3&gt;
+
+&lt;p&gt;windshieldjs comes with a binary CLI tool to generate new components, adapters
+and layouts. Run &lt;code&gt;./node_modules/.bin/windshield&lt;/code&gt; &lt;em&gt;from the project root&lt;/em&gt; of
+any project that has windshieldjs installed and you&amp;rsquo;ll be lead through a series
+of prompts.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./node_modules/.bin/windshield
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;project-structure&#34;&gt;Project Structure&lt;/h3&gt;
+
+&lt;p&gt;WindshieldJS is mostly driven by configuration, but due to the way Hapi&amp;rsquo;s
+&amp;ldquo;vision&amp;rdquo; plugin works, your main page &amp;ldquo;layouts&amp;rdquo; directory must be located
+directly within the &lt;code&gt;rootDir&lt;/code&gt; of your project. If you are using Handlebars
+helpers, you must add a &lt;code&gt;helpers&lt;/code&gt; directory inside &lt;code&gt;rootDir&lt;/code&gt; as well.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;rootDir&lt;/code&gt;
+
+&lt;ul&gt;
+&lt;li&gt;helpers&lt;/li&gt;
+&lt;li&gt;layouts&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

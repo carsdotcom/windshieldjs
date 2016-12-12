@@ -8,7 +8,8 @@
     "test": "node --es_staging node_modules/.bin/_mocha \"test/**/*.js\"",
     "watch": "node --es_staging node_modules/.bin/_mocha --watch --bail",
     "coverage": "node --es_staging node_modules/.bin/istanbul cover node_modules/.bin/_mocha",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "docs": "hugo -s ./hugo -d ../docs"
   },
   "author": "Mac Heller-Ogden",
   "license": "Apache-2.0",

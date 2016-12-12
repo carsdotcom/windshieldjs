@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+  
+  
+  
+  
+   <html class="no-js"> 
+
+  <head lang="en-us">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=10" />
+    <title>Getting started - WindshieldJS</title>
+    <meta name="generator" content="Hugo 0.16" />
+
+    
+    <meta name="description" content="WindshieldJS - An Enterprise Rendering Plugin for Hapi.js">
+    
+    <link rel="canonical" href="https://carsdotcom.github.io/windshieldjs/getting-started/">
+    
+    <meta name="author" content="Cars.com">
+    
+
+    <meta property="og:url" content="https://carsdotcom.github.io/windshieldjs/getting-started/">
+    <meta property="og:title" content="WindshieldJS">
+    <meta property="og:image" content="https://carsdotcom.github.io/windshieldjs/images/logo.png">
+    <meta name="apple-mobile-web-app-title" content="WindshieldJS">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <link rel="shortcut icon" type="image/x-icon" href="https://carsdotcom.github.io/windshieldjs/images/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="https://carsdotcom.github.io/windshieldjs/images/favicon.ico">
+
+    <style>
+      @font-face {
+        font-family: 'Icon';
+        src: url('https://carsdotcom.github.io/windshieldjs/fonts/icon.eot?52m981');
+        src: url('https://carsdotcom.github.io/windshieldjs/fonts/icon.eot?#iefix52m981')
+               format('embedded-opentype'),
+             url('https://carsdotcom.github.io/windshieldjs/fonts/icon.woff?52m981')
+               format('woff'),
+             url('https://carsdotcom.github.io/windshieldjs/fonts/icon.ttf?52m981')
+               format('truetype'),
+             url('https://carsdotcom.github.io/windshieldjs/fonts/icon.svg?52m981#icon')
+               format('svg');
+        font-weight: normal;
+        font-style: normal;
+      }
+    </style>
+
+    <link rel="stylesheet" href="https://carsdotcom.github.io/windshieldjs/stylesheets/application.css">
+    <link rel="stylesheet" href="https://carsdotcom.github.io/windshieldjs/stylesheets/temporary.css">
+    <link rel="stylesheet" href="https://carsdotcom.github.io/windshieldjs/stylesheets/palettes.css">
+    <link rel="stylesheet" href="https://carsdotcom.github.io/windshieldjs/stylesheets/highlight/highlight.css">
+
+    
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu:400,700|Ubuntu&#43;Mono">
+    <style>
+      body, input {
+        font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
+      }
+      pre, code {
+        font-family: 'Ubuntu Mono', 'Courier New', 'Courier', monospace;
+      }
+    </style>
+
+    
+    <script src="https://carsdotcom.github.io/windshieldjs/javascripts/modernizr.js"></script>
+
+    
+
+  </head>
+  <body class="palette-primary-deep-purple palette-accent-green">
+
+
+
+	
+	
+
+
+<div class="backdrop">
+	<div class="backdrop-paper"></div>
+</div>
+
+<input class="toggle" type="checkbox" id="toggle-drawer">
+<input class="toggle" type="checkbox" id="toggle-search">
+<label class="toggle-button overlay" for="toggle-drawer"></label>
+
+<header class="header">
+	<nav aria-label="Header">
+  <div class="bar default">
+    <div class="button button-menu" role="button" aria-label="Menu">
+      <label class="toggle-button icon icon-menu" for="toggle-drawer">
+        <span></span>
+      </label>
+    </div>
+    <div class="stretch">
+      <div class="title">
+        Getting started
+      </div>
+    </div>
+
+    
+
+    
+    <div class="button button-github" role="button" aria-label="GitHub">
+      <a href="https://github.com/carsdotcom" title="@carsdotcom on GitHub" target="_blank" class="toggle-button icon icon-github"></a>
+    </div>
+    
+    
+        
+  </div>
+  <div class="bar search">
+    <div class="button button-close" role="button" aria-label="Close">
+      <label class="toggle-button icon icon-back" for="toggle-search"></label>
+    </div>
+    <div class="stretch">
+      <div class="field">
+        <input class="query" type="text" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck>
+      </div>
+    </div>
+    <div class="button button-reset" role="button" aria-label="Search">
+      <button class="toggle-button icon icon-close" id="reset-search"></button>
+    </div>
+  </div>
+</nav>
+</header>
+
+<main class="main">
+	<div class="drawer">
+		<nav aria-label="Navigation">
+  <a href="https://github.com/carsdotcom/windshieldjs" class="project">
+    <div class="banner">
+      
+        <div class="logo">
+          <img src="https://carsdotcom.github.io/windshieldjs/images/logo.png">
+        </div>
+      
+      <div class="name">
+        <strong>WindshieldJS <span class="version">1.2.3</span></strong>
+        
+          <br>
+          carsdotcom/windshieldjs
+        
+      </div>
+    </div>
+  </a>
+
+  <div class="scrollable">
+    <div class="wrapper">
+      
+        <ul class="repo">
+          <li class="repo-download">
+            <a href="https://github.com/carsdotcom/windshieldjs/archive/master.zip" target="_blank" title="Download" data-action="download">
+              <i class="icon icon-download"></i> Download
+            </a>
+          </li>
+          <li class="repo-stars">
+            <a href="https://github.com/carsdotcom/windshieldjs/stargazers" target="_blank" title="Stargazers" data-action="star">
+              <i class="icon icon-star"></i> Stars
+              <span class="count">&ndash;</span>
+            </a>
+          </li>
+        </ul>
+        <hr>
+      
+
+      <div class="toc">
+        
+        <ul>
+          
+
+
+
+
+<li>
+  
+    
+
+
+
+<a  title="WindshieldJS" href="https://carsdotcom.github.io/windshieldjs/">
+	
+	WindshieldJS
+</a>
+
+
+
+  
+</li>
+
+
+
+<li>
+  
+    
+
+
+
+<a class="current" title="Getting started" href="https://carsdotcom.github.io/windshieldjs/getting-started/">
+	
+	Getting started
+</a>
+
+
+<ul id="scrollspy">
+</ul>
+
+
+  
+</li>
+
+
+
+<li>
+  
+    
+
+
+
+<a  title="License" href="https://carsdotcom.github.io/windshieldjs/license/">
+	
+	License
+</a>
+
+
+
+  
+</li>
+
+
+        </ul>
+        
+
+        
+        <hr>
+        <span class="section">The author</span>
+        
+        <ul>
+          
+
+          
+          <li>
+            <a href="https://github.com/carsdotcom" target="_blank" title="@carsdotcom on GitHub">
+              @carsdotcom on GitHub
+            </a>
+          </li>
+          
+
+          
+          <li>
+            <a href="mailto:mheller-ogden@cars.com" title="Email of mheller-ogden@cars.com">
+              Contact via email
+            </a>
+          </li>
+          
+        </ul>
+        
+      </div>
+    </div>
+  </div>
+</nav>
+
+	</div>
+
+	<article class="article">
+		<div class="wrapper">
+			<h1>Getting started </h1>
+
+			
+
+<h2 id="a-name-install-installation"><a name="install"/>Installation</h2>
+
+<pre><code>npm install --save windshieldjs
+</code></pre>
+
+<hr />
+
+<h2 id="a-name-usage-usage"><a name="usage"/>Usage</h2>
+
+<h3 id="a-name-register-register"><a name="register"/>Register</h3>
+
+<p>First, you must register the plugin with your Hapi server instance.</p>
+
+<h4 id="example-of-registering-plugin-with-options">Example of registering plugin with options</h4>
+
+<pre><code>server.register({
+    register: require('windshieldjs'),
+    options: {
+        rootDir: path.join(__dirname, 'app'),
+        handlebars: require('handlebars'),
+        uriContext: '/foo',
+        routes: require('./app/routes'),
+        components: require('./app/components')
+    }
+}, function (err) {
+    if (err) console.log(err);
+});
+</code></pre>
+
+<p>See options below for details on each of these options.</p>
+
+<h3 id="a-name-options-options"><a name="options" />Options</h3>
+
+<h4 id="rootdir"><code>rootDir</code></h4>
+
+<p>This should be the absolute path to the root directory of your project. Page <code>layouts</code> and Handlebars <code>helpers</code> will be looked for at this location. (See note below about project structure requirements).</p>
+
+<h4 id="handlebars"><code>handlebars</code></h4>
+
+<p>Windshield needs to use the same handlebars instance as is used by your project. To ensure it has access to the same object in memory, you should provide this instance within the config object.</p>
+
+<h4 id="uricontext"><code>uriContext</code></h4>
+
+<p>This is the base URI under which windshield will register all of your routes. For example, if you set <code>uriContext</code> to &ldquo;/foo&rdquo;, and you have a route defined as &ldquo;/bar&rdquo;, that route will be accessible at &ldquo;/foo/bar&rdquo;.</p>
+
+<h4 id="routes"><code>routes</code></h4>
+
+<p>The <code>routes</code> property on the Windshield config object is an array of route definitions.</p>
+
+<p>Each route definition within the <code>routes</code> array option is a configuration object with the following properties:</p>
+
+<ul>
+<li><code>path</code> - This is a string which acts as a path expression. It&rsquo;s handed off directly to Hapi&rsquo;s router when Windshield sets up your route.</li>
+<li><code>context</code> - This is an object which may contain route specific context to be referenced by the adapters.</li>
+<li><code>adapters</code> - This is an array of adapter implementations. An adapter is Promise-returning function which resolves with a page object. (More on page objects below.)</li>
+<li><code>pageFilter</code> - This is an optional property which can be set as a Promise-returning function which will receive the final composed page object immediately before it is applied to the page layout template and any component templates. It provides one last chance for the developer to modify the page object. This can be useful for cases where the data contained in one component affects another component on the page.</li>
+</ul>
+
+<h4 id="components"><code>components</code></h4>
+
+<p>The <code>components</code> property on the Windshield config object is an object which serves as a map of component implementations. The property names on this object are component names and the value of each property is a component&rsquo;s implementation object.</p>
+
+<p>Each component implementation is an object with the following properties: <code>template</code>, <code>Model</code> and <code>adapter</code>. The template property is the only thing that is required, the Model and adapter are optional. A model should be a constructor function which recieves and returns an object. A Model is used for simple translation and transformation of component data. An adapter is a function which returns the Promise—this promise should resolve with an object. Adapters are used for pulling in external data for the component to use from client libraries, etc.</p>
+
+<p>The <code>template</code> property of the component implementation should be a function which returns a Promise—this Promise should resolve with a Handlebars template string. To make this as easy as possible, a helper method called <code>readTemplate</code> is available on the <code>windshield</code> object which takes the absolute path to a template file and generated the proper function for export.</p>
+
+<h3 id="a-name-page-adapters-page-adapters-objects"><a name="page-adapters" />Page Adapters &amp; Objects</h3>
+
+<p>A page object is an object with the following properties: <code>layout</code>,  <code>attributes</code> and <code>associations</code>. All page object properties are optional.</p>
+
+<ul>
+<li><code>layout</code> - This is a string the value of which is the name of the Handlebars layout to use for the overall page.</li>
+<li><code>attributes</code> - This is an object each property of which is a string. These serve as page-level attributes.</li>
+<li><code>associations</code> - This is an object which serves as a map of &ldquo;named associations&rdquo;. You can think of an association as a zone within the page layout. Each property name is the assocation name, and the value of each property is a collection of component objects to be contained within that association.</li>
+</ul>
+
+<p>Adapters are Promise-returning functions which resolve with page objects. Each route definition has an array of adapters, each of which will be called and resolve with a page object. All the resultant page objects are then merged back together to create one single page object which can be applied to the page layout.</p>
+
+<p>For example, take the following route definition:</p>
+
+<pre><code>{
+    path: '/listings',
+    adapters: [
+        headerAdapter,
+        searchAdapter,
+        footerAdapter,
+    ]
+}
+</code></pre>
+
+<p>The <code>headerAdapter</code> in the example above, might return a partial page object which looks like this:</p>
+
+<pre><code>{
+    associations: {
+        header: [
+            { component: &quot;globalNav&quot; }
+        ]
+    }
+}
+</code></pre>
+
+<p>The <code>searchAdapter</code> in the example above, might return a partial page object which looks like this:</p>
+
+<pre><code>{
+    attributes: {
+        title: &quot;Cars.com&quot;
+    },
+    associations: {
+        main: [
+            { component: &quot;searchWidget&quot; },
+            { component: &quot;carListings&quot; }
+        ]
+    }
+}
+</code></pre>
+
+<p>The <code>footerAdapter</code> in the example above, might return a partial page object which looks like this:</p>
+
+<pre><code>{
+    associations: {
+        footer: [
+            { component: &quot;footerNav&quot; }
+        ]
+    }
+}
+</code></pre>
+
+<p>The resulting page object, after all adapters have resolve, would be composed together by Windshield and would look like this:</p>
+
+<pre><code>{
+    layout: &quot;default&quot;,
+    attributes: {
+        title: &quot;Cars.com&quot;
+    },
+    associations: {
+        header: [
+            { component: &quot;globalNav&quot; }
+        ],
+        main: [
+            { component: &quot;searchWidget&quot; },
+            { component: &quot;carListings&quot; }
+        ],
+        footer: [
+            { component: “footerNav&quot; }
+        ],
+    }
+}
+</code></pre>
+
+<h3 id="a-name-component-adapters-component-adapters-objects"><a name="component-adapters" />Component Adapters &amp; Objects</h3>
+
+<p>Components can also have their own adapters. The data which resolves from component adapter will be added back onto the component object within the <code>data</code> property. Component objects should return an object with their data contained inside a <code>data</code> property. This specification did not used to exists and currently a can component can still resolve with its data at the object root instead of inside a data property but this usage pattern is now deprecated and will not be supported in coming releases. After the component adapter has been processed, a component object within the page object might then look like this:</p>
+
+<pre><code>{
+    component: &quot;globalNav&quot;,
+    data: {
+        items: [
+            {
+                displayName: &quot;Buy&quot;,
+                href: &quot;/for-sale/&quot;
+            },
+            {
+                displayName: &quot;Sell &amp;amp; Trade&quot;,
+                href: &quot;/sell/&quot;
+            },
+            {
+                displayName: &quot;Service &amp;amp; Repair&quot;,
+                href: &quot;/auto-repair/&quot;
+            },
+            {
+                displayName: &quot;News&quot;,
+                href: &quot;/news/&quot;
+            }
+        ]
+    }
+}
+</code></pre>
+
+<p>In this way, each component referenced in the original page object, as generated by the page adapters, is hydrated until all of the data needed to render the final HTML of the page is contained in one composite page object.</p>
+
+<p>Optionally, a component can also resolve with an <code>export</code> and an <code>exportAs</code> property. Data &ldquo;exported&rdquo; in this manner will then be usable within any template (whether it be a layout template or a component template) by using the <code>{exported}</code> handlerbars helper. This is a new feature. More details on this coming soon.</p>
+
+<hr />
+
+<h3 id="a-name-scaffolding-scaffolding"><a name="scaffolding"/>Scaffolding</h3>
+
+<p>windshieldjs comes with a binary CLI tool to generate new components, adapters
+and layouts. Run <code>./node_modules/.bin/windshield</code> <em>from the project root</em> of
+any project that has windshieldjs installed and you&rsquo;ll be lead through a series
+of prompts.</p>
+
+<pre><code>./node_modules/.bin/windshield
+</code></pre>
+
+<hr />
+
+<h3 id="project-structure">Project Structure</h3>
+
+<p>WindshieldJS is mostly driven by configuration, but due to the way Hapi&rsquo;s
+&ldquo;vision&rdquo; plugin works, your main page &ldquo;layouts&rdquo; directory must be located
+directly within the <code>rootDir</code> of your project. If you are using Handlebars
+helpers, you must add a <code>helpers</code> directory inside <code>rootDir</code> as well.</p>
+
+<ul>
+<li><code>rootDir</code>
+
+<ul>
+<li>helpers</li>
+<li>layouts</li>
+</ul></li>
+</ul>
+
+
+			<aside class="copyright" role="note">
+				
+				&copy; 2016 Released under the Apache 2.0 license &ndash;
+				
+				Documentation built with
+				<a href="https://www.gohugo.io" target="_blank">Hugo</a>
+				using the
+				<a href="http://github.com/digitalcraftsman/hugo-material-docs" target="_blank">Material</a> theme.
+			</aside>
+
+			<footer class="footer">
+				
+
+<nav class="pagination" aria-label="Footer">
+  <div class="previous">
+  
+      <a href="https://carsdotcom.github.io/windshieldjs/" title="WindshieldJS - An Enterprise Rendering plugin for Hapi.js">
+        <span class="direction">
+          Previous
+        </span>
+        <div class="page">
+          <div class="button button-previous" role="button" aria-label="Previous">
+            <i class="icon icon-back"></i>
+          </div>
+          <div class="stretch">
+            <div class="title">
+              WindshieldJS - An Enterprise Rendering plugin for Hapi.js
+            </div>
+          </div>
+        </div>
+      </a>
+  
+  </div>
+
+  <div class="next">
+  
+      <a href="https://carsdotcom.github.io/windshieldjs/license/" title="License">
+        <span class="direction">
+          Next
+        </span>
+        <div class="page">
+          <div class="stretch">
+            <div class="title">
+              License
+            </div>
+          </div>
+          <div class="button button-next" role="button" aria-label="Next">
+            <i class="icon icon-forward"></i>
+          </div>
+        </div>
+      </a>
+  
+  </div>
+</nav>
+
+
+
+
+
+			</footer>
+		</div>
+	</article>
+
+	<div class="results" role="status" aria-live="polite">
+		<div class="scrollable">
+			<div class="wrapper">
+				<div class="meta"></div>
+				<div class="list"></div>
+			</div>
+		</div>
+	</div>
+</main>
+
+    <script>
+    
+      var base_url = 'https:\/\/carsdotcom.github.io\/windshieldjs\/';
+      var repo_id  = 'carsdotcom\/windshieldjs';
+    
+    </script>
+
+    <script src="https://carsdotcom.github.io/windshieldjs/javascripts/application.js"></script>
+    
+
+    <script>
+      /* Add headers to scrollspy */
+      var headers   = document.getElementsByTagName("h2");
+      var scrollspy = document.getElementById('scrollspy');
+
+      if(scrollspy) {
+        if(headers.length > 0) {
+          for(var i = 0; i < headers.length; i++) {
+            var li = document.createElement("li");
+            li.setAttribute("class", "anchor");
+
+            var a  = document.createElement("a");
+            a.setAttribute("href", "#" + headers[i].id);
+            a.setAttribute("title", headers[i].innerHTML);
+            a.innerHTML = headers[i].innerHTML;
+            
+            li.appendChild(a)
+            scrollspy.appendChild(li);
+          }
+        } else {
+          scrollspy.parentElement.removeChild(scrollspy)
+        }
+        
+
+        /* Add permanent link next to the headers */
+        var headers = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
+
+        for(var i = 0; i < headers.length; i++) {
+            var a = document.createElement("a");
+            a.setAttribute("class", "headerlink");
+            a.setAttribute("href", "#" + headers[i].id);
+            a.setAttribute("title", "Permanent link")
+            a.innerHTML = "#";
+            headers[i].appendChild(a);
+        }
+      }
+    </script>
+
+    
+
+    <script src="//gohugo.io/js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
