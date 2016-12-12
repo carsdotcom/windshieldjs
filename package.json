@@ -1,14 +1,15 @@
 {
   "name": "windshieldjs",
-  "version": "1.3.2",
+  "version": "1.4.0",
   "description": "An Enterprise Rendering Plugin for Hapi.js",
-  "repository": "http://git.cars.com/scm/npm/windshieldjs.git",
+  "repository": "https://github.com/carsdotcom/windshieldjs.git",
   "main": "lib/index.js",
   "scripts": {
     "test": "node --es_staging node_modules/.bin/_mocha \"test/**/*.js\"",
     "watch": "node --es_staging node_modules/.bin/_mocha --watch --bail",
     "coverage": "node --es_staging node_modules/.bin/istanbul cover node_modules/.bin/_mocha",
-    "lint": "eslint ."
+    "lint": "eslint ./lib",
+    "docs": "hugo -s ./hugo -d ../docs"
   },
   "author": "Mac Heller-Ogden",
   "license": "Apache-2.0",

@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>WindshieldJS</title>
+    <link>https://carsdotcom.github.io/windshieldjs/</link>
+    <description>Recent content on WindshieldJS</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 08 Mar 2016 21:07:13 +0100</lastBuildDate>
+    <atom:link href="https://carsdotcom.github.io/windshieldjs/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>WindshieldJS - An Enterprise Rendering plugin for Hapi.js</title>
+      <link>https://carsdotcom.github.io/windshieldjs/</link>
+      <pubDate>Tue, 08 Mar 2016 21:07:13 +0100</pubDate>
+      
+      <guid>https://carsdotcom.github.io/windshieldjs/</guid>
+      <description>
+
+&lt;h2 id=&#34;what-is-windshieldjs&#34;&gt;What is WindshieldJS?&lt;/h2&gt;
+
+&lt;p&gt;A Hapi plugin.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Getting started</title>
+      <link>https://carsdotcom.github.io/windshieldjs/getting-started/</link>
+      <pubDate>Fri, 23 Sep 2016 12:00:00 +0600</pubDate>
+      
+      <guid>https://carsdotcom.github.io/windshieldjs/getting-started/</guid>
+      <description>
+
+&lt;h2 id=&#34;a-name-install-installation&#34;&gt;&lt;a name=&#34;install&#34;/&gt;Installation&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;npm install --save windshieldjs
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&#34;a-name-usage-usage&#34;&gt;&lt;a name=&#34;usage&#34;/&gt;Usage&lt;/h2&gt;
+
+&lt;h3 id=&#34;a-name-register-register&#34;&gt;&lt;a name=&#34;register&#34;/&gt;Register&lt;/h3&gt;
+
+&lt;p&gt;First, you must register the plugin with your Hapi server instance.&lt;/p&gt;
+
+&lt;h4 id=&#34;example-of-registering-plugin-with-options&#34;&gt;Example of registering plugin with options&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;server.register({
+    register: require(&#39;windshieldjs&#39;),
+    options: {
+        rootDir: path.join(__dirname, &#39;app&#39;),
+        handlebars: require(&#39;handlebars&#39;),
+        uriContext: &#39;/foo&#39;,
+        routes: require(&#39;./app/routes&#39;),
+        components: require(&#39;./app/components&#39;)
+    }
+}, function (err) {
+    if (err) console.log(err);
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;See options below for details on each of these options.&lt;/p&gt;
+
+&lt;h3 id=&#34;a-name-options-options&#34;&gt;&lt;a name=&#34;options&#34; /&gt;Options&lt;/h3&gt;
+
+&lt;h4 id=&#34;rootdir&#34;&gt;&lt;code&gt;rootDir&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;This should be the absolute path to the root directory of your project. Page &lt;code&gt;layouts&lt;/code&gt; and Handlebars &lt;code&gt;helpers&lt;/code&gt; will be looked for at this location. (See note below about project structure requirements).&lt;/p&gt;
+
+&lt;h4 id=&#34;handlebars&#34;&gt;&lt;code&gt;handlebars&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;Windshield needs to use the same handlebars instance as is used by your project. To ensure it has access to the same object in memory, you should provide this instance within the config object.&lt;/p&gt;
+
+&lt;h4 id=&#34;uricontext&#34;&gt;&lt;code&gt;uriContext&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;This is the base URI under which windshield will register all of your routes. For example, if you set &lt;code&gt;uriContext&lt;/code&gt; to &amp;ldquo;/foo&amp;rdquo;, and you have a route defined as &amp;ldquo;/bar&amp;rdquo;, that route will be accessible at &amp;ldquo;/foo/bar&amp;rdquo;.&lt;/p&gt;
+
+&lt;h4 id=&#34;routes&#34;&gt;&lt;code&gt;routes&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;The &lt;code&gt;routes&lt;/code&gt; property on the Windshield config object is an array of route definitions.&lt;/p&gt;
+
+&lt;p&gt;Each route definition within the &lt;code&gt;routes&lt;/code&gt; array option is a configuration object with the following properties:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;path&lt;/code&gt; - This is a string which acts as a path expression. It&amp;rsquo;s handed off directly to Hapi&amp;rsquo;s router when Windshield sets up your route.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;context&lt;/code&gt; - This is an object which may contain route specific context to be referenced by the adapters.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;adapters&lt;/code&gt; - This is an array of adapter implementations. An adapter is Promise-returning function which resolves with a page object. (More on page objects below.)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pageFilter&lt;/code&gt; - This is an optional property which can be set as a Promise-returning function which will receive the final composed page object immediately before it is applied to the page layout template and any component templates. It provides one last chance for the developer to modify the page object. This can be useful for cases where the data contained in one component affects another component on the page.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;components&#34;&gt;&lt;code&gt;components&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;The &lt;code&gt;components&lt;/code&gt; property on the Windshield config object is an object which serves as a map of component implementations. The property names on this object are component names and the value of each property is a component&amp;rsquo;s implementation object.&lt;/p&gt;
+
+&lt;p&gt;Each component implementation is an object with the following properties: &lt;code&gt;template&lt;/code&gt;, &lt;code&gt;Model&lt;/code&gt; and &lt;code&gt;adapter&lt;/code&gt;. The template property is the only thing that is required, the Model and adapter are optional. A model should be a constructor function which recieves and returns an object. A Model is used for simple translation and transformation of component data. An adapter is a function which returns the Promise—this promise should resolve with an object. Adapters are used for pulling in external data for the component to use from client libraries, etc.&lt;/p&gt;
+
+&lt;p&gt;The &lt;code&gt;template&lt;/code&gt; property of the component implementation should be a function which returns a Promise—this Promise should resolve with a Handlebars template string. To make this as easy as possible, a helper method called &lt;code&gt;readTemplate&lt;/code&gt; is available on the &lt;code&gt;windshield&lt;/code&gt; object which takes the absolute path to a template file and generated the proper function for export.&lt;/p&gt;
+
+&lt;h3 id=&#34;a-name-page-adapters-page-adapters-objects&#34;&gt;&lt;a name=&#34;page-adapters&#34; /&gt;Page Adapters &amp;amp; Objects&lt;/h3&gt;
+
+&lt;p&gt;A page object is an object with the following properties: &lt;code&gt;layout&lt;/code&gt;,  &lt;code&gt;attributes&lt;/code&gt; and &lt;code&gt;associations&lt;/code&gt;. All page object properties are optional.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;layout&lt;/code&gt; - This is a string the value of which is the name of the Handlebars layout to use for the overall page.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;attributes&lt;/code&gt; - This is an object each property of which is a string. These serve as page-level attributes.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;associations&lt;/code&gt; - This is an object which serves as a map of &amp;ldquo;named associations&amp;rdquo;. You can think of an association as a zone within the page layout. Each property name is the assocation name, and the value of each property is a collection of component objects to be contained within that association.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Adapters are Promise-returning functions which resolve with page objects. Each route definition has an array of adapters, each of which will be called and resolve with a page object. All the resultant page objects are then merged back together to create one single page object which can be applied to the page layout.&lt;/p&gt;
+
+&lt;p&gt;For example, take the following route definition:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+    path: &#39;/listings&#39;,
+    adapters: [
+        headerAdapter,
+        searchAdapter,
+        footerAdapter,
+    ]
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The &lt;code&gt;headerAdapter&lt;/code&gt; in the example above, might return a partial page object which looks like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+    associations: {
+        header: [
+            { component: &amp;quot;globalNav&amp;quot; }
+        ]
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The &lt;code&gt;searchAdapter&lt;/code&gt; in the example above, might return a partial page object which looks like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+    attributes: {
+        title: &amp;quot;Cars.com&amp;quot;
+    },
+    associations: {
+        main: [
+            { component: &amp;quot;searchWidget&amp;quot; },
+            { component: &amp;quot;carListings&amp;quot; }
+        ]
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The &lt;code&gt;footerAdapter&lt;/code&gt; in the example above, might return a partial page object which looks like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+    associations: {
+        footer: [
+            { component: &amp;quot;footerNav&amp;quot; }
+        ]
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The resulting page object, after all adapters have resolve, would be composed together by Windshield and would look like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+    layout: &amp;quot;default&amp;quot;,
+    attributes: {
+        title: &amp;quot;Cars.com&amp;quot;
+    },
+    associations: {
+        header: [
+            { component: &amp;quot;globalNav&amp;quot; }
+        ],
+        main: [
+            { component: &amp;quot;searchWidget&amp;quot; },
+            { component: &amp;quot;carListings&amp;quot; }
+        ],
+        footer: [
+            { component: “footerNav&amp;quot; }
+        ],
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;a-name-component-adapters-component-adapters-objects&#34;&gt;&lt;a name=&#34;component-adapters&#34; /&gt;Component Adapters &amp;amp; Objects&lt;/h3&gt;
+
+&lt;p&gt;Components can also have their own adapters. The data which resolves from component adapter will be added back onto the component object within the &lt;code&gt;data&lt;/code&gt; property. Component objects should return an object with their data contained inside a &lt;code&gt;data&lt;/code&gt; property. This specification did not used to exists and currently a can component can still resolve with its data at the object root instead of inside a data property but this usage pattern is now deprecated and will not be supported in coming releases. After the component adapter has been processed, a component object within the page object might then look like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+    component: &amp;quot;globalNav&amp;quot;,
+    data: {
+        items: [
+            {
+                displayName: &amp;quot;Buy&amp;quot;,
+                href: &amp;quot;/for-sale/&amp;quot;
+            },
+            {
+                displayName: &amp;quot;Sell &amp;amp;amp; Trade&amp;quot;,
+                href: &amp;quot;/sell/&amp;quot;
+            },
+            {
+                displayName: &amp;quot;Service &amp;amp;amp; Repair&amp;quot;,
+                href: &amp;quot;/auto-repair/&amp;quot;
+            },
+            {
+                displayName: &amp;quot;News&amp;quot;,
+                href: &amp;quot;/news/&amp;quot;
+            }
+        ]
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In this way, each component referenced in the original page object, as generated by the page adapters, is hydrated until all of the data needed to render the final HTML of the page is contained in one composite page object.&lt;/p&gt;
+
+&lt;p&gt;Optionally, a component can also resolve with an &lt;code&gt;export&lt;/code&gt; and an &lt;code&gt;exportAs&lt;/code&gt; property. Data &amp;ldquo;exported&amp;rdquo; in this manner will then be usable within any template (whether it be a layout template or a component template) by using the &lt;code&gt;{exported}&lt;/code&gt; handlerbars helper. This is a new feature. More details on this coming soon.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;a-name-scaffolding-scaffolding&#34;&gt;&lt;a name=&#34;scaffolding&#34;/&gt;Scaffolding&lt;/h3&gt;
+
+&lt;p&gt;windshieldjs comes with a binary CLI tool to generate new components, adapters
+and layouts. Run &lt;code&gt;./node_modules/.bin/windshield&lt;/code&gt; &lt;em&gt;from the project root&lt;/em&gt; of
+any project that has windshieldjs installed and you&amp;rsquo;ll be lead through a series
+of prompts.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./node_modules/.bin/windshield
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;project-structure&#34;&gt;Project Structure&lt;/h3&gt;
+
+&lt;p&gt;WindshieldJS is mostly driven by configuration, but due to the way Hapi&amp;rsquo;s
+&amp;ldquo;vision&amp;rdquo; plugin works, your main page &amp;ldquo;layouts&amp;rdquo; directory must be located
+directly within the &lt;code&gt;rootDir&lt;/code&gt; of your project. If you are using Handlebars
+helpers, you must add a &lt;code&gt;helpers&lt;/code&gt; directory inside &lt;code&gt;rootDir&lt;/code&gt; as well.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;rootDir&lt;/code&gt;
+
+&lt;ul&gt;
+&lt;li&gt;helpers&lt;/li&gt;
+&lt;li&gt;layouts&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>License</title>
+      <link>https://carsdotcom.github.io/windshieldjs/license/</link>
+      <pubDate>Fri, 23 Sep 2016 12:00:00 +0600</pubDate>
+      
+      <guid>https://carsdotcom.github.io/windshieldjs/license/</guid>
+      <description>&lt;pre&gt;&lt;code class=&#34;language-text&#34;&gt;
+                                 Apache License
+                           Version 2.0, January 2004
+                        http://www.apache.org/licenses/
+
+   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+
+   1. Definitions.
+
+      &amp;quot;License&amp;quot; shall mean the terms and conditions for use, reproduction,
+      and distribution as defined by Sections 1 through 9 of this document.
+
+      &amp;quot;Licensor&amp;quot; shall mean the copyright owner or entity authorized by
+      the copyright owner that is granting the License.
+
+      &amp;quot;Legal Entity&amp;quot; shall mean the union of the acting entity and all
+      other entities that control, are controlled by, or are under common
+      control with that entity. For the purposes of this definition,
+      &amp;quot;control&amp;quot; means (i) the power, direct or indirect, to cause the
+      direction or management of such entity, whether by contract or
+      otherwise, or (ii) ownership of fifty percent (50%) or more of the
+      outstanding shares, or (iii) beneficial ownership of such entity.
+
+      &amp;quot;You&amp;quot; (or &amp;quot;Your&amp;quot;) shall mean an individual or Legal Entity
+      exercising permissions granted by this License.
+
+      &amp;quot;Source&amp;quot; form shall mean the preferred form for making modifications,
+      including but not limited to software source code, documentation
+      source, and configuration files.
+
+      &amp;quot;Object&amp;quot; form shall mean any form resulting from mechanical
+      transformation or translation of a Source form, including but
+      not limited to compiled object code, generated documentation,
+      and conversions to other media types.
+
+      &amp;quot;Work&amp;quot; shall mean the work of authorship, whether in Source or
+      Object form, made available under the License, as indicated by a
+      copyright notice that is included in or attached to the work
+      (an example is provided in the Appendix below).
+
+      &amp;quot;Derivative Works&amp;quot; shall mean any work, whether in Source or Object
+      form, that is based on (or derived from) the Work and for which the
+      editorial revisions, annotations, elaborations, or other modifications
+      represent, as a whole, an original work of authorship. For the purposes
+      of this License, Derivative Works shall not include works that remain
+      separable from, or merely link (or bind by name) to the interfaces of,
+      the Work and Derivative Works thereof.
+
+      &amp;quot;Contribution&amp;quot; shall mean any work of authorship, including
+      the original version of the Work and any modifications or additions
+      to that Work or Derivative Works thereof, that is intentionally
+      submitted to Licensor for inclusion in the Work by the copyright owner
+      or by an individual or Legal Entity authorized to submit on behalf of
+      the copyright owner. For the purposes of this definition, &amp;quot;submitted&amp;quot;
+      means any form of electronic, verbal, or written communication sent
+      to the Licensor or its representatives, including but not limited to
+      communication on electronic mailing lists, source code control systems,
+      and issue tracking systems that are managed by, or on behalf of, the
+      Licensor for the purpose of discussing and improving the Work, but
+      excluding communication that is conspicuously marked or otherwise
+      designated in writing by the copyright owner as &amp;quot;Not a Contribution.&amp;quot;
+
+      &amp;quot;Contributor&amp;quot; shall mean Licensor and any individual or Legal Entity
+      on behalf of whom a Contribution has been received by Licensor and
+      subsequently incorporated within the Work.
+
+   2. Grant of Copyright License. Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      copyright license to reproduce, prepare Derivative Works of,
+      publicly display, publicly perform, sublicense, and distribute the
+      Work and such Derivative Works in Source or Object form.
+
+   3. Grant of Patent License. Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      (except as stated in this section) patent license to make, have made,
+      use, offer to sell, sell, import, and otherwise transfer the Work,
+      where such license applies only to those patent claims licensable
+      by such Contributor that are necessarily infringed by their
+      Contribution(s) alone or by combination of their Contribution(s)
+      with the Work to which such Contribution(s) was submitted. If You
+      institute patent litigation against any entity (including a
+      cross-claim or counterclaim in a lawsuit) alleging that the Work
+      or a Contribution incorporated within the Work constitutes direct
+      or contributory patent infringement, then any patent licenses
+      granted to You under this License for that Work shall terminate
+      as of the date such litigation is filed.
+
+   4. Redistribution. You may reproduce and distribute copies of the
+      Work or Derivative Works thereof in any medium, with or without
+      modifications, and in Source or Object form, provided that You
+      meet the following conditions:
+
+      (a) You must give any other recipients of the Work or
+          Derivative Works a copy of this License; and
+
+      (b) You must cause any modified files to carry prominent notices
+          stating that You changed the files; and
+
+      (c) You must retain, in the Source form of any Derivative Works
+          that You distribute, all copyright, patent, trademark, and
+          attribution notices from the Source form of the Work,
+          excluding those notices that do not pertain to any part of
+          the Derivative Works; and
+
+      (d) If the Work includes a &amp;quot;NOTICE&amp;quot; text file as part of its
+          distribution, then any Derivative Works that You distribute must
+          include a readable copy of the attribution notices contained
+          within such NOTICE file, excluding those notices that do not
+          pertain to any part of the Derivative Works, in at least one
+          of the following places: within a NOTICE text file distributed
+          as part of the Derivative Works; within the Source form or
+          documentation, if provided along with the Derivative Works; or,
+          within a display generated by the Derivative Works, if and
+          wherever such third-party notices normally appear. The contents
+          of the NOTICE file are for informational purposes only and
+          do not modify the License. You may add Your own attribution
+          notices within Derivative Works that You distribute, alongside
+          or as an addendum to the NOTICE text from the Work, provided
+          that such additional attribution notices cannot be construed
+          as modifying the License.
+
+      You may add Your own copyright statement to Your modifications and
+      may provide additional or different license terms and conditions
+      for use, reproduction, or distribution of Your modifications, or
+      for any such Derivative Works as a whole, provided Your use,
+      reproduction, and distribution of the Work otherwise complies with
+      the conditions stated in this License.
+
+   5. Submission of Contributions. Unless You explicitly state otherwise,
+      any Contribution intentionally submitted for inclusion in the Work
+      by You to the Licensor shall be under the terms and conditions of
+      this License, without any additional terms or conditions.
+      Notwithstanding the above, nothing herein shall supersede or modify
+      the terms of any separate license agreement you may have executed
+      with Licensor regarding such Contributions.
+
+   6. Trademarks. This License does not grant permission to use the trade
+      names, trademarks, service marks, or product names of the Licensor,
+      except as required for reasonable and customary use in describing the
+      origin of the Work and reproducing the content of the NOTICE file.
+
+   7. Disclaimer of Warranty. Unless required by applicable law or
+      agreed to in writing, Licensor provides the Work (and each
+      Contributor provides its Contributions) on an &amp;quot;AS IS&amp;quot; BASIS,
+      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+      implied, including, without limitation, any warranties or conditions
+      of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
+      PARTICULAR PURPOSE. You are solely responsible for determining the
+      appropriateness of using or redistributing the Work and assume any
+      risks associated with Your exercise of permissions under this License.
+
+   8. Limitation of Liability. In no event and under no legal theory,
+      whether in tort (including negligence), contract, or otherwise,
+      unless required by applicable law (such as deliberate and grossly
+      negligent acts) or agreed to in writing, shall any Contributor be
+      liable to You for damages, including any direct, indirect, special,
+      incidental, or consequential damages of any character arising as a
+      result of this License or out of the use or inability to use the
+      Work (including but not limited to damages for loss of goodwill,
+      work stoppage, computer failure or malfunction, or any and all
+      other commercial damages or losses), even if such Contributor
+      has been advised of the possibility of such damages.
+
+   9. Accepting Warranty or Additional Liability. While redistributing
+      the Work or Derivative Works thereof, You may choose to offer,
+      and charge a fee for, acceptance of support, warranty, indemnity,
+      or other liability obligations and/or rights consistent with this
+      License. However, in accepting such obligations, You may act only
+      on Your own behalf and on Your sole responsibility, not on behalf
+      of any other Contributor, and only if You agree to indemnify,
+      defend, and hold each Contributor harmless for any liability
+      incurred by, or claims asserted against, such Contributor by reason
+      of your accepting any such warranty or additional liability.
+
+   END OF TERMS AND CONDITIONS
+   
+   APPENDIX: How to apply the Apache License to your work.
+   
+      To apply the Apache License to your work, attach the following
+      boilerplate notice, with the fields enclosed by brackets &amp;quot;{}&amp;quot;
+      replaced with your own identifying information. (Don&#39;t include
+      the brackets!)  The text should be enclosed in the appropriate
+      comment syntax for the file format. We also recommend that a
+      file or class name and description of purpose be included on the
+      same &amp;quot;printed page&amp;quot; as the copyright notice for easier
+      identification within third-party archives.
+
+   Copyright 2014 Cars.com
+
+   Licensed under the Apache License, Version 2.0 (the &amp;quot;License&amp;quot;);
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an &amp;quot;AS IS&amp;quot; BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

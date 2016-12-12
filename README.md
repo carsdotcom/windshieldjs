@@ -230,3 +230,14 @@ helpers, you must add a `helpers` directory inside `rootDir` as well.
 - `rootDir`
   - helpers
   - layouts
+
+<br>
+
+-----
+
+<br>
+
+## License
+
+Apache-2.0
+
