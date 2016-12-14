@@ -1,12 +1,12 @@
 # WindshieldJS
 
-An Enterprise Rendering plugin for Hapi.js.
-
-<br>
+> An Enterprise Rendering plugin for Hapi.js.
 
 -----
 
-<br>
+See [documentation site](https://carsdotcom.github.io/windshieldjs/) for more details. Please note the docs site is still a work-in-progress.
+
+-----
 
 ## Table of Contents
 
