@@ -9,6 +9,10 @@ const helpers = require('./helpers');
 describe('layouts -', function () {
     let testRoute = helpers.RouteTester('fixtures/basic');
 
+    beforeEach((done) => {
+        require('rimraf')(path.join(process.cwd(), 'windshield-cache'), (err) => done(err));
+    });
+
     it('custom layout should be used when layout property defined in page definition', function (done) {
         let route = {
             path: '/bar',
