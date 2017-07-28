@@ -77,16 +77,66 @@ The `routes` property on the Windshield config object is an array of route defin
 
 Each route definition within the `routes` array option is a configuration object with the following properties:
 
-- `path` - This is a string which acts as a path expression. It's handed off directly to Hapi's router when Windshield sets up your route.
-- `context` - This is an object which may contain route specific context to be referenced by the adapters.
-- `adapters` - This is an array of adapter implementations. An adapter is Promise-returning function which resolves with a page object. (More on page objects below.)
-- `pageFilter` - This is an optional property which can be set as a Promise-returning function which will receive the final composed page object immediately before it is applied to the page layout template and any component templates. It provides one last chance for the developer to modify the page object. This can be useful for cases where the data contained in one component affects another component on the page.
+- `path`
+   - `(String)`
+   - required
+   - Hapi path expression. It's handed off directly to Hapi's router when Windshield sets up your route. See [Hapi's API docs](https://github.com/hapijs/hapi/blob/master/API.md).
+- `context`
+   - `(Object)`
+   - optional
+   - No schema. Can contain any route specific context to be referenced by the adapters.
+- `adapters`
+   - `(Array[...Function])`
+   - required
+   - Contains adapter implementations. An adapter is Promise-returning function which resolves with a page object. (More on page objects below.)
+- `pageFilter`
+   - `(Function)`
+   - optional
+   - A Promise-returning function which will receive the final composed page object immediately before it is applied to the page layout template and any component templates. It provides one last chance for the developer to modify the page object. This can be useful for cases where the data contained in one component affects another component on the page.
+- `cache`
+   - `(Bool|Object|Function(Req)->Object)`
+   - optional
+   - defaults to `false`
+   - When type is `Object`, properties are:
+       - `query`
+          - `(Boolean)`
+          - defaults to `true`
+          - when `false` omits query string from cache key
+       - `ttl`
+          - `(Number)`
+          - defaults to `300000`
+          - the time (in milliseconds) to hold a given cache entry
+   - When type is `Function`, function will be passed the request object and must return a valid cache configuration object. Additionally, a `key` property may be setting in the returned object in order to defined a custom key suffix for caching.
+      - Example of a cache config function: `(request) => ({ key: request.url.path + request.headers['user-agent'], ttl: 300000 })`
+   - If value is set to `true`, cache configuration will be set to:
+      - `{ query: true, ttl: 300000 }`
+
+*Note:* Cache is applied to `GET` requests only.
 
 #### `components`
 
 The `components` property on the Windshield config object is an object which serves as a map of component implementations. The property names on this object are component names and the value of each property is a component's implementation object.
 
-Each component implementation is an object with the following properties: `template`, `Model` and `adapter`. The template property is the only thing that is required, the Model and adapter are optional. A model should be a constructor function which recieves and returns an object. A Model is used for simple translation and transformation of component data. An adapter is a function which returns the Promise—this promise should resolve with an object. Adapters are used for pulling in external data for the component to use from client libraries, etc.
+Each component implementation is an object with the following properties:
+- `template`
+   - `(Promise->String)` - a promise for the component's template string, note that windshield exposes a `readTemplate` handler which takes a template file path and returns a promise of the template string.
+- `Model`
+   - `(Constructor)`
+   - A model should be a constructor function which recieves and returns an object. A Model is used for simple translation and transformation of component data.
+   - Model has been deprecated and should not be used.
+- `adapter`
+   - `(Function->Promise)`
+   - optional
+   - An adapter is a function which returns the Promise. This promise should resolve with an object. Adapters are used for pulling in external data for the component to use from client libraries, etc.
+- `cache`
+   - `(Bool|Object|Function(Req)->Object)`
+   - cache options for components are exactly the same as with route cache configuration (see above) but with one additional property:
+       - `global`
+          - `(Boolean)`
+          - defaults to `false`
+          - when `true` the component will be cached app wide regardless of which ever route first rendered it.
+   - If value is set to `true`, cache configuration will be set to:
+      - `{ query: true, ttl: 300000, global: false }`
 
 The `template` property of the component implementation should be a function which returns a Promise—this Promise should resolve with a Handlebars template string. To make this as easy as possible, a helper method called `readTemplate` is available on the `windshield` object which takes the absolute path to a template file and generated the proper function for export.
 
