@@ -7,12 +7,20 @@ const helpers = require('./helpers');
 const fixtureComponents = require('./fixtures/basic/components');
 const chai = require('chai');
 const expect = chai.expect;
+const sinon = require('sinon');
+const sinonChai = require('sinon-chai');
+
+chai.use(sinonChai);
 
 describe('page adapters -', function () {
     let sandbox;
 
-    beforeEach((done) => {
-        require('rimraf')(path.join(process.cwd(), 'windshield-cache'), (err) => done(err));
+    beforeEach(function () {
+        sandbox = sinon.sandbox.create();
+    });
+
+    afterEach(function () {
+        sandbox.restore();
     });
 
     let testRoute = helpers.RouteTester('fixtures/basic');
