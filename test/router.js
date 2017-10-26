@@ -8,10 +8,6 @@ const helpers = require('./helpers');
 describe('router -', function () {
     let testRoute = helpers.RouteTester('fixtures/basic');
 
-    beforeEach((done) => {
-        require('rimraf')(path.join(process.cwd(), 'windshield-cache'), (err) => done(err));
-    });
-
     it('route can be defined with just a path and no adapters', function (done) {
         let route = {
             path: '/bar',

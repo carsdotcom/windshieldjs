@@ -7,4 +7,3 @@ node_modules/*
 .vagrant
 env.json
 npm-debug.log
-ws-cache
