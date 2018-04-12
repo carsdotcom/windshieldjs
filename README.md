@@ -48,7 +48,8 @@ First, you must register the plugin with your Hapi server instance.
             handlebars: require('handlebars'),
             uriContext: '/foo',
             routes: require('./app/routes'),
-            components: require('./app/components')
+            components: require('./app/components'),
+            path: ['./', '../../node_modules/some-module/src']
         }
     }, function (err) {
         if (err) console.log(err);
@@ -89,6 +90,11 @@ The `components` property on the Windshield config object is an object which ser
 Each component implementation is an object with the following properties: `template`, `Model` and `adapter`. The template property is the only thing that is required, the Model and adapter are optional. A model should be a constructor function which recieves and returns an object. A Model is used for simple translation and transformation of component data. An adapter is a function which returns the Promise—this promise should resolve with an object. Adapters are used for pulling in external data for the component to use from client libraries, etc.
 
 The `template` property of the component implementation should be a function which returns a Promise—this Promise should resolve with a Handlebars template string. To make this as easy as possible, a helper method called `readTemplate` is available on the `windshield` object which takes the absolute path to a template file and generated the proper function for export.
+
+
+#### `path`
+
+The `path` property on the Windshield config object is an optional array that specifies parent directories where vision will look for the layouts sub-directory.  The default value is `['./']`, relative to `rootDir`, meaning vision will look for templates in `rootDir/layouts` by default.
 
 ### <a name="page-adapters" />Page Adapters & Objects
 
@@ -206,10 +212,9 @@ Optionally, a component can also resolve with an `export` and an `exportAs` prop
 
 ### Project Structure
 
-WindshieldJS is mostly driven by configuration, but due to the way Hapi's
-"vision" plugin works, your main page "layouts" directory must be located
-directly within the `rootDir` of your project. If you are using Handlebars
-helpers, you must add a `helpers` directory inside `rootDir` as well.
+WindshieldJS is mostly driven by configuration, your "layouts" directory is located within the `rootDir` of your project
+ by default. You can specify alternative parent directories for layouts in the options object.  If you are using Handlebars
+helpers, your `helpers` directory will be inside `rootDir` as well.
 
 - `rootDir`
   - helpers
