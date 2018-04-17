@@ -49,7 +49,8 @@ First, you must register the plugin with your Hapi server instance.
             uriContext: '/foo',
             routes: require('./app/routes'),
             components: require('./app/components'),
-            path: ['./', '../../node_modules/some-module/src']
+            path: ['./', '../../node_modules/some-module/src'],
+            helpersPath: ['helpers', '../../node_modules/some-module/src/helpers']
         }
     }, function (err) {
         if (err) console.log(err);
@@ -95,6 +96,10 @@ The `template` property of the component implementation should be a function whi
 #### `path`
 
 The `path` property on the Windshield config object is an optional array that specifies parent directories where vision will look for the layouts sub-directory.  The default value is `['./']`, relative to `rootDir`, meaning vision will look for templates in `rootDir/layouts` by default.
+
+#### `helpersPath`
+
+The `helpersPath` property on the Windshield config object is an optional array that specifies directories holding handlebars helpers.  The default value is `['helpers']`, relative to `rootDir`, meaning handlebars will look for helpers in `rootDir/helpers` by default.  You can also add absolute paths.
 
 ### <a name="page-adapters" />Page Adapters & Objects
 
@@ -212,9 +217,10 @@ Optionally, a component can also resolve with an `export` and an `exportAs` prop
 
 ### Project Structure
 
-WindshieldJS is mostly driven by configuration, your "layouts" directory is located within the `rootDir` of your project
- by default. You can specify alternative parent directories for layouts in the options object.  If you are using Handlebars
-helpers, your `helpers` directory will be inside `rootDir` as well.
+WindshieldJS is mostly driven by configuration, your "layouts" and "helpers" directories are located within the `rootDir` of your project
+ by default. You can specify alternative parent directories for layouts and helpers in the options object.
+
+Default structure:
 
 - `rootDir`
   - helpers
