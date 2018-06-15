@@ -9,17 +9,17 @@
     "watch": "node --es_staging node_modules/.bin/_mocha --watch --bail",
     "coverage": "node --es_staging node_modules/.bin/istanbul cover node_modules/.bin/_mocha",
     "lint": "eslint ./lib",
-    "docs": "hugo -s ./hugo -d ../docs"
+    "docs": "hugo -s ./hugo -d ../docs",
+    "nsp": "nsp check"
   },
   "author": "Mac Heller-Ogden",
   "license": "Apache-2.0",
   "dependencies": {
     "bluebird": "^3.0.5",
-    "boom": "^3.0.0",
     "handlebars": "^4.0.5",
     "iniparser": "^1.0.5",
     "inquirer": "^0.12.0",
-    "joi": "^7.0.0",
+    "joi": "^13.4.0",
     "lodash": "^4.6.1",
     "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
@@ -32,6 +32,7 @@
     "hapi": "^16.6.3",
     "istanbul": "^0.4.0",
     "mocha": "^2.3.4",
+    "nsp": "^3.2.1",
     "pre-commit": "^1.1.2",
     "sinon": "^1.17.3",
     "sinon-chai": "^2.8.0",
