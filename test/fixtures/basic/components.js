@@ -30,5 +30,25 @@ module.exports = {
         Model: function (data) {
             return data.attributes;
         }
+    },
+
+    'helloworld': {
+        templates: {
+            default: Promise.resolve('<h1>{{message}}</h1>'),
+            shout: Promise.resolve('<h1>{{uppercase message}}</h1>')
+        },
+        adapter: function(context, page, request) {
+            return Promise.resolve({
+                message: 'Hello world!'
+            });
+        }
+    },
+    container: {
+        templates: {
+            default: Promise.resolve(`<section>{{assoc 'stuff'}}</section>`)
+        },
+        adapter: function(context, page, request) {
+            return Promise.resolve({});
+        }
     }
 };

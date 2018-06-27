@@ -17,7 +17,7 @@ describe("the association processor service", function () {
     let sandbox, components;
 
     beforeEach(function (done) {
-        sandbox = sinon.sandbox.create();
+        sandbox = sinon.createSandbox();
         components = ComponentMap(mockComponents);
         components.init(Handlebars).then(function () {
             done();
