@@ -36,7 +36,7 @@ describe("the association processor service", function () {
 
             let associations = {rail: [{component: 'basicComponent'}]};
             let iterPromise = associationProcessorService.associationIterator(
-                "context", "request", components, associations);
+                { associations }, "request", components, associations);
 
             iterPromise.then(function (res) {
                 result = res;
@@ -84,7 +84,7 @@ describe("the association processor service", function () {
                 ]
             };
             let iterPromise = associationProcessorService.associationIterator(
-                "context", "request", components, associations);
+                { associations }, "request", components, associations);
 
             iterPromise.then(function (res) {
                 result = res;

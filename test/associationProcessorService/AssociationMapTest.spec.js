@@ -8,14 +8,22 @@ chai.use(sinonChai);
 const Promise = require('bluebird');
 const Component = require('../../lib/Component');
 const ComponentMap = require('../../lib/Component/Map');
-const AssociationList = require('../../lib/associationProcessorService/AssociationMap');
+const composer = require('../../lib/associationProcessorService/renderAssocMap.composer');
 
 describe("the AssociationList object", function () {
+    let AssociationList;
+    const componentMap = new ComponentMap({});
 
     let sandbox;
 
     beforeEach(function () {
         sandbox = sinon.createSandbox();
+
+        const context = "context";
+        const request = "request";
+
+        AssociationList = composer(context, request, componentMap);
+
     });
 
     afterEach(function () {
@@ -24,7 +32,7 @@ describe("the AssociationList object", function () {
 
     describe("Handling nested associations", function () {
 
-        let components, associations, aList;
+        let associations, aList;
 
         beforeEach(function () {
             associations = {
@@ -60,8 +68,6 @@ describe("the AssociationList object", function () {
                 ]
             };
 
-            components = new ComponentMap({});
-            aList = AssociationList(associations, components);
         });
 
 
@@ -89,22 +95,22 @@ describe("the AssociationList object", function () {
 
                 sandbox.stub(n1, 'render').resolves({markup: "n1 result"});
 
-                sandbox.stub(components, 'getComponent').callsFake(function (name) {
+                sandbox.stub(componentMap, 'getComponent').callsFake(function (name) {
                     return {c1, c2, c3, c4, n1}[name];
                 });
 
-                aList.render("context", "request").then(function (res) {
+                AssociationList(associations).then(function (res) {
                     result = res;
                     done();
                 });
             });
 
             it("should have gotten each component instance off the map", function () {
-                expect(components.getComponent.callCount).to.equal(4);
-                expect(components.getComponent).to.have.been.calledWith("n1");
-                expect(components.getComponent).to.have.been.calledWith("c1");
-                expect(components.getComponent).to.have.been.calledWith("c2");
-                expect(components.getComponent).to.have.been.calledWith("c3");
+                expect(componentMap.getComponent.callCount).to.equal(4);
+                expect(componentMap.getComponent).to.have.been.calledWith("n1");
+                expect(componentMap.getComponent).to.have.been.calledWith("c1");
+                expect(componentMap.getComponent).to.have.been.calledWith("c2");
+                expect(componentMap.getComponent).to.have.been.calledWith("c3");
 
             });
 
