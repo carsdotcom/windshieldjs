@@ -8,11 +8,11 @@ chai.use(sinonChai);
 const Promise = require('bluebird');
 const Component = require('../../lib/Component');
 const ComponentMap = require('../../lib/Component/Map');
-const composer = require('../../lib/associationProcessorService/renderAssocMap.composer');
+const associationIterator = require('../../lib/associationProcessorService');
 
 describe("the AssociationList object", function () {
-    let AssociationList;
     const componentMap = new ComponentMap({});
+    let renderer;
 
     let sandbox;
 
@@ -22,7 +22,8 @@ describe("the AssociationList object", function () {
         const context = "context";
         const request = "request";
 
-        AssociationList = composer(context, request, componentMap);
+        renderer = componentMap.composeFactory(context, request);
+
 
     });
 
@@ -99,7 +100,7 @@ describe("the AssociationList object", function () {
                     return {c1, c2, c3, c4, n1}[name];
                 });
 
-                AssociationList(associations).then(function (res) {
+                associationIterator(associations, renderer).then(function (res) {
                     result = res;
                     done();
                 });
@@ -151,7 +152,8 @@ describe("the AssociationList object", function () {
                     expect(c1render).to.have.been.calledWith({
                         associations: { exported: {  }, markup: { inner1: "n1 result" } },
                         component: "c1",
-                        data: { testData: "hi" }
+                        data: { testData: "hi" },
+                        layout: 'main'
                     });
 
                     expect(result.markup.rail).to.equal("c2 result\nc3 result");

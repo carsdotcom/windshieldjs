@@ -64,7 +64,7 @@ describe("the Component object", function () {
 
 
                 beforeEach(function (done) {
-                    component.render({component: "TestComponent"}, {}, {}, "main").then(function (resp) {
+                    component.render({component: "TestComponent", layout: 'main' }, {}, {}).then(function (resp) {
                         result = resp;
                         done();
                     });
@@ -167,7 +167,7 @@ describe("the Component object", function () {
                     beforeEach(function (done) {
                         adapterDef.resolve({test: "Result"});
 
-                        component.render({component: "AdaptedComponent"}, "ctx", "req", 'main', 'testCalledName').then(function (resp) {
+                        component.render({component: "AdaptedComponent"}, "ctx", "req", 'main').then(function (resp) {
                             result = resp;
                             done();
                         });
@@ -182,7 +182,7 @@ describe("the Component object", function () {
                         it("should have been called with default data", function () {
                             expect(adapter.args[0][0]).to.deep.equal({
                                 componentName: "TestComponent",
-                                calledName: 'testCalledName'
+                                calledName: 'AdaptedComponent'
                             });
                         });
 
@@ -223,7 +223,7 @@ describe("the Component object", function () {
                             }
                         };
 
-                        component.render(definiton, "context", "request", '', 'fizBuz').then(function (resp) {
+                        component.render(definiton, "context", "request", '').then(function (resp) {
                             result = resp;
                             done();
                         });
@@ -238,7 +238,7 @@ describe("the Component object", function () {
                         it("should have been called with the right data", function () {
                             expect(adapter.args[0][0]).to.deep.equal({
                                 componentName: "TestComponent",
-                                calledName: 'fizBuz',
+                                calledName: 'CoolThing',
                                 test: "123",
                                 val: "456"
                             });
@@ -316,13 +316,13 @@ describe("the Component object", function () {
 
                 describe("When there is nothing passed in the definition", function () {
 
-                    describe("And an unknown association name is given", function () {
+                    describe("And an unknown layout name is given", function () {
 
 
                         beforeEach(function (done) {
                             adapterDef.resolve({test: "Result"});
 
-                            component.render({component: "AdaptedComponent"}, "ctx", "req", 'main', '').then(function (resp) {
+                            component.render({component: "AdaptedComponent", layout: 'main'}, "ctx", "req").then(function (resp) {
                                 result = resp;
                                 done();
                             });
@@ -336,7 +336,7 @@ describe("the Component object", function () {
 
                             it("should have been called with default data", function () {
                                 expect(adapter.args[0][0]).to.deep.equal({
-                                    calledName: '',
+                                    calledName: 'AdaptedComponent',
                                     componentName: 'comp'
                                 });
                             });
@@ -363,13 +363,13 @@ describe("the Component object", function () {
 
                     });
 
-                    describe("And a known association name is given", function () {
+                    describe("And a known layout name is given", function () {
 
 
                         beforeEach(function (done) {
                             adapterDef.resolve({test: "Result"});
 
-                            component.render({component: "AdaptedComponent"}, "ctx", "req", 'rail').then(function (resp) {
+                            component.render({component: "AdaptedComponent", layout: 'rail'}, "ctx", "req").then(function (resp) {
                                 result = resp;
                                 done();
                             });
@@ -383,7 +383,7 @@ describe("the Component object", function () {
 
                             it("should have been called with default data", function () {
                                 expect(adapter.args[0][0]).to.deep.equal({
-                                    calledName: undefined,
+                                    calledName: 'AdaptedComponent',
                                     componentName: "comp"
                                 });
                             });
@@ -414,7 +414,7 @@ describe("the Component object", function () {
 
                 describe("When there is data passed in the definition", function () {
 
-                    describe("And an unknown association name is given", function () {
+                    describe("And an unknown layout name is given", function () {
 
 
                         beforeEach(function (done) {
@@ -426,10 +426,11 @@ describe("the Component object", function () {
                                 data: {
                                     test: "123",
                                     val: "456"
-                                }
+                                },
+                                layout: 'snuh'
                             };
 
-                            component.render(definiton, "context", "request", '').then(function (resp) {
+                            component.render(definiton, "context", "request").then(function (resp) {
                                 result = resp;
                                 done();
                             });
@@ -445,7 +446,7 @@ describe("the Component object", function () {
                                 expect(adapter.args[0][0]).to.deep.equal({
                                     val: "456",
                                     test: "123",
-                                    calledName: undefined,
+                                    calledName: 'CoolThing',
                                     componentName: "comp"
                                 });
                             });
@@ -471,7 +472,7 @@ describe("the Component object", function () {
 
                     });
 
-                    describe("And a known association name is given", function () {
+                    describe("And a known layout name is given", function () {
 
 
                         beforeEach(function (done) {
@@ -483,10 +484,11 @@ describe("the Component object", function () {
                                 data: {
                                     test: "123",
                                     val: "456"
-                                }
+                                },
+                                layout: 'rail'
                             };
 
-                            component.render(definiton, "context", "request", 'rail').then(function (resp) {
+                            component.render(definiton, "context", "request").then(function (resp) {
                                 result = resp;
                                 done();
                             });
@@ -502,7 +504,7 @@ describe("the Component object", function () {
                                 expect(adapter.args[0][0]).to.deep.equal({
                                     val: "456",
                                     test: "123",
-                                    calledName: undefined,
+                                    calledName: 'CoolThing',
                                     componentName: "comp"
                                 });
                             });
@@ -602,7 +604,7 @@ describe("the Component object", function () {
 
                         it("should have been called with empty data", function () {
                             expect(adapter.args[0][0]).to.deep.equal({
-                                calledName: undefined,
+                                calledName: 'AdaptedComponent',
                                 componentName: undefined
                             });
                         });
@@ -657,7 +659,7 @@ describe("the Component object", function () {
                         it("should have been called with the passed data data", function () {
                             expect(adapter.args[0][0]).to.deep.equal({
                                 componentName: undefined,
-                                calledName: undefined,
+                                calledName: 'CoolThing',
                                 test: "123",
                                 val: "456"
                             });
@@ -753,7 +755,7 @@ describe("the Component object", function () {
                     it("should have been called with default data", function () {
                         expect(adapter.args[0][0]).to.deep.equal({
                             componentName: undefined,
-                            calledName: undefined
+                            calledName: 'AdaptedComponent'
                         });
                     });
 
@@ -808,7 +810,7 @@ describe("the Component object", function () {
                         expect(adapter.args[0][0]).to.deep.equal({
                             val: "456",
                             test: "123",
-                            calledName: undefined,
+                            calledName: "CoolThing",
                             componentName: undefined
                         });
                     });

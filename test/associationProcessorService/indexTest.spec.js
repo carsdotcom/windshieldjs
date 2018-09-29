@@ -9,7 +9,7 @@ const Promise = require("bluebird");
 const mockComponents = require("../fixtures/basic/components");
 const ComponentMap = require("../../lib/Component/Map");
 const Handlebars = require('handlebars');
-const associationProcessorService = require('../../lib/associationProcessorService');
+const associationIterator = require('../../lib/associationProcessorService');
 
 
 describe("the association processor service", function () {
@@ -35,8 +35,7 @@ describe("the association processor service", function () {
         beforeEach(function (done) {
 
             let associations = {rail: [{component: 'basicComponent'}]};
-            let iterPromise = associationProcessorService.associationIterator(
-                { associations }, "request", components, associations);
+            let iterPromise = associationIterator(associations, components.composeFactory({associations}, "request"));
 
             iterPromise.then(function (res) {
                 result = res;
@@ -83,8 +82,7 @@ describe("the association processor service", function () {
                     }
                 ]
             };
-            let iterPromise = associationProcessorService.associationIterator(
-                { associations }, "request", components, associations);
+            let iterPromise = associationIterator(associations, components.composeFactory({associations}, "request"));
 
             iterPromise.then(function (res) {
                 result = res;
