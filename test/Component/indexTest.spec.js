@@ -74,7 +74,7 @@ describe("the Component object", function () {
 
                     it("should be an object with the name set to the definition, empty data, and an undefined layout", function () {
                         expect(result).to.deep.equal({
-                            markup: "",
+                            markup: '<!-- undefined template "main" could not be found -->',
                             exported: {}
                         });
                     });
@@ -104,8 +104,8 @@ describe("the Component object", function () {
 
                 describe("the result", function () {
 
-                    it("should have markup that is an empty string", function () {
-                        expect(result.markup).to.equal("");
+                    it("should have markup that is a comment explaining that the layout could not be found", function () {
+                        expect(result.markup).to.equal('<!-- undefined template "testlayout" could not be found -->');
                     });
 
                 });
