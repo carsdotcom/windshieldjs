@@ -5,7 +5,6 @@ const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
 
 chai.use(sinonChai);
-const Promise = require('bluebird');
 const Component = require('../../lib/Component');
 const ComponentMap = require('../../lib/Component/Map');
 const associationIterator = require('../../lib/associationProcessorService');

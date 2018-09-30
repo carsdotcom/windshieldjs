@@ -5,7 +5,6 @@ const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
 
 chai.use(sinonChai);
-const Promise = require("bluebird");
 const mockComponents = require("../fixtures/basic/components");
 const ComponentMap = require("../../lib/Component/Map");
 const Handlebars = require('handlebars');

@@ -1,10 +1,7 @@
 'use strict';
 const _ = require('lodash');
-const fs = require('fs');
-const path = require('path');
 const Promise = require('bluebird');
 const helpers = require('./helpers');
-const fixtureComponents = require('./fixtures/basic/components');
 const chai = require('chai');
 const expect = chai.expect;
 const sinon = require('sinon');
