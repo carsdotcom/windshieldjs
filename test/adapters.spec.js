@@ -25,7 +25,7 @@ describe('page adapters -', function () {
 
     let testRoute = helpers.RouteTester('fixtures/basic');
 
-    it('should use reply if defined as prehandler (object with `method` property', function (done) {
+    it('should use reply if defined as prehandler (object with `method` property)', function (done) {
         let mockComponent = {
             component: 'basicComponent'
         };

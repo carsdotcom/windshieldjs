@@ -122,7 +122,9 @@ describe('A Hapi server configured with Vision and Windshield', function () {
         };
 
         server.register([Vision, windshieldPlugin], function (err) {
-            if (err) console.log(err);
+            if (err) {
+                console.log(err);
+            }
         });
 
 
