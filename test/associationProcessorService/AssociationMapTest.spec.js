@@ -15,7 +15,7 @@ describe("the AssociationList object", function () {
     let sandbox;
 
     beforeEach(function () {
-        sandbox = sinon.sandbox.create();
+        sandbox = sinon.createSandbox();
     });
 
     afterEach(function () {
@@ -79,27 +79,17 @@ describe("the AssociationList object", function () {
                 n1 = new Component({});
 
 
-                c1render = sandbox.stub(c1, 'render', function () {
-                    return Promise.resolve({markup: "c1 result"});
-                });
+                c1render = sandbox.stub(c1, 'render').resolves({markup: "c1 result"});
 
-                sandbox.stub(c2, 'render', function () {
-                    return Promise.resolve({markup: "c2 result"});
-                });
+                sandbox.stub(c2, 'render').resolves({markup: "c2 result"});
 
-                sandbox.stub(c3, 'render', function () {
-                    return Promise.resolve({markup: "c3 result"});
-                });
+                sandbox.stub(c3, 'render').resolves({markup: "c3 result"});
 
-                sandbox.stub(c4, 'render', function () {
-                    return Promise.resolve({markup: "c4 result"});
-                });
+                sandbox.stub(c4, 'render').resolves({markup: "c4 result"});
 
-                sandbox.stub(n1, 'render', function () {
-                    return Promise.resolve({markup: "n1 result"});
-                });
+                sandbox.stub(n1, 'render').resolves({markup: "n1 result"});
 
-                sandbox.stub(components, 'getComponent', function (name) {
+                sandbox.stub(components, 'getComponent').callsFake(function (name) {
                     return {c1, c2, c3, c4, n1}[name];
                 });
 

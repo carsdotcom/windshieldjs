@@ -16,7 +16,7 @@ describe('page adapters -', function () {
     let sandbox;
 
     beforeEach(function () {
-        sandbox = sinon.sandbox.create();
+        sandbox = sinon.createSandbox();
     });
 
     afterEach(function () {
