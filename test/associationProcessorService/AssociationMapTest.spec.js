@@ -14,12 +14,16 @@ describe("the AssociationList object", function () {
     let renderer;
 
     let sandbox;
-
+    const request = {
+        server: {
+            log: sinon.stub()
+        }
+    };
     beforeEach(function () {
         sandbox = sinon.createSandbox();
 
         const context = "context";
-        const request = "request";
+
 
         renderer = componentMap.composeFactory(context, request);
 
@@ -135,9 +139,9 @@ describe("the AssociationList object", function () {
                 });
 
                 it("should have passed request as the third arg to render", function () {
-                    expect(c1.render.args[0][2]).to.equal("request");
-                    expect(c2.render.args[0][2]).to.equal("request");
-                    expect(c3.render.args[0][2]).to.equal("request");
+                    expect(c1.render.args[0][2]).to.equal(request);
+                    expect(c2.render.args[0][2]).to.equal(request);
+                    expect(c3.render.args[0][2]).to.equal(request);
                 });
 
             });

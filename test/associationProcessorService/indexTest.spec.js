@@ -29,12 +29,18 @@ describe("the association processor service", function () {
 
     describe("When a component has a non-default template/association name", function () {
 
+        const mockRequest = {
+            server: {
+                log: sinon.stub()
+            }
+        };
+
         let result;
 
         beforeEach(function (done) {
 
             let associations = {rail: [{component: 'basicComponent'}]};
-            let iterPromise = associationIterator(associations, components.composeFactory({associations}, "request"));
+            let iterPromise = associationIterator(associations, components.composeFactory({associations}, mockRequest));
 
             iterPromise.then(function (res) {
                 result = res;

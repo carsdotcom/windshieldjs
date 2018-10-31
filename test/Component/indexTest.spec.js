@@ -10,7 +10,11 @@ const Component = require('../../lib/Component');
 const Handlebars = require('handlebars');
 
 describe("the Component object", function () {
-
+    const request = {
+        server: {
+            log: sinon.stub()
+        }
+    };
     let sandbox;
 
     beforeEach(function () {
@@ -64,7 +68,13 @@ describe("the Component object", function () {
 
 
                 beforeEach(function (done) {
-                    component.render({component: "TestComponent", layout: 'main' }, {}, {}).then(function (resp) {
+                    const request = {
+                        server: {
+                            log: sinon.stub()
+                        }
+                    };
+
+                    component.render({component: "TestComponent", layout: 'main' }, {}, request).then(function (resp) {
                         result = resp;
                         done();
                     });
@@ -87,6 +97,12 @@ describe("the Component object", function () {
 
 
                 beforeEach(function (done) {
+                    const request = {
+                        server: {
+                            log: sinon.stub()
+                        }
+                    };
+
                     let definiton = {
                         component: "TestComponent",
                         layout: "testlayout",
@@ -96,7 +112,7 @@ describe("the Component object", function () {
                         }
                     };
 
-                    component.render(definiton, {}, {}, '').then(function (resp) {
+                    component.render(definiton, {}, request, '').then(function (resp) {
                         result = resp;
                         done();
                     });
@@ -165,9 +181,11 @@ describe("the Component object", function () {
 
 
                     beforeEach(function (done) {
+
+
                         adapterDef.resolve({test: "Result"});
 
-                        component.render({component: "AdaptedComponent"}, "ctx", "req", 'main').then(function (resp) {
+                        component.render({component: "AdaptedComponent"}, "ctx", request, 'main').then(function (resp) {
                             result = resp;
                             done();
                         });
@@ -191,7 +209,7 @@ describe("the Component object", function () {
                         });
 
                         it("should receive the context as the second argument", function () {
-                            expect(adapter.args[0][2]).to.equal("req");
+                            expect(adapter.args[0][2]).to.equal(request);
                         });
 
                     });
@@ -214,6 +232,7 @@ describe("the Component object", function () {
 
                         adapterDef.resolve({value: "Something"});
 
+
                         let definiton = {
                             component: "CoolThing",
                             layout: "overridelayout",
@@ -223,7 +242,7 @@ describe("the Component object", function () {
                             }
                         };
 
-                        component.render(definiton, "context", "request", '').then(function (resp) {
+                        component.render(definiton, "context", request, '').then(function (resp) {
                             result = resp;
                             done();
                         });
@@ -249,7 +268,7 @@ describe("the Component object", function () {
                         });
 
                         it("should receive the context as the second argument", function () {
-                            expect(adapter.args[0][2]).to.equal("request");
+                            expect(adapter.args[0][2]).to.equal(request);
                         });
 
                     });
@@ -322,7 +341,7 @@ describe("the Component object", function () {
                         beforeEach(function (done) {
                             adapterDef.resolve({test: "Result"});
 
-                            component.render({component: "AdaptedComponent", layout: 'main'}, "ctx", "req").then(function (resp) {
+                            component.render({component: "AdaptedComponent", layout: 'main'}, "ctx", request).then(function (resp) {
                                 result = resp;
                                 done();
                             });
@@ -346,7 +365,7 @@ describe("the Component object", function () {
                             });
 
                             it("should receive the context as the second argument", function () {
-                                expect(adapter.args[0][2]).to.equal("req");
+                                expect(adapter.args[0][2]).to.equal(request);
                             });
 
                         });
@@ -365,11 +384,10 @@ describe("the Component object", function () {
 
                     describe("And a known layout name is given", function () {
 
-
                         beforeEach(function (done) {
                             adapterDef.resolve({test: "Result"});
 
-                            component.render({component: "AdaptedComponent", layout: 'rail'}, "ctx", "req").then(function (resp) {
+                            component.render({component: "AdaptedComponent", layout: 'rail'}, "ctx", request).then(function (resp) {
                                 result = resp;
                                 done();
                             });
@@ -393,7 +411,7 @@ describe("the Component object", function () {
                             });
 
                             it("should receive the context as the second argument", function () {
-                                expect(adapter.args[0][2]).to.equal("req");
+                                expect(adapter.args[0][2]).to.equal(request);
                             });
 
                         });
@@ -430,7 +448,7 @@ describe("the Component object", function () {
                                 layout: 'snuh'
                             };
 
-                            component.render(definiton, "context", "request").then(function (resp) {
+                            component.render(definiton, "context", request).then(function (resp) {
                                 result = resp;
                                 done();
                             });
@@ -456,7 +474,7 @@ describe("the Component object", function () {
                             });
 
                             it("should receive the context as the second argument", function () {
-                                expect(adapter.args[0][2]).to.equal("request");
+                                expect(adapter.args[0][2]).to.equal(request);
                             });
 
                         });
@@ -488,7 +506,7 @@ describe("the Component object", function () {
                                 layout: 'rail'
                             };
 
-                            component.render(definiton, "context", "request").then(function (resp) {
+                            component.render(definiton, "context", request).then(function (resp) {
                                 result = resp;
                                 done();
                             });
@@ -514,7 +532,7 @@ describe("the Component object", function () {
                             });
 
                             it("should receive the context as the second argument", function () {
-                                expect(adapter.args[0][2]).to.equal("request");
+                                expect(adapter.args[0][2]).to.equal(request);
                             });
 
                         });
@@ -590,7 +608,7 @@ describe("the Component object", function () {
 
                     beforeEach(function (done) {
 
-                        component.render({component: "AdaptedComponent"}, "ctx", "req", '').then(function (resp) {
+                        component.render({component: "AdaptedComponent"}, "ctx", request, '').then(function (resp) {
                             result = resp;
                             done();
                         });
@@ -613,8 +631,8 @@ describe("the Component object", function () {
                             expect(adapter.args[0][1]).to.equal("ctx");
                         });
 
-                        it("should receive the context as the second argument", function () {
-                            expect(adapter.args[0][2]).to.equal("req");
+                        it("should receive the request as the second argument", function () {
+                            expect(adapter.args[0][2]).to.equal(request);
                         });
 
                     });
@@ -644,7 +662,7 @@ describe("the Component object", function () {
                             }
                         };
 
-                        component.render(definiton, "context", "request", 'rail').then(function (resp) {
+                        component.render(definiton, "context", request, 'rail').then(function (resp) {
                             result = resp;
                             done();
                         });
@@ -670,7 +688,7 @@ describe("the Component object", function () {
                         });
 
                         it("should receive the context as the second argument", function () {
-                            expect(adapter.args[0][2]).to.equal("request");
+                            expect(adapter.args[0][2]).to.equal(request);
                         });
 
                     });
@@ -740,7 +758,7 @@ describe("the Component object", function () {
 
                 beforeEach(function (done) {
 
-                    component.render({component: "AdaptedComponent"}, "ctx", "req").then(function (resp) {
+                    component.render({component: "AdaptedComponent"}, "ctx", request).then(function (resp) {
                         result = resp;
                         done();
                     });
@@ -764,7 +782,7 @@ describe("the Component object", function () {
                     });
 
                     it("should receive the context as the second argument", function () {
-                        expect(adapter.args[0][2]).to.equal("req");
+                        expect(adapter.args[0][2]).to.equal(request);
                     });
 
                 });
@@ -794,7 +812,7 @@ describe("the Component object", function () {
                         }
                     };
 
-                    component.evaluate(definiton, "context", "request").then(function (resp) {
+                    component.evaluate(definiton, "context", request).then(function (resp) {
                         result = resp;
                         done();
                     });
@@ -820,7 +838,7 @@ describe("the Component object", function () {
                     });
 
                     it("should receive the context as the second argument", function () {
-                        expect(adapter.args[0][2]).to.equal("request");
+                        expect(adapter.args[0][2]).to.equal(request);
                     });
 
                 });
