@@ -22,14 +22,14 @@ describe('page adapters -', function () {
 
     let testRoute = helpers.RouteTester('fixtures/basic');
 
-    it('should use reply if defined as prehandler (object with `method` property)', function (done) {
+    it('should use response if defined as prehandler (object with `method` property)', function () {
         let mockComponent = {
             component: 'basicComponent'
         };
         let route = {
             path: '/bar',
             adapters: [{
-                method: function (context, request, reply) {
+                method: function (context, request, h) {
 
                     let data = {
                         layout: 'railAssoc',
@@ -42,7 +42,7 @@ describe('page adapters -', function () {
 
                     _.merge(context, data);
 
-                    return reply(Promise.resolve(data));
+                    return Promise.resolve(data);
                 }
             },
                 function (context, request) {
@@ -61,13 +61,13 @@ describe('page adapters -', function () {
                 }
             ]
         };
-        testRoute(route, function (data) {
-            expect(data.payload).to.contain('this is the rail template');
-            done();
-        });
+        return testRoute(route)
+            .then(function (data) {
+                return expect(data.payload).to.contain('this is the rail template');
+            });
     });
 
-    it('should not need reply if not defined as prehandler (object with `method` property)', function (done) {
+    it('should not need response if not defined as prehandler (object with `method` property)', function () {
         let mockComponent = {
             component: 'basicComponent'
         };
@@ -91,26 +91,25 @@ describe('page adapters -', function () {
                 }
             ]
         };
-        testRoute(route, function (data) {
-            expect(data.payload).to.contain('this is the rail template');
-            done();
+        return testRoute(route).then(function (data) {
+            return expect(data.payload).to.contain('this is the rail template');
         });
     });
 
-    it('should act as decorators', function (done) {
+    it('should act as decorators', function () {
         let route = {
             path: '/foo',
             adapters: [
                 function (context, request) {
                     context.attributes.setByFirstAdapter = 'this was set by first adapter';
                     return Promise.resolve(context);
-                }, function (context, request) {
+                },
+                function (context, request) {
                     expect(context.attributes.setByFirstAdapter).to.contain('this was set by first adapter');
-                    done();
                 }
             ]
         };
-        testRoute(route, () => {});
+        return testRoute(route);
     });
 
 });

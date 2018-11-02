@@ -63,11 +63,11 @@ const nestedHelloWorldPageAdapter = sinon.stub().resolves({
 
 
 const prereq = {
-    method: sinon.spy(function (context, request, reply) {
+    method: sinon.spy(function (context, request, h) {
         if (context.sayHello === false) {
-            reply().takeover().code(404);
+            return h.takeover().code(404);
         } else {
-            reply.continue();
+            return h.continue;
         }
     })
 };
@@ -104,12 +104,10 @@ describe('A Hapi server configured with Vision and Windshield', function () {
     let replyViewSpy;
     before(function () {
 
-        server = new Hapi.Server();
-
-        server.connection({ "port": 3000 });
+        server = new Hapi.Server({ "port": 3000 });
 
         const windshieldPlugin = {
-            register: Windshield,
+            plugin: Windshield,
             options: {
                 rootDir: path.join(__dirname, './fixtures'),
                 handlebars: Handlebars,
@@ -121,22 +119,18 @@ describe('A Hapi server configured with Vision and Windshield', function () {
             }
         };
 
-        server.register([Vision, windshieldPlugin], function (err) {
-            if (err) {
-                console.log(err);
-            }
-        });
+        return server.register([Vision, windshieldPlugin])
+            .then(() => {
+                replyViewSpy = sinon.spy(server._core._decorations.toolkit, 'view');
+            })
+            .catch(err => {
+                if (err) {
+                    console.log(err);
+                }
+            });
 
 
-        let _original = server._replier.interface;
 
-
-        server._replier.interface = function (request, realm, options, next) {
-            let reply = _original.call(this, request, realm, options, next);
-            replyViewSpy = sinon.spy(reply, 'view');
-
-            return reply;
-        };
 
     });
 
@@ -145,15 +139,14 @@ describe('A Hapi server configured with Vision and Windshield', function () {
 
         describe("basic", function () {
 
-            beforeEach(function (done) {
+            beforeEach(function () {
                 const request = {
                     method: 'GET',
                     url: '/foo/bar/'
                 };
 
-                server.inject(request, function (resp) {
+                return server.inject(request).then(function (resp) {
                     response = resp;
-                    done();
                 });
             });
 
@@ -183,7 +176,7 @@ describe('A Hapi server configured with Vision and Windshield', function () {
                 expect(pageFilter).to.have.been.calledWith(intermediatePageData, response.request);
             });
 
-            it("should call vision's reply.view to parse the layout template with the page definition object", function () {
+            it("should call vision's h.view to parse the layout template with the page definition object", function () {
                 expect(replyViewSpy).to.have.been.calledWith('layouts/foobar', {
                     attributes: { headers:
                         {
@@ -211,19 +204,18 @@ describe('A Hapi server configured with Vision and Windshield', function () {
 
         describe("that uses an adapter with nested associations", function () {
 
-            beforeEach(function (done) {
+            beforeEach(function () {
                 const request = {
                     method: 'GET',
                     url: '/foo/nested/'
                 };
 
-                server.inject(request, function (resp) {
+                return server.inject(request).then(function (resp) {
                     response = resp;
-                    done();
                 });
             });
 
-            it("should call vision's reply.view to parse the layout template with the page definition object", function () {
+            it("should call vision's h.view to parse the layout template with the page definition object", function () {
                 expect(replyViewSpy).to.have.been.calledWith('layouts/foobar', {
                     attributes: { headers: { Cookie: 'examplecookie=yes' } },
                     exported: {},

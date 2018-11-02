@@ -22,14 +22,14 @@ describe('components -', function () {
 
     let testRoute = helpers.RouteTester('fixtures/basic');
 
-    it('should use the template which matches the name of the association they belong to', function (done) {
+    it('should use the template which matches the name of the association they belong to', function () {
         let mockComponent = {
             component: 'basicComponent'
         };
         let route = {
             path: '/bar',
             adapters: [{
-                method: function (context, request, reply) {
+                method: function (context, request, h) {
 
                     let data = {
                         layout: 'railAssoc',
@@ -42,14 +42,13 @@ describe('components -', function () {
 
                     _.merge(context, data);
 
-                    reply(Promise.resolve(data));
+                    return Promise.resolve(data);
                 },
                 assign: 'test'
             }]
         };
-        testRoute(route, function (data) {
+        return testRoute(route).then(function (data) {
             expect(data.payload).to.contain('this is the rail template');
-            done();
         });
     });
 

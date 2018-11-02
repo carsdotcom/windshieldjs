@@ -23,14 +23,14 @@
   "devDependencies": {
     "chai": "^4.1.2",
     "eslint": "^1.10.3",
-    "hapi": "^16.7.0",
+    "hapi": "^17.6.0",
     "istanbul": "^0.4.5",
     "mocha": "^5.2.0",
     "nsp": "^3.2.1",
     "pre-commit": "^1.1.2",
     "sinon": "^6.0.1",
     "sinon-chai": "^3.2.0",
-    "vision": "^4.0.1"
+    "vision": "^5.4.2"
   },
   "pre-commit": [
     "test",

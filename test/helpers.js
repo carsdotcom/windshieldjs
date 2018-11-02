@@ -10,15 +10,12 @@ exports.registerWithOptions = registerWithOptions;
 
 function registerWithOptions(options, cb) {
     let windshieldWithOptions = {
-        register: windshield,
+        plugin: windshield,
         options: options
     };
     let plugins = [ vision, windshieldWithOptions ];
-    let server = new Hapi.Server({ debug: { log: [ 'error' ]} });
-    server.connection({ port: 3000 });
-    server.register(plugins, function(err) {
-        cb(err, !err && server);
-    });
+    let server = new Hapi.Server({ port: 3000, debug: { log: [ 'error' ]} });
+    return server.register(plugins).then(() => server);
 }
 
 exports.RouteTester = RouteTester;
@@ -33,16 +30,18 @@ function RouteTester(fixture) {
             routes: [ route ],
             components: require(path.join(fixturePath, 'components'))
         };
-        registerWithOptions(options, function (err, server) {
-            assert.ifError(err);
+        return registerWithOptions(options)
+            .then(server => {
+                let req = {
+                    method: 'GET',
+                    url: '/foo' + route.path
+                };
 
-            let req = {
-                method: 'GET',
-                url: '/foo' + route.path
-            };
-
-            server.inject(req, cb);
-        });
+                return server.inject(req);
+            })
+            .catch(err => {
+                return assert.ifError(err);
+            });
     }
 
     testRoute.fixturePath = fixturePath;
