@@ -12,14 +12,13 @@
         "node": true,
         "es6": true
     },
-    "ecmaFeatures": {
-        "modules": true
+    "parserOptions": {
+        "ecmaVersion": 2017
     },
     "rules": {
         "one-var": 0,
         "vars-on-top": 0,
         "no-mixed-requires": 0,
-        "wrap-iife": [2, "any"],
         "camelcase": 2,
         "curly": 0,
         "eqeqeq": 0,
