@@ -15,20 +15,20 @@
   "author": "Mac Heller-Ogden",
   "license": "Apache-2.0",
   "dependencies": {
-    "bluebird": "^3.0.5",
-    "handlebars": "^4.0.5",
-    "joi": "^13.6.0",
-    "lodash": "^4.17.10"
+    "bluebird": "^3.5.2",
+    "handlebars": "^4.0.12",
+    "joi": "^14.0.4",
+    "lodash": "^4.17.11"
   },
   "devDependencies": {
-    "chai": "^4.1.2",
+    "chai": "^4.2.0",
     "eslint": "^5.8.0",
     "hapi": "^17.6.0",
     "istanbul": "^1.1.0-alpha.1",
     "mocha": "^5.2.0",
     "nsp": "^3.2.1",
     "pre-commit": "^1.1.2",
-    "sinon": "^6.0.1",
+    "sinon": "^7.1.1",
     "sinon-chai": "^3.2.0",
     "vision": "^5.4.2"
   },
