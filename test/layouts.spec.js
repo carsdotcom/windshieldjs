@@ -1,9 +1,8 @@
 'use strict';
-const _ = require('lodash');
+const merge = require('lodash.merge');
 const fs = require('fs');
 const path = require('path');
 const assert = require('assert');
-const Promise = require('bluebird');
 const helpers = require('./helpers');
 
 describe('layouts -', function () {
@@ -15,7 +14,7 @@ describe('layouts -', function () {
             adapters: [ {
                 method: function (context, request, h) {
 
-                    _.merge(context, { layout: 'other' });
+                    merge(context, { layout: 'other' });
 
                     return Promise.resolve({ layout: 'other' });
 

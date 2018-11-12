@@ -1,6 +1,5 @@
 'use strict';
 const assert = require('assert');
-const Promise = require('bluebird');
 const helpers = require('./helpers');
 
 describe('router -', function () {

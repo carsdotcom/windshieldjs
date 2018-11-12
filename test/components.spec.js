@@ -1,6 +1,5 @@
 "use strict";
-const _ = require('lodash');
-const Promise = require('bluebird');
+const merge = require('lodash.merge');
 const helpers = require('./helpers');
 const chai = require('chai');
 const expect = chai.expect;
@@ -40,7 +39,7 @@ describe('components -', function () {
                         }
                     };
 
-                    _.merge(context, data);
+                    merge(context, data);
 
                     return Promise.resolve(data);
                 },

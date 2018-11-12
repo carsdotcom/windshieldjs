@@ -15,10 +15,10 @@
   "author": "Mac Heller-Ogden",
   "license": "Apache-2.0",
   "dependencies": {
-    "bluebird": "^3.5.2",
     "handlebars": "^4.0.12",
     "joi": "^14.0.4",
-    "lodash": "^4.17.11"
+    "lodash.clonedeep": "^4.5.0",
+    "lodash.merge": "^4.6.1"
   },
   "devDependencies": {
     "chai": "^4.2.0",

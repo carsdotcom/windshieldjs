@@ -5,7 +5,6 @@ const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
 
 chai.use(sinonChai);
-const Promise = require('bluebird');
 const Component = require('../../lib/Component');
 const Handlebars = require('handlebars');
 
@@ -136,14 +135,10 @@ describe("the Component object", function () {
         describe("And has one default template", function () {
 
 
-            let component, adapter, adapterDef;
+            let component, adapter;
 
             beforeEach(function (done) {
-                adapterDef = Promise.defer();
-
-                adapter = sandbox.spy(function () {
-                    return adapterDef.promise;
-                });
+                adapter = sandbox.stub();
 
                 component = Component({
                     adapter,
@@ -183,7 +178,7 @@ describe("the Component object", function () {
                     beforeEach(function (done) {
 
 
-                        adapterDef.resolve({test: "Result"});
+                        adapter.resolves({test: "Result"});
 
                         component.render({component: "AdaptedComponent"}, "ctx", request, 'main').then(function (resp) {
                             result = resp;
@@ -230,7 +225,7 @@ describe("the Component object", function () {
 
                     beforeEach(function (done) {
 
-                        adapterDef.resolve({value: "Something"});
+                        adapter.resolves({value: "Something"});
 
 
                         let definiton = {
@@ -291,14 +286,10 @@ describe("the Component object", function () {
         describe("And has several templates", function () {
 
 
-            let component, adapter, adapterDef;
+            let component, adapter;
 
             beforeEach(function (done) {
-                adapterDef = Promise.defer();
-
-                adapter = sandbox.spy(function () {
-                    return adapterDef.promise;
-                });
+                adapter = sandbox.stub();
 
                 component = Component({
                     adapter,
@@ -339,7 +330,7 @@ describe("the Component object", function () {
 
 
                         beforeEach(function (done) {
-                            adapterDef.resolve({test: "Result"});
+                            adapter.resolves({test: "Result"});
 
                             component.render({component: "AdaptedComponent", layout: 'main'}, "ctx", request).then(function (resp) {
                                 result = resp;
@@ -385,7 +376,7 @@ describe("the Component object", function () {
                     describe("And a known layout name is given", function () {
 
                         beforeEach(function (done) {
-                            adapterDef.resolve({test: "Result"});
+                            adapter.resolves({test: "Result"});
 
                             component.render({component: "AdaptedComponent", layout: 'rail'}, "ctx", request).then(function (resp) {
                                 result = resp;
@@ -437,7 +428,7 @@ describe("the Component object", function () {
 
                         beforeEach(function (done) {
 
-                            adapterDef.resolve({value: "Something"});
+                            adapter.resolves({value: "Something"});
 
                             let definiton = {
                                 component: "CoolThing",
@@ -495,7 +486,7 @@ describe("the Component object", function () {
 
                         beforeEach(function (done) {
 
-                            adapterDef.resolve({value: "Something"});
+                            adapter.resolves({value: "Something"});
 
                             let definiton = {
                                 component: "CoolThing",

@@ -18,7 +18,20 @@ let pageFilter = sinon.spy(function (pageData) {
     return Promise.resolve(pageData);
 });
 
-const helloWorldPageAdapter = sinon.stub()
+const helloWorldPageAdapter = sinon.stub();
+
+const defaultComponent = `<div style="padding:30px">
+    <h1>Component unknown is not defined in this project!</h1>
+    <p>Available Components are</p>
+    <ul style="padding-left: 24px">
+            <li style="list-style-type: disc">basicComponent</li>
+            <li style="list-style-type: disc">componentWithAdapter</li>
+            <li style="list-style-type: disc">componentWithModel</li>
+            <li style="list-style-type: disc">helloworld</li>
+            <li style="list-style-type: disc">container</li>
+            <li style="list-style-type: disc">default</li>
+    </ul>
+</div>`;
 
 
 
@@ -202,6 +215,9 @@ describe('A Hapi server configured with Vision and Windshield', function () {
                                         {
                                             component: 'helloworld',
                                             layout: 'shout'
+                                        },
+                                        {
+                                            component: 'unknown'
                                         }
                                     ]
                                 }
@@ -210,7 +226,7 @@ describe('A Hapi server configured with Vision and Windshield', function () {
                     },
                     layout: 'foobar'
                 });
-            })
+            });
 
             describe("basic", function () {
 
@@ -291,17 +307,23 @@ describe('A Hapi server configured with Vision and Windshield', function () {
                 });
 
                 it("should call vision's h.view to parse the layout template with the page definition object", function () {
+                    const str = `<section><h1>Hello world!</h1>\n<h1>HELLO WORLD!</h1>
+${defaultComponent}</section>`;
+
+
                     expect(replyViewSpy).to.have.been.calledWith('layouts/foobar', {
                         attributes: { headers: { Cookie: 'examplecookie=yes' } },
                         exported: {},
-                        assoc: { helloSection:
-                            '<section><h1>Hello world!</h1>\n<h1>HELLO WORLD!</h1></section>'
-                        }
+                        assoc: { helloSection: str }
                     });
                 });
 
                 it("should set the response payload by processing the route's page adapters and layout template", function () {
-                    expect(response.payload).to.equal('<html><body><div><section><h1>Hello world!</h1>\n<h1>HELLO WORLD!</h1></section></div></body></html>');
+
+                    const str = `<html><body><div><section><h1>Hello world!</h1>\n<h1>HELLO WORLD!</h1>
+${defaultComponent}</section></div></body></html>`;
+
+                    expect(response.payload).to.equal(str);
                 });
 
                 it("should set the response headers based on the attributes defined by the route's page adapters", function () {
