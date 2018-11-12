@@ -6,45 +6,47 @@ const handlebars = require('handlebars');
 const vision = require('vision');
 const windshield = require('..');
 
-exports.registerWithOptions = registerWithOptions;
 
-function registerWithOptions(options, cb) {
-    let windshieldWithOptions = {
+async function registerWithOptions(options, cb) {
+    const windshieldWithOptions = {
         plugin: windshield,
         options: options
     };
-    let plugins = [ vision, windshieldWithOptions ];
-    let server = new Hapi.Server({ port: 3000, debug: { log: [ 'error' ]} });
-    return server.register(plugins).then(() => server);
+    const plugins = [ vision, windshieldWithOptions ];
+    const server = new Hapi.Server({ port: 3000, debug: { log: [ 'error' ]} });
+    await server.register(plugins);
+    return server;
 }
 
-exports.RouteTester = RouteTester;
 function RouteTester(fixture) {
-    let fixturePath = path.join(__dirname, fixture);
+    const fixturePath = path.join(__dirname, fixture);
 
-    function testRoute(route, cb) {
-        let options = {
+    async function testRoute(route, cb) {
+        const options = {
             rootDir: fixturePath,
             handlebars: handlebars,
             uriContext: '/foo',
             routes: [ route ],
             components: require(path.join(fixturePath, 'components'))
         };
-        return registerWithOptions(options)
-            .then(server => {
-                let req = {
-                    method: 'GET',
-                    url: '/foo' + route.path
-                };
+        const server = await registerWithOptions(options);
 
-                return server.inject(req);
-            })
-            .catch(err => {
-                return assert.ifError(err);
-            });
+        try {
+            const req = {
+                method: 'GET',
+                url: '/foo' + route.path
+            };
+
+            return server.inject(req);
+        } catch(err) {
+            return assert.ifError(err);
+        }
     }
 
     testRoute.fixturePath = fixturePath;
     return testRoute;
 }
 
+
+exports.registerWithOptions = registerWithOptions;
+exports.RouteTester = RouteTester;

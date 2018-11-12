@@ -102,7 +102,7 @@ describe("the Component object", function () {
                         }
                     };
 
-                    let definiton = {
+                    const definiton = {
                         component: "TestComponent",
                         layout: "testlayout",
                         data: {
@@ -228,7 +228,7 @@ describe("the Component object", function () {
                         adapter.resolves({value: "Something"});
 
 
-                        let definiton = {
+                        const definiton = {
                             component: "CoolThing",
                             layout: "overridelayout",
                             data: {
@@ -430,7 +430,7 @@ describe("the Component object", function () {
 
                             adapter.resolves({value: "Something"});
 
-                            let definiton = {
+                            const definiton = {
                                 component: "CoolThing",
                                 data: {
                                     test: "123",
@@ -488,7 +488,7 @@ describe("the Component object", function () {
 
                             adapter.resolves({value: "Something"});
 
-                            let definiton = {
+                            const definiton = {
                                 component: "CoolThing",
                                 data: {
                                     test: "123",
@@ -644,7 +644,7 @@ describe("the Component object", function () {
 
                     beforeEach(function (done) {
 
-                        let definiton = {
+                        const definiton = {
                             component: "CoolThing",
                             layout: "rail",
                             data: {
@@ -794,7 +794,7 @@ describe("the Component object", function () {
 
                 beforeEach(function (done) {
 
-                    let definiton = {
+                    const definiton = {
                         component: "CoolThing",
                         layout: "custom",
                         data: {

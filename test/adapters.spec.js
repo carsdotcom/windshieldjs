@@ -19,18 +19,18 @@ describe('page adapters -', function () {
         sandbox.restore();
     });
 
-    let testRoute = helpers.RouteTester('fixtures/basic');
+    const testRoute = helpers.RouteTester('fixtures/basic');
 
     it('should use response if defined as prehandler (object with `method` property)', function () {
-        let mockComponent = {
+        const mockComponent = {
             component: 'basicComponent'
         };
-        let route = {
+        const route = {
             path: '/bar',
             adapters: [{
                 method: function (context, request, h) {
 
-                    let data = {
+                    const data = {
                         layout: 'railAssoc',
                         associations: {
                             rail: [
@@ -46,7 +46,7 @@ describe('page adapters -', function () {
             },
                 function (context, request) {
 
-                    let data = {
+                    const data = {
                         associations: {
                             main: [
                                 mockComponent
@@ -67,15 +67,15 @@ describe('page adapters -', function () {
     });
 
     it('should not need response if not defined as prehandler (object with `method` property)', function () {
-        let mockComponent = {
+        const mockComponent = {
             component: 'basicComponent'
         };
-        let route = {
+        const route = {
             path: '/bar',
             adapters: [
                 function (context, request) {
 
-                    let data = {
+                    const data = {
                         layout: 'railAssoc',
                         associations: {
                             rail: [
@@ -96,7 +96,7 @@ describe('page adapters -', function () {
     });
 
     it('should act as decorators', function () {
-        let route = {
+        const route = {
             path: '/foo',
             adapters: [
                 function (context, request) {

@@ -19,18 +19,18 @@ describe('components -', function () {
         sandbox.restore();
     });
 
-    let testRoute = helpers.RouteTester('fixtures/basic');
+    const testRoute = helpers.RouteTester('fixtures/basic');
 
     it('should use the template which matches the name of the association they belong to', function () {
-        let mockComponent = {
+        const mockComponent = {
             component: 'basicComponent'
         };
-        let route = {
+        const route = {
             path: '/bar',
             adapters: [{
                 method: function (context, request, h) {
 
-                    let data = {
+                    const data = {
                         layout: 'railAssoc',
                         associations: {
                             rail: [

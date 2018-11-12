@@ -14,7 +14,7 @@ const Handlebars = require('handlebars');
 
 
 
-let pageFilter = sinon.spy(function (pageData) {
+const pageFilter = sinon.spy(function (pageData) {
     return Promise.resolve(pageData);
 });
 
@@ -36,7 +36,7 @@ const defaultComponent = `<div style="padding:30px">
 
 
 
-const nestedHelloWorldPageAdapter = sinon.stub()
+const nestedHelloWorldPageAdapter = sinon.stub();
 
 
 
@@ -75,41 +75,52 @@ const windshieldRoutes = [
 
 const componentLibrary = require('./fixtures/basic/components');
 
+describe("The Windshield plugin", function () {
+
+    it('should export an object', function () {
+        expect(Windshield).to.be.an('object');
+    });
+
+    it('should expose a plugin name', function () {
+        expect(Windshield.name).to.equal('windshield');
+    });
+
+    it('should expose a register method', function () {
+        expect(Windshield.register).to.be.a('function');
+    });
+
+    it('should expose a readTemplate utility method', function () {
+        expect(Windshield.readTemplate).to.be.a('function');
+    });
+});
+
 describe('A Hapi server configured with Vision and Windshield', function () {
     let response;
-    let server;
+    const server = new Hapi.Server({ "port": 3000 });
+
+
+    const windshieldPlugin = {
+        plugin: Windshield,
+        options: {
+            rootDir: path.join(__dirname, './fixtures'),
+            handlebars: Handlebars,
+            uriContext: '/foo',
+            routes: windshieldRoutes,
+            components: componentLibrary,
+            path: ['./basic/'],
+            helpersPath: ['./basic/helpers']
+        }
+    };
+
 
     let replyViewSpy;
-    before(function () {
-
-        server = new Hapi.Server({ "port": 3000 });
-
-        const windshieldPlugin = {
-            plugin: Windshield,
-            options: {
-                rootDir: path.join(__dirname, './fixtures'),
-                handlebars: Handlebars,
-                uriContext: '/foo',
-                routes: windshieldRoutes,
-                components: componentLibrary,
-                path: ['./basic/'],
-                helpersPath: ['./basic/helpers']
-            }
-        };
-
-        return server.register([Vision, windshieldPlugin])
-            .then(() => {
-                replyViewSpy = sinon.spy(server._core._decorations.toolkit, 'view');
-            })
-            .catch(err => {
-                if (err) {
-                    console.log(err);
-                }
-            });
-
-
-
-
+    before(async function () {
+        await server.register([Vision, windshieldPlugin]);
+        try {
+            replyViewSpy = sinon.spy(server._core._decorations.toolkit, 'view');
+        } catch(err) {
+            console.log(err);
+        }
     });
 
 
@@ -246,7 +257,7 @@ describe('A Hapi server configured with Vision and Windshield', function () {
                 });
 
                 it('should call the pageFilter method to perform last-minute operations on the page definition object', function () {
-                    let intermediatePageData = {
+                    const intermediatePageData = {
                         assoc: {
                             exported: {},
                             markup: {
