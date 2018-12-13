@@ -5,17 +5,29 @@ const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
 
 chai.use(sinonChai);
-const Promise = require('bluebird');
 const Component = require('../../lib/Component');
 const ComponentMap = require('../../lib/Component/Map');
-const AssociationList = require('../../lib/associationProcessorService/AssociationMap');
+const associationIterator = require('../../lib/associationProcessorService');
 
 describe("the AssociationList object", function () {
+    const componentMap = new ComponentMap({});
+    let renderer;
 
     let sandbox;
-
+    const request = {
+        server: {
+            log: sinon.stub()
+        }
+    };
     beforeEach(function () {
         sandbox = sinon.createSandbox();
+
+        const context = "context";
+
+
+        renderer = componentMap.composeFactory(context, request);
+
+
     });
 
     afterEach(function () {
@@ -24,7 +36,7 @@ describe("the AssociationList object", function () {
 
     describe("Handling nested associations", function () {
 
-        let components, associations, aList;
+        let associations, aList;
 
         beforeEach(function () {
             associations = {
@@ -60,8 +72,6 @@ describe("the AssociationList object", function () {
                 ]
             };
 
-            components = new ComponentMap({});
-            aList = AssociationList(associations, components);
         });
 
 
@@ -89,22 +99,22 @@ describe("the AssociationList object", function () {
 
                 sandbox.stub(n1, 'render').resolves({markup: "n1 result"});
 
-                sandbox.stub(components, 'getComponent').callsFake(function (name) {
+                sandbox.stub(componentMap, 'getComponent').callsFake(function (name) {
                     return {c1, c2, c3, c4, n1}[name];
                 });
 
-                aList.render("context", "request").then(function (res) {
+                associationIterator(associations, renderer).then(function (res) {
                     result = res;
                     done();
                 });
             });
 
             it("should have gotten each component instance off the map", function () {
-                expect(components.getComponent.callCount).to.equal(4);
-                expect(components.getComponent).to.have.been.calledWith("n1");
-                expect(components.getComponent).to.have.been.calledWith("c1");
-                expect(components.getComponent).to.have.been.calledWith("c2");
-                expect(components.getComponent).to.have.been.calledWith("c3");
+                expect(componentMap.getComponent.callCount).to.equal(4);
+                expect(componentMap.getComponent).to.have.been.calledWith("n1");
+                expect(componentMap.getComponent).to.have.been.calledWith("c1");
+                expect(componentMap.getComponent).to.have.been.calledWith("c2");
+                expect(componentMap.getComponent).to.have.been.calledWith("c3");
 
             });
 
@@ -129,9 +139,9 @@ describe("the AssociationList object", function () {
                 });
 
                 it("should have passed request as the third arg to render", function () {
-                    expect(c1.render.args[0][2]).to.equal("request");
-                    expect(c2.render.args[0][2]).to.equal("request");
-                    expect(c3.render.args[0][2]).to.equal("request");
+                    expect(c1.render.args[0][2]).to.equal(request);
+                    expect(c2.render.args[0][2]).to.equal(request);
+                    expect(c3.render.args[0][2]).to.equal(request);
                 });
 
             });
@@ -145,7 +155,8 @@ describe("the AssociationList object", function () {
                     expect(c1render).to.have.been.calledWith({
                         associations: { exported: {  }, markup: { inner1: "n1 result" } },
                         component: "c1",
-                        data: { testData: "hi" }
+                        data: { testData: "hi" },
+                        layout: 'main'
                     });
 
                     expect(result.markup.rail).to.equal("c2 result\nc3 result");

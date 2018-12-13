@@ -1,10 +1,7 @@
 'use strict';
 const _ = require('lodash');
-const fs = require('fs');
-const path = require('path');
 const Promise = require('bluebird');
 const helpers = require('./helpers');
-const fixtureComponents = require('./fixtures/basic/components');
 const chai = require('chai');
 const expect = chai.expect;
 const sinon = require('sinon');
@@ -25,7 +22,7 @@ describe('page adapters -', function () {
 
     let testRoute = helpers.RouteTester('fixtures/basic');
 
-    it('should use reply if defined as prehandler (object with `method` property', function (done) {
+    it('should use reply if defined as prehandler (object with `method` property)', function (done) {
         let mockComponent = {
             component: 'basicComponent'
         };
