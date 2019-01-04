@@ -5,40 +5,130 @@ const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
 
 chai.use(sinonChai);
-const Component = require('../../lib/Component');
-const ComponentMap = require('../../lib/Component/Map');
-const associationIterator = require('../../lib/associationProcessorService');
+const mockComponents = require("./fixtures/basic/components");
+const Component = require('../lib/Component');
+const ComponentMap = require("../lib/Component/Map");
+const Handlebars = require('handlebars');
+const associationIterator = require('../lib/associationProcessorService');
 
-describe("the AssociationList object", function () {
-    const componentMap = new ComponentMap({});
-    let renderer;
 
-    let sandbox;
-    const request = {
-        server: {
-            log: sinon.stub()
-        }
-    };
-    beforeEach(function () {
+describe("the association processor service", function () {
+
+    let sandbox, components;
+
+    beforeEach(async function () {
         sandbox = sinon.createSandbox();
-
-        const context = "context";
-
-
-        renderer = componentMap.composeFactory(context, request);
-
-
+        components = ComponentMap(mockComponents);
+        await components.init(Handlebars);
     });
 
     afterEach(function () {
         sandbox.restore();
     });
 
+    describe("When a component has a non-default template/association name", function () {
+
+        const mockRequest = {
+            server: {
+                log: sinon.stub()
+            }
+        };
+
+        let result;
+
+        beforeEach(async function () {
+
+            const associations = {rail: [{component: 'basicComponent'}]};
+            result = await associationIterator(associations, components.composeFactory({associations}, mockRequest));
+        });
+
+        it("should have association data", function () {
+            expect(result.markup).to.exist;
+        });
+
+        it("should have exported data", function () {
+            expect(result.exported).to.exist;
+        });
+
+        it("should have a rail association", function () {
+            expect(result.markup.rail).to.exist;
+        });
+
+        describe("The rail association", function () {
+            it("should have the correct data", function () {
+                expect(result.markup.rail).to.equal('this is the rail template');
+            });
+        });
+
+    });
+
+    describe("When the component has an adapter", function () {
+
+        let result;
+
+        beforeEach(async function () {
+
+            const associations = {
+                main: [
+                    {
+                        component: 'componentWithAdapter',
+                        data: {
+                            attributes: {
+                                content: "Fake Content"
+                            }
+                        }
+                    }
+                ]
+            };
+            result = await associationIterator(associations, components.composeFactory({associations}, "request"));
+        });
+
+        describe("Exported data", function () {
+
+            it("should contain the data exported from the component adapter", function () {
+                expect(result.exported).to.deep.equal({
+                    componentWithAdapter: {
+                        test: 'Hello'
+                    }
+                });
+            });
+        });
+
+        describe("Association Data", function () {
+
+            it("should have a main association", function () {
+                expect(result.markup.main).to.exist;
+            });
+
+            it("should have all the data returned from the adapter", function () {
+                expect(result.markup.main).to.equal("<p>Fake Content</p>");
+            });
+
+        });
+
+    });
+
+
+
+
     describe("Handling nested associations", function () {
 
-        let associations, aList;
+        let associations;
+
+        const componentMap = new ComponentMap({});
+        let renderer;
+
+        const request = {
+            server: {
+                log: sinon.stub()
+            }
+        };
 
         beforeEach(function () {
+            const context = "context";
+            renderer = componentMap.composeFactory(context, request);
+
+
             associations = {
                 main: [
                     {

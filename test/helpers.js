@@ -6,46 +6,47 @@ const handlebars = require('handlebars');
 const vision = require('vision');
 const windshield = require('..');
 
-exports.registerWithOptions = registerWithOptions;
 
-function registerWithOptions(options, cb) {
-    let windshieldWithOptions = {
-        register: windshield,
+async function registerWithOptions(options, cb) {
+    const windshieldWithOptions = {
+        plugin: windshield,
         options: options
     };
-    let plugins = [ vision, windshieldWithOptions ];
-    let server = new Hapi.Server({ debug: { log: [ 'error' ]} });
-    server.connection({ port: 3000 });
-    server.register(plugins, function(err) {
-        cb(err, !err && server);
-    });
+    const plugins = [ vision, windshieldWithOptions ];
+    const server = new Hapi.Server({ port: 3000, debug: { log: [ 'error' ]} });
+    await server.register(plugins);
+    return server;
 }
 
-exports.RouteTester = RouteTester;
 function RouteTester(fixture) {
-    let fixturePath = path.join(__dirname, fixture);
+    const fixturePath = path.join(__dirname, fixture);
 
-    function testRoute(route, cb) {
-        let options = {
+    async function testRoute(route, cb) {
+        const options = {
             rootDir: fixturePath,
             handlebars: handlebars,
             uriContext: '/foo',
             routes: [ route ],
             components: require(path.join(fixturePath, 'components'))
         };
-        registerWithOptions(options, function (err, server) {
-            assert.ifError(err);
+        const server = await registerWithOptions(options);
 
-            let req = {
+        try {
+            const req = {
                 method: 'GET',
                 url: '/foo' + route.path
             };
 
-            server.inject(req, cb);
-        });
+            return server.inject(req);
+        } catch(err) {
+            return assert.ifError(err);
+        }
     }
 
     testRoute.fixturePath = fixturePath;
     return testRoute;
 }
 
+
+exports.registerWithOptions = registerWithOptions;
+exports.RouteTester = RouteTester;

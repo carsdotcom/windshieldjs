@@ -45,16 +45,12 @@ details. Please note the docs site is still a work-in-progress.
 
 ## <a name="requirements"/>Requirements</a>
 
-WindshieldJS 3.x is intended for use with
+WindshieldJS 4.x is intended for use with
 
-* [Hapi.js](https://github.com/hapijs/hapi) 16.x (no support for 17+)
-* [vision](https://github.com/hapijs/vision) 4.x. (no support for 5+)
-* [Handlebars](https://github.com/wycats/handlebars.js/) 4.x and up
-* Node 6.x and up
-
-It may work with older versions, but it hasn't been tested.
-
-Support for a Hapi 17 environment is planned for a future version.
+* [Hapi.js](https://github.com/hapijs/hapi) 17+
+* [vision](https://github.com/hapijs/vision) 5+
+* [Handlebars](https://github.com/wycats/handlebars.js/) 4+
+* Node 7.6+
 
 <br>
 
@@ -91,8 +87,8 @@ First, you must register the plugin with your Hapi server instance.
             path: ['./', '../../node_modules/some-module/src'],
             helpersPath: ['helpers', '../../node_modules/some-module/src/helpers']
         }
-    }, function (err) {
-        if (err) console.log(err);
+    }).catch(function (err) {
+        console.log(err);
     });
 
 See [options](#options) below for details on each of these options.

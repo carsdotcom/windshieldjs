@@ -1,6 +1,5 @@
 "use strict";
-const _ = require('lodash');
-const Promise = require('bluebird');
+const merge = require('lodash.merge');
 const helpers = require('./helpers');
 const chai = require('chai');
 const expect = chai.expect;
@@ -20,18 +19,18 @@ describe('components -', function () {
         sandbox.restore();
     });
 
-    let testRoute = helpers.RouteTester('fixtures/basic');
+    const testRoute = helpers.RouteTester('fixtures/basic');
 
-    it('should use the template which matches the name of the association they belong to', function (done) {
-        let mockComponent = {
+    it('should use the template which matches the name of the association they belong to', function () {
+        const mockComponent = {
             component: 'basicComponent'
         };
-        let route = {
+        const route = {
             path: '/bar',
             adapters: [{
-                method: function (context, request, reply) {
+                method: function (context, request, h) {
 
-                    let data = {
+                    const data = {
                         layout: 'railAssoc',
                         associations: {
                             rail: [
@@ -40,16 +39,15 @@ describe('components -', function () {
                         }
                     };
 
-                    _.merge(context, data);
+                    merge(context, data);
 
-                    reply(Promise.resolve(data));
+                    return Promise.resolve(data);
                 },
                 assign: 'test'
             }]
         };
-        testRoute(route, function (data) {
+        return testRoute(route).then(function (data) {
             expect(data.payload).to.contain('this is the rail template');
-            done();
         });
     });
 

@@ -1,6 +1,5 @@
 'use strict';
-const _ = require('lodash');
-const Promise = require('bluebird');
+const merge = require('lodash.merge');
 const helpers = require('./helpers');
 const chai = require('chai');
 const expect = chai.expect;
@@ -20,18 +19,18 @@ describe('page adapters -', function () {
         sandbox.restore();
     });
 
-    let testRoute = helpers.RouteTester('fixtures/basic');
+    const testRoute = helpers.RouteTester('fixtures/basic');
 
-    it('should use reply if defined as prehandler (object with `method` property)', function (done) {
-        let mockComponent = {
+    it('should use response if defined as prehandler (object with `method` property)', function () {
+        const mockComponent = {
             component: 'basicComponent'
         };
-        let route = {
+        const route = {
             path: '/bar',
             adapters: [{
-                method: function (context, request, reply) {
+                method: function (context, request, h) {
 
-                    let data = {
+                    const data = {
                         layout: 'railAssoc',
                         associations: {
                             rail: [
@@ -40,14 +39,14 @@ describe('page adapters -', function () {
                         }
                     };
 
-                    _.merge(context, data);
+                    merge(context, data);
 
-                    return reply(Promise.resolve(data));
+                    return Promise.resolve(data);
                 }
             },
                 function (context, request) {
 
-                    let data = {
+                    const data = {
                         associations: {
                             main: [
                                 mockComponent
@@ -55,28 +54,28 @@ describe('page adapters -', function () {
                         }
                     };
 
-                    _.merge(context, data);
+                    merge(context, data);
 
                     return Promise.resolve(data);
                 }
             ]
         };
-        testRoute(route, function (data) {
-            expect(data.payload).to.contain('this is the rail template');
-            done();
-        });
+        return testRoute(route)
+            .then(function (data) {
+                return expect(data.payload).to.contain('this is the rail template');
+            });
     });
 
-    it('should not need reply if not defined as prehandler (object with `method` property)', function (done) {
-        let mockComponent = {
+    it('should not need response if not defined as prehandler (object with `method` property)', function () {
+        const mockComponent = {
             component: 'basicComponent'
         };
-        let route = {
+        const route = {
             path: '/bar',
             adapters: [
                 function (context, request) {
 
-                    let data = {
+                    const data = {
                         layout: 'railAssoc',
                         associations: {
                             rail: [
@@ -85,32 +84,31 @@ describe('page adapters -', function () {
                         }
                     };
 
-                    _.merge(context, data);
+                    merge(context, data);
 
                     return Promise.resolve(data);
                 }
             ]
         };
-        testRoute(route, function (data) {
-            expect(data.payload).to.contain('this is the rail template');
-            done();
+        return testRoute(route).then(function (data) {
+            return expect(data.payload).to.contain('this is the rail template');
         });
     });
 
-    it('should act as decorators', function (done) {
-        let route = {
+    it('should act as decorators', function () {
+        const route = {
             path: '/foo',
             adapters: [
                 function (context, request) {
                     context.attributes.setByFirstAdapter = 'this was set by first adapter';
                     return Promise.resolve(context);
-                }, function (context, request) {
+                },
+                function (context, request) {
                     expect(context.attributes.setByFirstAdapter).to.contain('this was set by first adapter');
-                    done();
                 }
             ]
         };
-        testRoute(route, () => {});
+        return testRoute(route);
     });
 
 });
