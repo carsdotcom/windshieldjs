@@ -9,8 +9,7 @@
     "watch": "node --es_staging node_modules/.bin/_mocha --watch --bail",
     "coverage": "node --es_staging node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- \"test/**/*.spec.js\"",
     "lint": "eslint ./lib",
-    "docs": "hugo -s ./hugo -d ../docs",
-    "nsp": "nsp check"
+    "docs": "hugo -s ./hugo -d ../docs"
   },
   "author": "Mac Heller-Ogden",
   "license": "Apache-2.0",
@@ -26,7 +25,6 @@
     "hapi": "^17.8.1",
     "istanbul": "^1.1.0-alpha.1",
     "mocha": "^5.2.0",
-    "nsp": "^3.2.1",
     "pre-commit": "^1.1.2",
     "sinon": "^7.1.1",
     "sinon-chai": "^3.3.0",
