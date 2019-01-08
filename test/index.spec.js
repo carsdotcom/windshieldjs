@@ -81,8 +81,9 @@ describe("The Windshield plugin", function () {
         expect(Windshield).to.be.an('object');
     });
 
-    it('should expose a plugin name', function () {
-        expect(Windshield.name).to.equal('windshield');
+    it('should expose a pkg property', function () {
+        expect(Windshield.pkg.name).to.equal('windshieldjs');
+        expect(Windshield.pkg.version).to.be.a('string');
     });
 
     it('should expose a register method', function () {
